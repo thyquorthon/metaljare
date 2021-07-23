@@ -1,6 +1,11 @@
 {
-    "hosting": {
-      "site": "metaljarebeers",
-      "public": "public"
-    }
+  "hosting": {
+    "site": "metaljarebeers",
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
   }
+}
