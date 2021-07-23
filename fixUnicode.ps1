@@ -113,4 +113,4 @@ For ($i=0; $i -lt $origin_json.Length; $i++) {
   }
 }
 $destination_json = $destination_json | Sort-Object -Descending -Property creation_timestamp
-ConvertTo-Json $destination_json -Depth 10 | Out-File -FilePath .\data\posts.json
+ConvertTo-Json $destination_json -Depth 10 | Out-File -FilePath .\public\data\posts.json
