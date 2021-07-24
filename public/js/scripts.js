@@ -185,10 +185,16 @@ function filterOut(obj) {
 
   showBeers(value);
 }
+function reset() {
+  if (window.innerWidth>900) {
+    window.scrollTo(0, 0);
+  }
+}
 
 function showMap() {
   $('#content_map').fadeIn(800);
   $('#content_categories').fadeOut(500);
+  $('#content_inner').fadeOut(500);
   $('#content').fadeOut(500);
   $('#post-end-message').fadeOut(100);
   $("#loading").fadeOut(100);
@@ -201,6 +207,7 @@ function showCategories() {
   $('#content_categories').fadeIn(800);
   $('#content_map').fadeOut(500);
   $('#content').fadeOut(500);
+  $('#content_inner').fadeOut(500);
   $('#post-end-message').fadeOut(100);
   $("#loading").fadeOut(100);
   $("#search-area").fadeOut(100);
@@ -212,6 +219,7 @@ function showBeers(value) {
   $('#content').fadeIn(800);
   $('#content_map').fadeOut(500);
   $('#content_categories').fadeOut(500);
+  $('#content_inner').fadeOut(500);
   $('#post-end-message').html('<div class="end">End</div>').fadeOut(10);
   $("#loading").fadeIn(100);  
   page.position = 0;
@@ -219,7 +227,7 @@ function showBeers(value) {
   page.filter = value;
   $('#mc-search').val(value);
   document.querySelector("#content").innerHTML="";
-  window.scrollTo(0, 0);
+  reset();
   drawPosts(page.position, page.filter);
   page.area = "beers";
   $("#search-area").fadeIn(800);
@@ -235,7 +243,7 @@ function showInner(value) {
   $("#loading").fadeOut(100);  
   $('#mc-search').val(value);
   document.querySelector("#content_inner").innerHTML="";
-  window.scrollTo(0, 0);
+  reset();
   drawInternal();
   page.area = "inner";
   $("#search-area").fadeIn(800);
@@ -249,7 +257,7 @@ function doneTyping () {
   page.filter = $('#mc-search').val();
   document.querySelector("#content").innerHTML = "";
   document.querySelector("#content_inner").innerHTML = "";
-  window.scrollTo(0, 0);
+  reset();
   drawPosts(page.position, page.filter);
   drawInternal(page.filter);
 }
@@ -270,7 +278,7 @@ function drawInternal(filter) {
     filtered_entries = beers_drinked.filter(item => {
       var result = false;
       filters.forEach(element => {
-        if (item.includes(element)) {
+        if (item.toLowerCase().includes(element.toLowerCase())) {
           result = true;
         }
       }); 
@@ -299,7 +307,7 @@ function drawPosts(from, filter) {
       filtered_entries = entries.filter(item => {
         var result = false;
         filters.forEach(element => {
-          if (item.hashtags.includes(element)) {
+          if (item.hashtags.includes(element.toLowerCase())) {
             result = true;
           }
         }); 
