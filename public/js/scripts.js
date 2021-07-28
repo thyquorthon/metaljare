@@ -242,7 +242,7 @@ function showInner(value) {
   $('#post-end-message').html('<div class="end">End</div>').fadeOut(10);
   $("#loading").fadeOut(100);  
   $('#mc-search').val(value);
-  document.querySelector("#content_inner").innerHTML="";
+  document.querySelector("#content_drinked").innerHTML="";
   reset();
   drawInternal();
   page.area = "inner";
@@ -256,7 +256,7 @@ function doneTyping () {
   page.loaded = false;
   page.filter = $('#mc-search').val();
   document.querySelector("#content").innerHTML = "";
-  document.querySelector("#content_inner").innerHTML = "";
+  document.querySelector("#content_drinked").innerHTML = "";
   reset();
   drawPosts(page.position, page.filter);
   drawInternal(page.filter);
@@ -292,7 +292,8 @@ function drawInternal(filter) {
     beers += '<span>' + filtered_entries[i] + '</span><br>';
   }
   console.log(beers);
-  document.querySelector("#content_inner").innerHTML = '<div class="col-md-12 blog-post">' + beers + '</div>';
+  document.querySelector("#content_drinked").innerHTML = beers;
+  document.querySelector("#content_drinked_count").innerHTML = filtered_entries.length;
   $("#content_inner").fadeIn(500);
 }
 
@@ -315,7 +316,7 @@ function drawPosts(from, filter) {
       });
     }
 
-    if (filtered_entries.length == 0) {
+    if (!filtered_entries || filtered_entries.length == 0) {
       var t = document.querySelector('#no_results');
       var tb = document.querySelector("#content");
 
@@ -357,11 +358,19 @@ function drawPosts(from, filter) {
       brewery.innerHTML = brewers; //filtered_entries[from+i].metadata.brewer.sort().join(' + ');
 
       text = t.content.querySelector("#text");
-      text.innerHTML = filtered_entries[from+i].text.split("\n").join("<BR>");
+      var content = filtered_entries[from+i].text.split("\n").join("<BR>");
+      if (content.endsWith('<BR><BR>')) {
+        content = content.substr(0, content.length-8);
+      }
+      text.innerHTML = content;
 
       moment.locale('es'); 
       date = t.content.querySelector("#timestamp");
       date.innerHTML = moment.unix(filtered_entries[from+i].creation_timestamp).format("LLLL");
+
+      counter = t.content.querySelector("#beer_counter");
+      counter.innerHTML = (i+1) + " de " + filtered_entries.length;
+
 
       beerStyles = ""
       for (j=0;j<filtered_entries[from+i].metadata.styles.length;j++) {

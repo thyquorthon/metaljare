@@ -1395,6 +1395,10 @@ blockquote {
 
 @media only screen and (max-width:435px) {
 	
+    .portrait {
+        display: none;
+    }
+
     b {
        font-weight: 500;
     }
