@@ -308,7 +308,7 @@ function drawPosts(from, filter) {
       filtered_entries = entries.filter(item => {
         var result = false;
         filters.forEach(element => {
-          if (item.hashtags.includes(element.toLowerCase())) {
+          if (item.hashtags.toLowerCase().includes(element.toLowerCase())) {
             result = true;
           }
         }); 
