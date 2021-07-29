@@ -626,6 +626,12 @@ div.blog-post {
     margin-bottom: 50px;
     background: #ffffff;
     box-shadow: -2px -1px 88px 0px rgba(0,0,0,0.17);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.insta-link {
+   color: #ffaa00;
 }
 
 .beer-badge {
