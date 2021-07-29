@@ -178,12 +178,12 @@ function setCategories() {
 function filterOut(obj) {
   value = obj.querySelector("#cat_name").innerHTML;
   if (value.indexOf("Jares")!=-1) {
-    value = "#" + value.split(" Jares").join("jares");
+    value = value.split(" Jares").join("jares");
   }
   value = value.toLowerCase();
   value = value.split(" ").join("_");
 
-  showBeers(value);
+  showBeers("#" + value);
 }
 function reset() {
   if (window.innerWidth>900) {
