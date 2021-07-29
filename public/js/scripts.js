@@ -362,7 +362,7 @@ function drawPosts(from, filter) {
       if (content.endsWith('<BR><BR>')) {
         content = content.substr(0, content.length-8);
       }
-      text.innerHTML = content;
+      text.innerHTML = content.replace(/(^|\W)(@[a-z\d][\w-]*)/ig, "$1<a class='hash_tag' href='http://www.instagram.com/$2' target='_blank'>$2</a>").replace(/\s*$/, "").replace('@','');
 
       moment.locale('es'); 
       date = t.content.querySelector("#timestamp");
