@@ -123,8 +123,8 @@ function setCategories() {
 
 
   // BREWERS
-  var brewers = [].concat(...entries.map(e => e.metadata.toLowerCase()).filter(Boolean));
-  brewers = [...new Set(brewers.map(item => item))].sort()
+  var brewers = [].concat(...entries.map(e => e.metadata).filter(Boolean));
+  brewers = [...new Set(brewers.map(item => item.toLowerCase()))].sort()
   var tb = document.querySelector("#content_brewers");
   for (brewer in brewers) {
     var t = document.querySelector('#categories');
