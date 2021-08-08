@@ -28,7 +28,7 @@ function getMetaData($text) {
 
   For ($i=0; $i -lt $hastags.Length; $i++) {
     if ($i -le $brewer_i) {
-      $meta.brewer += cleanUp $hastags[$i]
+      $meta.brewer += cleanUp $hastags[$i].ToLower()
     }
     if ($i -eq $brewer_i+1) {
       $meta.name = cleanUp $hastags[$i]
@@ -95,6 +95,9 @@ For ($i=0; $i -lt $origin_json.Length; $i++) {
   if ($origin_json[$i].media.length -eq 1) {
     $post = $origin_json[$i].media[0]
   } else {
+    Write-Host "----------------------------------"    
+    Write-Host $origin_json[$i].title
+
     $post = @{
       title = $origin_json[$i].title
       creation_timestamp = $origin_json[$i].creation_timestamp
