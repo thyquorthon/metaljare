@@ -425,7 +425,7 @@ function drawPosts(from, filter) {
       $('#content_categories').fadeOut(10);
       $("#search-1").fadeIn(100);
       $("#content_inner").fadeOut(100);
-      
+      $('#content_inner').fadeOut(100);      
       if (params.inner) {
         $("#link_inner").fadeIn(100);
       }
