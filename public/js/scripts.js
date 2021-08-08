@@ -123,7 +123,7 @@ function setCategories() {
 
 
   // BREWERS
-  var brewers = [].concat(...entries.map(e => e.metadata.brewer).filter(Boolean));
+  var brewers = [].concat(...entries.map(e => e.metadata..toLowerCase()).filter(Boolean));
   brewers = [...new Set(brewers.map(item => item))].sort()
   var tb = document.querySelector("#content_brewers");
   for (brewer in brewers) {
@@ -158,7 +158,7 @@ function setCategories() {
 
   // STYLES
   var styles = [].concat(...entries.map(e => e.metadata.styles).filter(Boolean));
-  styles = [...new Set(styles.map(item => item))].sort()
+  styles = [...new Set(styles.map(item => item.toLowerCase()))].sort()
   var tb = document.querySelector("#content_styles");
   for (style in styles) {
     var t = document.querySelector('#categories');
