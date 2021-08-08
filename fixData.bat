@@ -1,1 +1,1 @@
-powershell -ExecutionPolicy Bypass -File .\fixUnicode.ps1
+powershell -ExecutionPolicy Bypass -File .\fixUnicode.ps1  > output.txt

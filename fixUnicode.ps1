@@ -90,26 +90,42 @@ $origin_json = ConvertFrom-JSON $replaced
 $destination_json = @()
 
 For ($i=0; $i -lt $origin_json.Length; $i++) {
-  if ($origin_json[$i].media[0].title.Contains("#abv_")) {
+  # Write-Host "----------------------------------"
+  # Write-Host $origin_json[$i].media[0].title
+  if ($origin_json[$i].media.length -eq 1) {
+    $post = $origin_json[$i].media[0]
+  } else {
+    $post = @{
+      title = $origin_json[$i].title
+      creation_timestamp = $origin_json[$i].creation_timestamp
+      img = $origin_json[$i].media[0].uri
+      media_metadata = $null
+    }
+  }
+
+  if ($post.title.Contains("#abv_")) {
      $position = $null
-     if ( $origin_json[$i].media[0].media_metadata -ne $null) {
-       if ($origin_json[$i].media[0].media_metadata.photo_metadata -ne $null) {
-         $position = $origin_json[$i].media[0].media_metadata.photo_metadata.exif_data[0]
+     if ($post.media_metadata -ne $null) {
+       if ($post.media_metadata.photo_metadata -ne $null) {
+         $position = $post.media_metadata.photo_metadata.exif_data[0]
        }
      }
 
-     $metaData = getMetaData $origin_json[$i].media[0].title
+     $metaData = getMetaData $post.title
 
      $props = @{
-       text = $origin_json[$i].media[0].title
-       creation_timestamp = $origin_json[$i].media[0].creation_timestamp
-       img = $origin_json[$i].media[0].uri
+       text = $post.title
+       creation_timestamp = $post.creation_timestamp
+       img = $post.uri
        position = $position
        metadata = $metadata
        }
 
      $item = New-Object psobject -Property $props
      $destination_json += $item
+  } else {
+    # Write-Host "----------------------------------"
+    # Write-Host $origin_json[$i].media[0].title
   }
 }
 $destination_json = $destination_json | Sort-Object -Descending -Property creation_timestamp
