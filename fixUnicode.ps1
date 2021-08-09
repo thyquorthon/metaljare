@@ -28,7 +28,7 @@ function getMetaData($text) {
 
   For ($i=0; $i -lt $hastags.Length; $i++) {
     if ($i -le $brewer_i) {
-      $meta.brewer += cleanUp $hastags[$i]
+      $meta.brewer += cleanUp $hastags[$i].ToLower()
     }
     if ($i -eq $brewer_i+1) {
       $meta.name = cleanUp $hastags[$i]

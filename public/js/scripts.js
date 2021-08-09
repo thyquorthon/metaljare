@@ -123,10 +123,12 @@ function setCategories() {
 
 
   // BREWERS
-  var brewers = [].concat(...entries.map(e => e.metadata).filter(Boolean));
+  var brewers = [].concat(...entries.map(e => e.metadata.brewer).filter(Boolean));
   brewers = [...new Set(brewers.map(item => item))].sort()
   var tb = document.querySelector("#content_brewers");
+  console.log(brewers)
   for (brewer in brewers) {
+    
     var t = document.querySelector('#categories');
     cat_name = t.content.querySelector("#cat_name");
     cat_name.innerHTML = brewers[brewer];
@@ -344,9 +346,11 @@ function drawPosts(from, filter) {
     for (i=0; i<max; i++) {
       var t = document.querySelector('#blogpost');
 
+      // BEERNAME
       beername = t.content.querySelector("#beername");
       beername.innerHTML = filtered_entries[from+i].metadata.name;
 
+      // BREWERIES
       brewery = t.content.querySelector("#brewery");
       var brewers = "";
       for(j=0;j<filtered_entries[from+i].metadata.brewer.length;j++) {
@@ -357,6 +361,7 @@ function drawPosts(from, filter) {
       }
       brewery.innerHTML = brewers; //filtered_entries[from+i].metadata.brewer.sort().join(' + ');
 
+      // TEXT
       text = t.content.querySelector("#text");
       var content = filtered_entries[from+i].text.split("\n").join("<BR>");
       if (content.endsWith('<BR><BR>')) {
@@ -364,20 +369,23 @@ function drawPosts(from, filter) {
       }
       text.innerHTML = content.replace(/(^|\W)(@[a-z\d][\w-]*)/ig, "$1<a class='insta-link' href='http://www.instagram.com/$2' target='_blank'>$2</a>").replace(/\s*$/, "").replace('@','');
 
+      // TIMESTAMP
       moment.locale('es'); 
       date = t.content.querySelector("#timestamp");
       date.innerHTML = moment.unix(filtered_entries[from+i].creation_timestamp).format("LLLL");
 
+      // BEER COUNTER
       counter = t.content.querySelector("#beer_counter");
-      counter.innerHTML = (i+1) + " de " + filtered_entries.length;
+      counter.innerHTML = (i+from+1) + " de " + filtered_entries.length;
 
-
+      // SET BEERSTYLES
       beerStyles = ""
       for (j=0;j<filtered_entries[from+i].metadata.styles.length;j++) {
         if (j>0) beerStyles += ", "
         beerStyles += "<a href=# onclick=showBeers('" + filtered_entries[from+i].metadata.styles[j].split(" ").join("_") + "') >" + filtered_entries[from+i].metadata.styles[j] + "</a>";
       }
 
+      // SET COUNTRY AND FLAG
       beerFlags = "";
       for (j=0;j<filtered_entries[from+i].metadata.countries.length;j++) {
         if (flags[filtered_entries[from+i].metadata.countries[j]]) {
@@ -396,10 +404,11 @@ function drawPosts(from, filter) {
       flag = t.content.querySelector("#beer-info");
       flag.innerHTML = beerFlags + " - " + beerStyles;
 
-
+      // ABV SPOT
       avb = t.content.querySelector("#abv-value");
       avb.innerHTML = filtered_entries[from+i].metadata.abv + '%<br>ABV.';
 
+      // IMAGE
       img = t.content.querySelector("#beer-image");
       img.style = 'background-image: url("images/' + filtered_entries[from+i].img + '");';
       

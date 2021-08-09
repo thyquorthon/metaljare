@@ -746,6 +746,15 @@ div.blog-post {
     line-height: 20px;
 }
 
+.blog-post .post-info-beer-count {
+    font-size: 10px;
+    line-height: 20px;
+    font-weight: 500;
+    color: #8c8c8c;
+    text-transform: capitalize; 
+    float: right;
+}
+
 .blog-post p {
     font-size: 16px;
     line-height: 30px;
@@ -1478,6 +1487,16 @@ blockquote {
         text-transform: capitalize; 
         float: left;
         line-height: 20px;
+    }
+
+    .blog-post .post-info-beer-count {
+        font-size: 10px;
+        line-height: 20px;
+        font-weight: 500;
+        color: #8c8c8c;
+        text-transform: capitalize; 
+        float: right;
+        margin-top: -30px;
     }
 
     .blog-post p {
