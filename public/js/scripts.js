@@ -30,7 +30,7 @@ var countries_alpha_2;
 var beers_drinked;
 var params;
 var page = { position: 0, ammount: 10, loaded:false, filter: null, area: "beers" };
-var spain_provinces = ["a_coruña","alava","albacete","alicante","almeria","asturias","avila","badajoz","baleares","barcelona","burgos","caceres","cadiz","cantabria","castellon","ceuta","ciudad real","cordoba","cuenca","girona","granada","guadalajara","guipuzkoa","huelva","huesca","jaen","la_rioja","las_palmas","leon","lerida","lugo","madrid","malaga","melilla","murcia","navarra","ourense","palencia","pontevedra","salamanca","segovia","sevilla","soria","tarragona","santa_cruz_de_tenerife","teruel","toledo","valencia","valladolid","vizcaya","zamora","zaragoza"];
+var spain_provinces = ["a_coruña","alava","albacete","alicante","almeria","asturias","avila","badajoz","baleares","barcelona","burgos","caceres","cadiz","cantabria","castellon","ceuta","ciudad_real","cordoba","cuenca","girona","granada","guadalajara","guipuzkoa","huelva","huesca","jaen","la_rioja","las_palmas","leon","lerida","lugo","madrid","malaga","melilla","murcia","navarra","ourense","palencia","pontevedra","salamanca","segovia","sevilla","soria","tarragona","santa_cruz_de_tenerife","teruel","toledo","valencia","valladolid","vizcaya","zamora","zaragoza"];
 
 //setup before functions
 var typingTimer;                //timer identifier
@@ -253,7 +253,6 @@ function setProvincesData() {
     paths[i].addEventListener('mouseover', provinceMouseOverEffect);
     paths[i].addEventListener('mouseout', provinceMouseOutEffect);
   }
-
 }
 
 function convertRange( value, r1, r2 ) { 
@@ -267,7 +266,7 @@ function provinceMouseOverEffect(event) {
   var text = document.getElementById(this.id.split('_path').join('_text'))
   document.getElementById('spain_provinces_svg').append(text);
   
-  var province = this.id.split('_path').join('');
+  var province = this.id.split('_path').join('').split('_text').join('');
   beers_by_province = entries.filter(x => x.metadata.countries.includes(province) ).length;
 
   if (beers_by_province==0) return;
