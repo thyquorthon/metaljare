@@ -19,13 +19,7 @@
    3. Scroll To Top
    4. Tooltip
    5. Popover
-   6. Ajaxchimp for Subscribe Form
-   7. Video and Google Map Popup
-   8. Magnific Popup
-   9. Image Carousel/Slider
-  10. Load More Post
-  11. Load More Portfolio
-  12. End Box (Popup When Scroll Down)
+   6. End Box (Popup When Scroll Down)
  
 
 */
@@ -36,6 +30,7 @@ var countries_alpha_2;
 var beers_drinked;
 var params;
 var page = { position: 0, ammount: 10, loaded:false, filter: null, area: "beers" };
+var spain_provinces = ["a_coruña","alava","albacete","alicante","almeria","asturias","avila","badajoz","baleares","barcelona","burgos","caceres","cadiz","cantabria","castellon","ceuta","ciudad real","cordoba","cuenca","girona","granada","guadalajara","guipuzkoa","huelva","huesca","jaen","la_rioja","las_palmas","leon","lerida","lugo","madrid","malaga","melilla","murcia","navarra","ourense","palencia","pontevedra","salamanca","segovia","sevilla","soria","tarragona","santa_cruz_de_tenerife","teruel","toledo","valencia","valladolid","vizcaya","zamora","zaragoza"];
 
 //setup before functions
 var typingTimer;                //timer identifier
@@ -90,7 +85,6 @@ function setMap() {
 
 // CATEGORIES FUNCS
 function getClass(jares) {
-  console.log(jares);
   if (jares<4) {
       return "btn-danger"; 
   }
@@ -126,7 +120,6 @@ function setCategories() {
   var brewers = [].concat(...entries.map(e => e.metadata.brewer).filter(Boolean));
   brewers = [...new Set(brewers.map(item => item))].sort()
   var tb = document.querySelector("#content_brewers");
-  console.log(brewers)
   for (brewer in brewers) {
     
     var t = document.querySelector('#categories');
@@ -142,7 +135,9 @@ function setCategories() {
   }
 
   // COUNTRIES
-  var countries = [].concat(...entries.map(e => e.metadata.countries).filter(Boolean));
+  var countries = [].concat(...entries.map(e => e.metadata.countries.filter( function( el ) {
+    return spain_provinces.indexOf( el ) < 0;
+  } )).filter(Boolean));
   countries = [...new Set(countries.map(item => item))].sort()
   var tb = document.querySelector("#content_countries");
   for (country in countries) {
@@ -153,6 +148,25 @@ function setCategories() {
     cat_badge = t.content.querySelector("#value");
     beers_by_country = entries.filter(x => x.metadata.countries.includes(countries[country]) )
     cat_badge.innerHTML = beers_by_country.length;
+
+    var clone = document.importNode(t.content, true);
+    tb.appendChild(clone);
+  }
+
+  // SPAIN PROVINCES
+  var provinces = [].concat(...entries.map(e => e.metadata.countries.filter( function( el ) {
+    return spain_provinces.indexOf( el ) >= 0;
+  } )).filter(Boolean));
+  provinces = [...new Set(provinces.map(item => item))].sort()
+  var tb = document.querySelector("#content_provinces");
+  for (province in provinces) {
+    var t = document.querySelector('#categories');
+    cat_name = t.content.querySelector("#cat_name");
+    cat_name.innerHTML = provinces[province].split("_").join(" ");
+
+    cat_badge = t.content.querySelector("#value");
+    beers_by_province = entries.filter(x => x.metadata.countries.includes(provinces[province]) )
+    cat_badge.innerHTML = beers_by_province.length;
 
     var clone = document.importNode(t.content, true);
     tb.appendChild(clone);
@@ -293,7 +307,6 @@ function drawInternal(filter) {
   for (i=0; i<filtered_entries.length; i++) {
     beers += '<span>' + filtered_entries[i] + '</span><br>';
   }
-  console.log(beers);
   document.querySelector("#content_drinked").innerHTML = beers;
   document.querySelector("#content_drinked_count").innerHTML = filtered_entries.length;
   $("#content_inner").fadeIn(500);
@@ -372,7 +385,7 @@ function drawPosts(from, filter) {
       // TIMESTAMP
       moment.locale('es'); 
       date = t.content.querySelector("#timestamp");
-      date.innerHTML = moment.unix(filtered_entries[from+i].creation_timestamp).format("LLLL");
+      date.innerHTML = moment.unix(filtered_entries[from+i].creation_timestamp).format("llll");
 
       // BEER COUNTER
       counter = t.content.querySelector("#beer_counter");
@@ -394,10 +407,9 @@ function drawPosts(from, filter) {
           assignedFlag = 'undefined';
         }
         if (j>0) beerFlags += " y "
-        beerFlags += '<a href=# onclick=showBeers("' + filtered_entries[from+i].metadata.countries[j].split(" ").join("_") + '") ><span class="flag-text"><span class="flag-icon flag-icon-'+assignedFlag+' flag-size"></span> ' + filtered_entries[from+i].metadata.countries[j] + '</span></a> ';  
+        beerFlags += '<a href=# onclick=showBeers("' + filtered_entries[from+i].metadata.countries[j] + '") ><span class="flag-text"><span class="flag-icon flag-icon-'+assignedFlag+' flag-size"></span> ' + filtered_entries[from+i].metadata.countries[j].split("_").join(" ") + '</span></a> ';  
       }
       if (filtered_entries[from+i].metadata.countries.length == 0) {
-        console.log(filtered_entries[from+i])
         beerFlags += '<span class="flag-text"><span class="flag-icon flag-icon-undefined flag-size"></span> ??? </span> ';  
       }
 
@@ -511,81 +523,6 @@ function drawPosts(from, filter) {
        /* Popover */
         $('[data-toggle="popover"]').popover();		  
 	   
-       /* Ajaxchimp for Subscribe Form */
-        $('#mc-form').ajaxChimp();
-
-        /* Video and Google Map Popup */
-        $('.video-popup').magnificPopup({
-          disableOn: 700,
-          type: 'iframe',
-          removalDelay: 160,
-          preloader: false,
-          fixedContentPos: false
-          });
-
-       /* Magnific Popup */
-        $('.image-popup').magnificPopup({
-            type: 'image',
-			
-            gallery: { enabled: true },
-			        zoom: { enabled: true, duration: 500 },
-		  
-         image:{
-               markup: '<div class="mfp-figure portfolio-pop-up">'+
-               '<div class="mfp-close"></div>'+
-               '<div class="mfp-img"></div>'+
-               '<div class="mfp-bottom-bar portfolio_title">'+
-               '<div class="mfp-title"></div>'+
-               '<div class="mfp-counter"></div>'+
-               '</div>'+
-               '</div>',
-
-               titleSrc:function(item){
-                return item.el.attr('title');
-              }
-            }
-          });
-
-        /* Image Carousel/Slider */
-        $(".image-carousel").owlCarousel({
-            items: 1,
-            autoPlay: true,
-            stopOnHover: false,
-            navigation: true,
-            navigationText: ["<i class='fa fa-long-arrow-left fa-2x owl-navi'></i>", "<i class='fa fa-long-arrow-right fa-2x owl-navi'></i>"],
-            itemsDesktop: [1199, 1],
-            itemsDesktopSmall: [980, 1],
-            itemsTablet: [768, 1],
-            itemsTabletSmall: false,
-            itemsMobile: [479, 1],
-            autoHeight: false,
-            pagination: false,
-            loop: true,
-            transitionStyle : "fadeUp"
-            });
-
-        /* Load More Post */	
-        $("div.blog-post").slice(0, 4).show();
-          $("#load-more-post").on('click', function (e) {
-             e.preventDefault();
-             $("div.blog-post:hidden").slice(0, 1).slideDown(300);
-             if ($("div.blog-post:hidden").length == 0) {
-             $('#post-end-message').html('<div class="end">End</div>').fadeIn(800);
-             $("#load-more-post").fadeOut(100);
-              }
-             });
-
-        /* Load More Portfolio */	
-        $("div.portfolio").slice(0, 2).show();
-          $("#load-more-portfolio").on('click', function (e) {
-             e.preventDefault();
-             $("div.portfolio:hidden").slice(0, 1).slideDown(300);
-             if ($("div.portfolio:hidden").length == 0) {
-             $('#portfolio-end-message').html('<div class="end">End</div>').fadeIn(800);
-             $("#load-more-portfolio").fadeOut(100);
-              }
-             });
-
         $(window).scroll(function() {
           if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
             if (page.area == "beers") { drawPosts(page.position, page.filter); }
