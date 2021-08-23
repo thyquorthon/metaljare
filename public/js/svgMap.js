@@ -1606,7 +1606,9 @@ function svgMapWrapper(svgPanZoom) {
     this.tooltip = this.createElement(
       'div',
       'svgMap-tooltip',
-      document.getElementsByTagName('body')[0]
+      document.getElementsByTagName('body')[0],
+      null,
+      'tooltip-svg-map-id'
     );
     this.tooltipContent = this.createElement(
       'div',
@@ -1702,9 +1704,13 @@ function svgMapWrapper(svgPanZoom) {
     type,
     className,
     appendTo,
-    innerhtml
+    innerhtml,
+    id
   ) {
     var element = document.createElement(type);
+    if (id) {
+      element.setAttribute("id",id)
+    }
     if (className) {
       className = className.split(' ');
       className.forEach(function (item) {

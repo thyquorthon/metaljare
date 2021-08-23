@@ -35,6 +35,7 @@ var spain_provinces = ["a_coruña","alava","albacete","alicante","almeria","astu
 //setup before functions
 var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
+var svgMapObj;
 
 // MAP FUNCS
 function setMap() {
@@ -75,7 +76,7 @@ function setMap() {
     values: data
   }
 
-  new svgMap({
+  svgMapObj = new svgMap({
     targetElementID: 'svgMap',
     data: svgMapData
   });
@@ -217,6 +218,89 @@ function showMap() {
   $("#search-area").fadeOut(100);
   $("#search-1").fadeOut(100);
   page.area = "map";
+  setTimeout(setProvincesData,100);
+}
+
+function setProvincesData() {
+  var scale_colors = ['#E2E2E2','#FFE5D9','#FACFC9','#F5B8B8','#F0A1A8','#EB8A97','#CC0033']
+  // SPAIN PROVINCES
+  var provinces = [].concat(...entries.map(e => e.metadata.countries.filter( function( el ) {
+    return spain_provinces.indexOf( el ) >= 0;
+  } )).filter(Boolean));
+  provinces = [...new Set(provinces.map(item => item ))].sort()
+
+  for (province in provinces) {
+    var t = document.querySelector('#categories');
+    beers_by_province = entries.filter(x => x.metadata.countries.includes(provinces[province]) )
+    provinces[province] = {province: provinces[province], ammount: beers_by_province.length, range: 0};
+  }
+  // SORT BY AMMOUNT
+  provinces = provinces.sort((a, b) => a.ammount < b.ammount && 1 || -1);
+  // SET RANGE AND BG COLOR
+  for (i=0;i<spain_provinces.length;i++) { 
+    document.getElementById(spain_provinces[i].split(" ").join("_") + '_path').style.fill = scale_colors[0];
+    document.getElementById(spain_provinces[i].split(" ").join("_") + '_path').style.stroke = "#ffffff";
+  }
+  
+  for (i=0;i<provinces.length;i++) {
+    provinces[i].range = convertRange(provinces[i].ammount, [0, provinces[0].ammount], [1,6]);
+    document.getElementById(provinces[i].province + '_path').style.fill = scale_colors[provinces[i].range];
+  }
+
+  // SET EVENTS
+  var paths = document.querySelectorAll('[id$=_path]');
+  for (i=0;i<paths.length;i++) {
+    paths[i].addEventListener('mouseover', provinceMouseOverEffect);
+    paths[i].addEventListener('mouseout', provinceMouseOutEffect);
+  }
+
+}
+
+function convertRange( value, r1, r2 ) { 
+  return Math.round(( value - r1[ 0 ] ) * ( r2[ 1 ] - r2[ 0 ] ) / ( r1[ 1 ] - r1[ 0 ] ) + r2[ 0 ]);
+}
+
+function provinceMouseOverEffect(event) {
+  this.style.stroke = "#555555";
+  this.style["stroke-width"] = 1;
+  document.getElementById('spain_provinces_svg').append(this);
+  var text = document.getElementById(this.id.split('_path').join('_text'))
+  document.getElementById('spain_provinces_svg').append(text);
+  
+  var province = this.id.split('_path').join('');
+  beers_by_province = entries.filter(x => x.metadata.countries.includes(province) ).length;
+
+  if (beers_by_province==0) return;
+  
+  var t = document.querySelector('#province_tooltip');
+  pv_name = t.content.querySelector("#pv_title");
+  pv_name.innerHTML = province.split("_").join(" ");
+
+  pv_flag = t.content.querySelector("#pv_flag");
+  pv_flag.src = "/flags/4x3/" + flags[province] + ".svg";
+
+  
+  pv_ammount = t.content.querySelector("#pv_ammount");
+  pv_ammount.innerHTML = beers_by_province;
+
+  var clone = document.importNode(t.content, true);
+
+  svgMapObj.setTooltipContent(clone);
+  svgMapObj.moveTooltip(event);
+  svgMapObj.showTooltip(event);
+  
+}
+function provinceMouseOutEffect(event) {
+  this.style.stroke = "#FFFFFF";
+  this.style["stroke-width"] = 0.5;
+  document.getElementById('spain_provinces_svg').append(this);
+
+  // reset all texts
+  for(i=0;i<spain_provinces.length;i++) {
+    var text = document.getElementById( spain_provinces[i] + '_text');
+    document.getElementById('spain_provinces_svg').append(text);
+  }
+  svgMapObj.hideTooltip(event);
 }
 
 function showCategories() {
