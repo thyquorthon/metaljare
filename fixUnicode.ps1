@@ -97,11 +97,12 @@ For ($i=0; $i -lt $origin_json.Length; $i++) {
   } else {
     Write-Host "----------------------------------"    
     Write-Host $origin_json[$i].title
+    Write-Host $origin_json[$i].media[0].uri
 
     $post = @{
       title = $origin_json[$i].title
       creation_timestamp = $origin_json[$i].creation_timestamp
-      img = $origin_json[$i].media[0].uri
+      uri = $origin_json[$i].media[0].uri
       media_metadata = $null
     }
   }
