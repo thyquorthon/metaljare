@@ -139,6 +139,14 @@ function setCategories() {
   var countries = [].concat(...entries.map(e => e.metadata.countries.filter( function( el ) {
     return spain_provinces.indexOf( el ) < 0;
   } )).filter(Boolean));
+  var country_keys = Object.keys(countries_alpha_2)
+  .reduce((destination, key) => {
+    destination[key.toLowerCase().split(' ').join('_')] = countries_alpha_2[key];
+    return destination;
+  }, {});
+  country_keys = Object.keys(country_keys);
+
+  countries = countries.filter(c => country_keys.includes(c));
   countries = [...new Set(countries.map(item => item))].sort()
   var tb = document.querySelector("#content_countries");
   for (country in countries) {
