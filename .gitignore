@@ -66,3 +66,4 @@ node_modules/
 .env
 push.bat
 marked with star.txt
+output.txt
