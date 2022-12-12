@@ -366,7 +366,7 @@ function svgMapWrapper(svgPanZoom) {
           parseInt(data.values[countryID][data.applyData], 10)
         );
         var ratio = Math.max(0, Math.min(1, (value - min) / (max - min)));
-        if (value<1) {
+        if (value<=1) {
           var color = value==0 ? this.options.colorNoData : this.options.colorMin;
         } else {
           var color = this.getColor(
