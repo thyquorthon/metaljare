@@ -15,6 +15,8 @@ function getMetaData($text) {
     jares = 0
     abv = 0.0
     countries = @()
+    christmasbeer = $false
+    eneropetrolero = $false
   }
 
   $text = $text -replace "\n", " "
@@ -41,6 +43,12 @@ function getMetaData($text) {
         $meta.styles += cleanUp $hastags[$i]
       }
       
+    }
+    if ($hastags[$i].Contains("#christmas")) {
+      $meta.christmasbeer = $true
+    }
+    if ($hastags[$i].Contains("#eneropetrolero")) {
+      $meta.eneropetrolero = $true
     }
     if ($hastags[$i].StartsWith("#abv_")) {
       $temp = $hastags[$i] -replace "#abv_", ""

@@ -95,22 +95,32 @@ function getClass(jares) {
   return "btn-warning"; 
 }
 
+function getBadge(item, sortedList) {
+  if (item.value == sortedList[0].value) return "badge-gold";
+  if (item.value == sortedList[1].value) return "badge-silver";
+  if (item.value == sortedList[2].value) return "badge-bronze";
+  return "badge-light";
+}
+function setBadge(obj, item, winners) {
+  obj.className = "";
+  obj.classList.add("badge");
+  obj.classList.add(getBadge(item, winners));
+  obj.innerHTML = item.amount;
+}
 
 function setCategories() {
   // JARES
-  var jares = [...new Set(entries.map(item => item.metadata.jares))];
-  jares = jares.sort(function(a, b) {
-    return a - b;
-  });
+  var jares = [...new Set(entries.map(item => item.metadata.jares ))].sort((a,b) => a - b).map(x => ({ value: x, amount: entries.filter(y => y.metadata.jares == x ).length }));
+  var winners = [...jares].sort((a, b) => b.amount - a.amount);
+
   var tb = document.querySelector("#content_jares");
   for (jare in jares) {
     var t = document.querySelector('#categories');
     cat_name = t.content.querySelector("#cat_name");
-    cat_name.innerHTML = jares[jare] + " Jares";
+    cat_name.innerHTML = jares[jare].value + " Jares";
 
     cat_badge = t.content.querySelector("#value");
-    beers_by_jares = entries.filter(x => x.metadata.jares == jares[jare] )
-    cat_badge.innerHTML = beers_by_jares.length;
+    setBadge(cat_badge, jares[jare], winners);
 
     var clone = document.importNode(t.content, true);
     tb.appendChild(clone);
@@ -118,18 +128,17 @@ function setCategories() {
 
 
   // BREWERS
-  var brewers = [].concat(...entries.map(e => e.metadata.brewer).filter(Boolean));
-  brewers = [...new Set(brewers.map(item => item))].sort()
+  var brewers = [...new Set([].concat(...entries.map(e => e.metadata.brewer).filter(Boolean)))].sort().map(x => ({value: x, amount: entries.filter(y => y.metadata.brewer.includes(x) ).length}))
+  var winners = [...brewers].sort((a, b) => b.amount - a.amount);
+
   var tb = document.querySelector("#content_brewers");
   for (brewer in brewers) {
-    
     var t = document.querySelector('#categories');
-    cat_name = t.content.querySelector("#cat_name");
-    cat_name.innerHTML = brewers[brewer];
+    cat_name = t.content.querySelector("#cat_name");    
+    cat_name.innerHTML = brewers[brewer].value;
 
     cat_badge = t.content.querySelector("#value");
-    beers_by_brewer = entries.filter(x => x.metadata.brewer.includes(brewers[brewer]) )
-    cat_badge.innerHTML = beers_by_brewer.length;
+    setBadge(cat_badge, brewers[brewer], winners)
 
     var clone = document.importNode(t.content, true);
     tb.appendChild(clone);
@@ -147,17 +156,17 @@ function setCategories() {
   country_keys = Object.keys(country_keys);
 
   countries = countries.filter(c => country_keys.includes(c));
-  countries = [...new Set(countries.map(item => item))].sort()
+  countries = [...new Set(countries.map(item => item))].sort().map(x => ({value: x, amount: entries.filter(y => y.metadata.countries.includes(x) ).length}));
+  var winners = [...countries].sort((a, b) => b.amount - a.amount);
+
   var tb = document.querySelector("#content_countries");
   for (country in countries) {
     var t = document.querySelector('#categories');
     cat_name = t.content.querySelector("#cat_name");
-    cat_name.innerHTML = countries[country].split("_").join(" ");
+    cat_name.innerHTML = countries[country].value.split("_").join(" ");
 
-    cat_badge = t.content.querySelector("#value");
-    beers_by_country = entries.filter(x => x.metadata.countries.includes(countries[country]) )
-    cat_badge.innerHTML = beers_by_country.length;
-
+    setBadge(cat_badge, countries[country], winners)
+  
     var clone = document.importNode(t.content, true);
     tb.appendChild(clone);
   }
@@ -166,16 +175,16 @@ function setCategories() {
   var provinces = [].concat(...entries.map(e => e.metadata.countries.filter( function( el ) {
     return spain_provinces.indexOf( el ) >= 0;
   } )).filter(Boolean));
-  provinces = [...new Set(provinces.map(item => item))].sort()
+  provinces = [...new Set(provinces.map(item => item))].sort().map(x => ({value: x, amount: entries.filter(y => y.metadata.countries.includes(x) ).length}));
+  var winners = [...provinces].sort((a, b) => b.amount - a.amount);
+
   var tb = document.querySelector("#content_provinces");
   for (province in provinces) {
     var t = document.querySelector('#categories');
     cat_name = t.content.querySelector("#cat_name");
-    cat_name.innerHTML = provinces[province].split("_").join(" ");
+    cat_name.innerHTML = provinces[province].value.split("_").join(" ");
 
-    cat_badge = t.content.querySelector("#value");
-    beers_by_province = entries.filter(x => x.metadata.countries.includes(provinces[province]) )
-    cat_badge.innerHTML = beers_by_province.length;
+    setBadge(cat_badge, provinces[province], winners)
 
     var clone = document.importNode(t.content, true);
     tb.appendChild(clone);

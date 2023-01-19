@@ -2014,3 +2014,13 @@ blockquote {
     min-height: 100%;
     z-index: -1;
   }
+
+.badge-gold {
+    background-color: goldenrod;
+}
+.badge-silver {
+    background-color: silver;
+}
+.badge-bronze {
+    background-color: rosybrown;
+}
