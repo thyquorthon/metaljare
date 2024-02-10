@@ -30,7 +30,7 @@ var countries_alpha_2;
 var beers_drinked;
 var params;
 var page = { position: 0, ammount: 10, loaded:false, filter: null, area: "beers" };
-var spain_provinces = ["a_coruña","alava","albacete","alicante","almeria","asturias","avila","badajoz","baleares","barcelona","burgos","caceres","cadiz","cantabria","castellon","ceuta","ciudad_real","cordoba","cuenca","girona","granada","guadalajara","guipuzkoa","huelva","huesca","jaen","la_rioja","las_palmas","leon","lleida","lugo","madrid","malaga","melilla","murcia","navarra","ourense","palencia","pontevedra","salamanca","segovia","sevilla","soria","tarragona","santa_cruz_de_tenerife","teruel","toledo","valencia","valladolid","vizcaya","zamora","zaragoza"];
+var spain_provinces = ["a_coruña","alava","albacete","alicante","almeria","asturias","avila","badajoz","baleares","barcelona","burgos","caceres","cadiz","cantabria","castellon","ceuta","ciudad_real","cordoba","cuenca","girona","granada","guadalajara","guipuzcoa","huelva","huesca","jaen","la_rioja","las_palmas","leon","lleida","lugo","madrid","malaga","melilla","murcia","navarra","ourense","palencia","pontevedra","salamanca","segovia","sevilla","soria","tarragona","santa_cruz_de_tenerife","teruel","toledo","valencia","valladolid","vizcaya","zamora","zaragoza"];
 
 //setup before functions
 var typingTimer;                //timer identifier
