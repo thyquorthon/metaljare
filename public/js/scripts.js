@@ -408,7 +408,7 @@ function drawInternal(filter) {
     beers += '<span>' + filtered_entries[i] + '</span><br>';
   }
   document.querySelector("#content_drinked").innerHTML = beers;
-  document.querySelector("#content_drinked_count").innerHTML = filtered_entries.length;
+  document.querySelector("#content_drinked_count").innerHTML = filtered_entries.length + ' de ' + beers_drinked.length;
   $("#content_inner").fadeIn(500);
 }
 
