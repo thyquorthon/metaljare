@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+</head>
+<style>
+* {margin:0; padding:0;}
+html, body { width:100%; height:100%; overflow: hidden;}
+canvas { display:block; }
+  .header {
+    position: sticky;
+    top: 10;
+    background-color: white; /* Adjust as needed */
+    z-index: 1000; /* Ensure it's above other content */
+    width: 100%; /* Ensure it spans the entire width */
+	display:none;
+  }
+  .tools {
+	position:absolute;
+	width: 400px;
+	height:100px;
+	/*background-color: white;*/
+	font-color:black;
+	/*border: 2px solid red;*/
+	top: 10px;
+	left: 10px;
+  }
+  .zoom {
+	position: relative;
+	top: 0px;
+	width: 22px;
+	height: 22px;
+	border:2px solid black;
+	text-align: center;
+	font-weight: bold;
+	font-size: 20px;
+	float:left;
+	cursor: pointer;
+	background-color: white;
+	display: none;
+  }
+  .zoom_in {
+  }
+  .zoom_out {
+	left: 10px;
+  }
+  .info {
+	position:relative;
+	top: 5px;
+	left: 10px;
+	float: left;
+	font-weight: bold;
+	font-family: arial;
+	color: white;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	font-size: 16px;
+  }
+
+  .legend {
+	position:relative;
+	top: -5px;
+	left: 8px;
+	clear: both;
+	float: left;
+	font-weight: bold;
+	font-family: arial;
+	color: white;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	font-size: 14px;
+  }
+  .icon {
+	font-size: 26px;
+	cursor: pointer;
+  }
+  .gold {
+	color: yellow;
+  }
+  .copper {
+	color: coral;
+  }
+  .gems {
+	color: fuchsia;
+  }
+  .artifacts {
+	color: red;
+  }
+  .legend_item {
+	position: relative;
+	clear: both;
+  }
+  .grayed {
+    	-webkit-filter: grayscale(0%);
+    	-moz-filter:    grayscale(0%);
+	-ms-filter:     grayscale(0%);
+    	-o-filter:      grayscale(0%);
+	filter: saturate(0%);
+  }
+</style>
+<body>
+<div id="tools" class="tools">
+  <div class="zoom zoom_in" onclick="javascript:zoom(1)" >+</div>
+  <div class="zoom zoom_out" onclick="javascript:zoom(-1)" >-</div>
+  <div id="info" class="info">0 - 0</div>
+  <div id="legend" class="legend">
+	<span id="lg_gold" class="legend_item"><span class="icon gold" onclick="toggle('gold')">■</span> Gold</span>
+	<span id="lg_copper" class="legend_item"><span class="icon copper" onclick="toggle('copper')">■</span> Copper</span>
+	<span id="lg_gems" class="legend_item"><span class="icon gems" onclick="toggle('gems')">■</span> Gems</span>
+	<span id="lg_artifacts" class="legend_item"><span class="icon artifacts" onclick="toggle('artifacts')">■</span> Artifacts</span>
+  </div>
+</div>
+
+<canvas id="draggable"></canvas>
+<script type="text/javascript" src="gold.js"></script>
+<script type="text/javascript" src="copper.js"></script>
+<script type="text/javascript" src="gem.js"></script>
+<script type="text/javascript" src="artifacts.js"></script>
+<script>
+var tileSize = 14;
+window.addEventListener("load", function() { 
+	window.resources = {
+		gold: gold.sort(sortAsset),
+		copper: copper.sort(sortAsset),
+		gem: gem.sort(sortAsset),
+		artifacts: artifacts.sort(sortAsset),
+		legend: {
+			gold: true,
+			copper: true,
+			gems: true,
+			artifacts: true
+		}
+	}
+   
+	window.cv = document.getElementById("draggable");
+
+    	window.cv.width = window.innerWidth;
+	window.cv.height = window.innerHeight;   
+
+	window.ctx = window.cv.getContext('2d');
+        window.info = "X: 0 Y: 0"
+ 
+	window.img = new Image();
+	window.xy = {x:0, y:0, zoom: 100, scale: 0};
+	window.dirty = false;
+
+	function on_draw() {
+		if (window.dirty) {
+			redraw();
+		}
+	}
+
+	function update() {
+		on_draw();
+		webkitRequestAnimationFrame(update);
+	}
+
+	window.img.onload = function() {
+		window.xy.x = window.map.start.x;
+		window.xy.y = window.map.start.y;
+		window.dirty = true;
+		update();
+		storeStartingPoint();
+	}
+
+	window.map = { w: 6440, h: 6440, botom: 210, start: {x: -2400, y:-2900}, objects: [] };
+	window.img.src = "myMap.png";
+
+	window.centerTile2 = { 
+		x : ((window.map.w/tileSize/2)*tileSize)-tileSize,
+		y : 1624,
+	}
+
+	window.centerTile = { 
+		x : ((window.map.w/tileSize/2)*tileSize),
+		y : ((window.map.h/tileSize/2)*tileSize),
+	}
+
+	var drag = {x:0, y:0, enable:false, mx:0, my:0};
+	window.cv.addEventListener("mousedown", function(ev) {
+		drag.enable = true;
+		drag.x = ev.x;
+		drag.y = ev.y;
+	}, false);
+	window.addEventListener("mousemove", function(ev) {
+		if (drag.enable) {
+			window.xy.x -= drag.x - ev.x;
+			drag.x = ev.x;
+			window.xy.y -= drag.y - ev.y;			
+			drag.y = ev.y;
+			window.dirty = true;
+			window.info = "X: " + window.xy.x + " Y: " + window.xy.y;
+			// limits
+			if (window.xy.x > 0) window.xy.x = 0;
+			if (window.xy.x < (window.map.w - window.cv.width ) * -1) window.xy.x = (window.map.w - window.cv.width ) * -1;
+			if (window.xy.y > 0) window.xy.y = 0;
+			if (window.xy.y < (window.map.h - window.cv.height ) * -1) window.xy.y = (window.map.h - window.cv.height ) * -1;
+		} else {
+			redraw();
+			var r = window.cv.getBoundingClientRect(),
+		        x = ev.clientX - r.left, y = ev.clientY - r.top;
+			rectCollision(x, y);
+		}
+	}, false);
+	window.addEventListener("mouseup", function(ev) {
+		drag.enable = false;
+	}, false);
+
+}, false);
+
+
+function showInfo(ctx, info) {
+	document.getElementById("info").innerHTML = info;
+	ctx.font = "bold 20px Arial";
+	ctx.textAlign = 'left';
+	ctx.textBaseline = 'middle';
+
+	/*ctx.fillStyle = "lightblue";
+	ctx.strokeStyle = 'black';
+	ctx.lineWidth = 1;
+	ctx.fillText(info, 10, 20);
+	ctx.strokeText(info, 10, 20);*/
+}
+
+function redraw() {
+	window.ctx.clearRect(0, 0, window.cv.width, window.cv.height);
+	window.ctx.drawImage(window.img, window.xy.x, window.xy.y);
+	showInfo(window.ctx, window.info);
+	window.dirty = false;
+	drawItems();
+}
+
+// ---- ITEMS
+function drawItems() {
+	drawCapital();
+	if (window.resources.legend.gold) drawGold();
+	if (window.resources.legend.copper) drawCopper();
+	if (window.resources.legend.gems) drawGem();
+	if (window.resources.legend.artifacts) drawArtifacts();
+}
+
+function drawCapital() {
+		var obj = {type:"City", position: {x: window.centerTile.x, y: window.centerTile.y}, label:"Capital", tile: {x: 0, y: 0}}
+		window.map.objects.push(obj)
+		drawSquare('pink', tileSize, obj.position.x, obj.position.y); 
+}
+
+function drawGold() {
+	window.resources.gold.forEach((x, i) => { 
+		var obj = {type:"gold", position: {x: (x.x*tileSize)+window.centerTile.x, y: (x.y*tileSize)+window.centerTile.y}, label:"", tile: {x: x.x, y: x.y}}
+		window.map.objects.push(obj)
+		drawSquare('yellow', tileSize, obj.position.x, obj.position.y); 
+	});
+}
+
+function drawCopper() {
+	window.resources.copper.forEach((x, i) => { 
+		var obj = {type:"copper", position: {x: (x.x*tileSize)+window.centerTile.x, y: (x.y*tileSize)+window.centerTile.y}, label:"", tile: {x: x.x, y: x.y}}
+		window.map.objects.push(obj)
+		drawSquare('coral', tileSize, obj.position.x, obj.position.y); 
+	});
+}
+
+function drawGem() {
+	window.resources.gem.forEach((x, i) => { 
+		var obj = {type:"gem", position: {x: (x.x*tileSize)+window.centerTile.x, y: (x.y*tileSize)+window.centerTile.y}, label:"", tile: {x: x.x, y: x.y}}
+		window.map.objects.push(obj)
+		drawSquare('fuchsia', tileSize, obj.position.x, obj.position.y); 
+	});
+}
+
+function drawArtifacts() {
+	window.resources.artifacts.forEach((x, i) => { 
+		var obj = {type:"artifact", position: {x: (x.x*tileSize)+window.centerTile.x, y: (x.y*tileSize)+window.centerTile.y}, label:x.label, tile: {x: x.x, y: x.y}}
+		window.map.objects.push(obj)
+		drawSquare('red', tileSize, obj.position.x, obj.position.y); 
+	});
+}
+
+
+// ----
+function rectCollision(x, y) {
+    if (window.hover) redraw();
+    window.hover = false;
+    window.hoverObject = null;
+
+    var calculatedX = (x + window.xy.x*-1);
+    var calculatedY = (y + window.xy.y*-1);
+    for(var i = window.map.objects.length - 1, b; b = window.map.objects[i]; i--) {
+	var objX = b.position.x;
+	var objY = b.position.y;
+	//if (i==0) console.log(x, y, x + window.xy.x*-1, y + window.xy.y*-1, objX, objY)
+        if(calculatedX >= objX && calculatedX <= objX + tileSize &&
+           calculatedY >= objY && calculatedY <= objY + tileSize) {
+            // The mouse honestly hits the rect
+            window.hover = true;
+            window.hoverObject = b;
+            id = i;
+
+	    var label = b.type + (b.label ? " "+b.label : "") + " - X:"+b.tile.x+" : Y:"+b.tile.y ;
+
+	    drawTooltip(window.ctx,x,y,titleCase(label));
+            break;
+        }
+    }
+
+}
+function drawSquare(color, size, x, y, xy){
+    drawBorder(x, y, size, size)
+    window.ctx.fillStyle = color;
+    window.ctx.fillRect(x+window.xy.x , y+window.xy.y, size, size)
+ }
+
+function drawBorder(xPos, yPos, width, height, thickness = 2)
+{
+  window.ctx.fillStyle='black';
+  window.ctx.fillRect(xPos - (thickness) + window.xy.x , yPos - (thickness) + window.xy.y, width + (thickness * 2), height + (thickness * 2));
+}
+
+function drawTooltip(context,x,y,label) {
+    var alignY=10;
+    var font = '18px Arial, Helvetica, sans-serif';
+    const { width, height } = measureText(label, font);
+
+    const reactWidth = width + 10;
+    const reactHeight = height + 4;
+    const reactX = x+12;
+    const reactY = y-alignY;
+    const labelX = reactX+((reactWidth-width)/2);
+    const labelY = reactY+12;
+
+    context.beginPath();
+    context.fillStyle = "#fff9d5";
+    context.fillRect(reactX,reactY,reactWidth,reactHeight);   
+    
+    context.font = font;
+    context.fillStyle = "#333333"; 
+    context.fillText(label,labelX,labelY);
+    context.strokeStyle = 'white';
+    //context.strokeText(label,labelX,labelY);
+    context.closePath();
+}
+
+function measureText(text, font) {
+    const span = document.createElement('span');
+    span.appendChild(document.createTextNode(text));
+    Object.assign(span.style, {
+        font: font,
+        margin: '0',
+        padding: '0',
+        border: '0',
+        whiteSpace: 'nowrap'
+    });
+    document.body.appendChild(span);
+    const {width, height} = span.getBoundingClientRect();
+    span.remove();
+    return {width, height};
+}
+
+function titleCase(str) {
+   var splitStr = str.toLowerCase().split(' ');
+   for (var i = 0; i < splitStr.length; i++) {
+       // You do not need to check if i is larger than splitStr length, as your for does that for you
+       // Assign it back to the array
+       splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+   }
+   // Directly return the joined string
+   return splitStr.join(' '); 
+}
+
+
+function sortAsset(a, b) {          
+      if (a.x === b.x) {
+         return a.y > b.y ? 1 : -1;
+      }
+      return a.x > b.x ? 1 : -1;
+}
+
+function zoom(amount) {	
+	/*window.xy.scale=window.xy.scale+amount;
+
+	var change =  window.xy.scale == 0 ? storeStartingPoint() : amount>0 ? 1.5 : 0.5;
+	
+	window.info = "ZOOM: " + window.xy.scale + " - X: " + window.xy.x + " Y: " + window.xy.y;
+	window.ctx.scale(change, change);
+	redraw();*/
+
+	window.xy.zoom = window.xy.zoom + (10*amount);
+	document.body.style.zoom = window.xy.zoom + "%";
+}
+
+
+function storeStartingPoint(){
+	window.ctx.restore();
+	window.ctx.save();
+}
+
+function toggle(resource) {
+	window.resources.legend[resource] = window.resources.legend[resource] ? false : true;
+	if (window.resources.legend[resource]) { document.getElementById("lg_" + resource).classList.remove('grayed'); }
+	else { document.getElementById("lg_" + resource).classList.add('grayed'); }
+	redraw();
+}
+
+</script>
+</body>
+</html>

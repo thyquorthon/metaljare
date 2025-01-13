@@ -547,9 +547,7 @@ function drawPosts(from, filter) {
       $("#search-1").fadeIn(100);
       $("#content_inner").fadeOut(100);
       $('#content_inner').fadeOut(100);      
-      if (params.inner) {
-        $("#link_inner").fadeIn(100);
-      }
+      $("#link_inner").fadeIn(100);
        /* Preloader */
         $(window).load(function () {
           $.ajax({
