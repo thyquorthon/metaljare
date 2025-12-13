@@ -403,9 +403,16 @@ function drawInternal(filter) {
   }
 
   beers = ""
+  instagram_badge = "<i class='fa fa-instagram' style='color:Crimson;'></i>";
+  var temp_badge = "";
   filtered_entries = filtered_entries.sort();
   for (i=0; i<filtered_entries.length; i++) {
-    beers += '<span>' + filtered_entries[i] + '</span><br>';
+    if (filtered_entries[i].includes('*')) {
+  	temp_badge=' ' + instagram_badge;
+    } else {
+	temp_badge="";
+    }
+    beers += '<span>' + filtered_entries[i].replace('*','') + temp_badge + '</span><br>';
   }
   document.querySelector("#content_drinked").innerHTML = beers;
   document.querySelector("#content_drinked_count").innerHTML = filtered_entries.length + ' de ' + beers_drinked.length;
