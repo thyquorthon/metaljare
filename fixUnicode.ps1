@@ -1,5 +1,6 @@
 function cleanUp($text) {
   $temp = $text.Split("#")[1] -replace "#", ""
+  $temp = $temp -replace "§", ""
   $temp = $temp -replace "_", " ";
   return $temp
 }
@@ -20,10 +21,14 @@ function getMetaData($text) {
   }
 
   $text = $text -replace "\n", " "
+  $split_char = '#'
+  if ($text.Contains('§')) {
+    $split_char = '§'
+  }
 
   $hastags = foreach ($IS_Item in $text)
     {
-    @($IS_Item.Split(' ')) -match '#'
+    @($IS_Item.Split(' ')) -match $split_char
     }
 
   $brewer_i = $text.Split('+').GetUpperBound(0)
@@ -36,7 +41,7 @@ function getMetaData($text) {
       $meta.name = cleanUp $hastags[$i]
     }
     if ($i -eq $brewer_i+2) {
-      if ($hastags[$i].Contains("#abv_")) {
+      if ($hastags[$i].Contains("$($split_char)abv_")) {
         
         $meta.styles += cleanUp $hastags[$i-1]
       } else {
@@ -44,14 +49,14 @@ function getMetaData($text) {
       }
       
     }
-    if ($hastags[$i].Contains("#christmas")) {
+    if ($hastags[$i].Contains("$($split_char)christmas")) {
       $meta.christmasbeer = $true
     }
-    if ($hastags[$i].Contains("#eneropetrolero")) {
+    if ($hastags[$i].Contains("$($split_char)eneropetrolero")) {
       $meta.eneropetrolero = $true
     }
-    if ($hastags[$i].StartsWith("#abv_")) {
-      $temp = $hastags[$i] -replace "#abv_", ""
+    if ($hastags[$i].StartsWith("$($split_char)abv_")) {
+      $temp = $hastags[$i] -replace "$($split_char)abv_", ""
       $temp = $temp -replace "_", "."
       $meta.abv = $temp -as [double]
     }
@@ -60,7 +65,7 @@ function getMetaData($text) {
     }
 
     if ($processed) { 
-      $temp = $hastags[$i] -replace "#", ""
+      $temp = $hastags[$i] -replace $split_char, ""
       if ($temp.Length -gt 0) {
         $meta.countries += $temp.replace(' ','')
       }      
@@ -69,7 +74,7 @@ function getMetaData($text) {
     try {
       if ($processed -eq $false -and $hastags[$i].EndsWith("jares")) {      
         $temp = $hastags[$i] -replace "jares", ""
-        $temp = $temp -replace "#", ""
+        $temp = $temp -replace $split_char, ""
         $meta.jares = $temp -as [int]
         $processed = $true
       }
