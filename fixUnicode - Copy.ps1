@@ -1,5 +1,6 @@
 function cleanUp($text) {
   $temp = $text.Split("#")[1] -replace "#", ""
+  $temp = $temp -replace "§", ""
   $temp = $temp -replace "_", " ";
   return $temp
 }
@@ -20,10 +21,17 @@ function getMetaData($text) {
   }
 
   $text = $text -replace "\n", " "
+  $split_char = '#'
+  # Write-Host $text
+  if ($text.Contains('§')) {
+    $split_char = '§'
+    Write-Host $text
+    Write-Host " "
+  }
 
   $hastags = foreach ($IS_Item in $text)
     {
-    @($IS_Item.Split(' ')) -match '#'
+    @($IS_Item.Split(' ')) -match $split_char
     }
 
   $brewer_i = $text.Split('+').GetUpperBound(0)
@@ -36,7 +44,7 @@ function getMetaData($text) {
       $meta.name = cleanUp $hastags[$i]
     }
     if ($i -eq $brewer_i+2) {
-      if ($hastags[$i].Contains("#abv_")) {
+      if ($hastags[$i].Contains("$($split_char)abv_")) {
         
         $meta.styles += cleanUp $hastags[$i-1]
       } else {
@@ -44,14 +52,14 @@ function getMetaData($text) {
       }
       
     }
-    if ($hastags[$i].Contains("#christmas")) {
+    if ($hastags[$i].Contains("$($split_char)christmas")) {
       $meta.christmasbeer = $true
     }
-    if ($hastags[$i].Contains("#eneropetrolero")) {
+    if ($hastags[$i].Contains("$($split_char)eneropetrolero")) {
       $meta.eneropetrolero = $true
     }
-    if ($hastags[$i].StartsWith("#abv_")) {
-      $temp = $hastags[$i] -replace "#abv_", ""
+    if ($hastags[$i].StartsWith("$($split_char)abv_")) {
+      $temp = $hastags[$i] -replace "$($split_char)abv_", ""
       $temp = $temp -replace "_", "."
       $meta.abv = $temp -as [double]
     }
@@ -60,7 +68,7 @@ function getMetaData($text) {
     }
 
     if ($processed) { 
-      $temp = $hastags[$i] -replace "#", ""
+      $temp = $hastags[$i] -replace $split_char, ""
       if ($temp.Length -gt 0) {
         $meta.countries += $temp.replace(' ','')
       }      
@@ -69,14 +77,15 @@ function getMetaData($text) {
     try {
       if ($processed -eq $false -and $hastags[$i].EndsWith("jares")) {      
         $temp = $hastags[$i] -replace "jares", ""
-        $temp = $temp -replace "#", ""
+        $temp = $temp -replace $split_char, ""
         $meta.jares = $temp -as [int]
         $processed = $true
       }
     } catch {
-      Write-Host $i
-      Write-Host $text
-      Write-Host $hastags[$i]
+      # Write-Host "LOLOLO"
+      # Write-Host $i
+      # Write-Host $text
+      # Write-Host $hastags[$i]
     }    
   }
 
@@ -92,7 +101,6 @@ $replaced = [regex]::replace($file_data, '(?:\\u[0-9a-f]{4})+', { param($m)
   [text.encoding]::utf8.GetString($utf8Bytes)
 })
 
-$replaced = $replaced.Replace('§', '#')
 Set-Content -Encoding UTF8 -Path .\original_data\posts_2.json -Value $replaced
 
 $origin_json = ConvertFrom-JSON $replaced
@@ -104,9 +112,9 @@ For ($i=0; $i -lt $origin_json.Length; $i++) {
   if ($origin_json[$i].media.length -eq 1) {
     $post = $origin_json[$i].media[0]
   } else {
-    Write-Host "----------------------------------"    
-    Write-Host $origin_json[$i].title
-    Write-Host $origin_json[$i].media[0].uri
+    # Write-Host "----------------------------------"    
+    # Write-Host $origin_json[$i].title
+    # Write-Host $origin_json[$i].media[0].uri
 
     $post = @{
       title = $origin_json[$i].title
@@ -116,7 +124,7 @@ For ($i=0; $i -lt $origin_json.Length; $i++) {
     }
   }
 
-  if ($post.title.Contains("#abv_")) {
+  if ($post.title.Contains("$($split_char)abv_")) {
      $position = $null
      if ($post.media_metadata -ne $null) {
        if ($post.media_metadata.photo_metadata -ne $null) {
