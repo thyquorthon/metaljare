@@ -22,8 +22,11 @@ function getMetaData($text) {
 
   $text = $text -replace "\n", " "
   $split_char = '#'
+  # Write-Host $text
   if ($text.Contains('§')) {
     $split_char = '§'
+    Write-Host $text
+    Write-Host " "
   }
 
   $hastags = foreach ($IS_Item in $text)
@@ -79,9 +82,10 @@ function getMetaData($text) {
         $processed = $true
       }
     } catch {
-      Write-Host $i
-      Write-Host $text
-      Write-Host $hastags[$i]
+      # Write-Host "LOLOLO"
+      # Write-Host $i
+      # Write-Host $text
+      # Write-Host $hastags[$i]
     }    
   }
 
@@ -108,9 +112,9 @@ For ($i=0; $i -lt $origin_json.Length; $i++) {
   if ($origin_json[$i].media.length -eq 1) {
     $post = $origin_json[$i].media[0]
   } else {
-    Write-Host "----------------------------------"    
-    Write-Host $origin_json[$i].title
-    Write-Host $origin_json[$i].media[0].uri
+    # Write-Host "----------------------------------"    
+    # Write-Host $origin_json[$i].title
+    # Write-Host $origin_json[$i].media[0].uri
 
     $post = @{
       title = $origin_json[$i].title
@@ -120,7 +124,7 @@ For ($i=0; $i -lt $origin_json.Length; $i++) {
     }
   }
 
-  if ($post.title.Contains("#abv_")) {
+  if ($post.title.Contains("$($split_char)abv_")) {
      $position = $null
      if ($post.media_metadata -ne $null) {
        if ($post.media_metadata.photo_metadata -ne $null) {
