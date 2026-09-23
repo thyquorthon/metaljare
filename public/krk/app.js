@@ -3,6 +3,7 @@
 
   const FAVORITES_KEY = 'km_favorites_v1';
   const HIDDEN_ARTISTS_KEY = 'km_hidden_artists_v1';
+  const AUTO_IMPORT_FILENAME = 'favoritos.json';
 
   const allSongs = Array.isArray(window.KARAOKE_SONGS) ? window.KARAOKE_SONGS : [];
 
@@ -14,6 +15,7 @@
     sortDir: 'asc',
     page: 1,
     pageSize: 50,
+    hiddenArtistsFilter: '',
     favorites: loadSet(FAVORITES_KEY)
   };
 
@@ -38,19 +40,22 @@
     if (!artist || state.excludedArtists.has(artist)) return;
     state.excludedArtists.add(artist);
     saveHiddenArtists();
-    state.page = 1;
     render();
   }
 
   function showArtist(artist) {
     state.excludedArtists.delete(artist);
     saveHiddenArtists();
-    state.page = 1;
     render();
   }
 
   function songKey(song) {
     return `${song.Language}||${song.Artist}||${song.Title}`;
+  }
+
+  const artistSongCounts = new Map();
+  for (const s of allSongs) {
+    artistSongCounts.set(s.Artist, (artistSongCounts.get(s.Artist) || 0) + 1);
   }
 
   function langBadgeClass(language) {
@@ -84,52 +89,58 @@
   const validSongKeys = new Set(allSongs.map(songKey));
   const validArtists = new Set(allSongs.map(s => s.Artist));
 
+  // Shared merge logic for the manual file-picker import and the automatic on-load import.
+  function applyImportedPayload(jsonText) {
+    const data = JSON.parse(jsonText);
+    // Legacy format: a bare array of songs means favorites-only, no hidden artists.
+    const favoritesInput = Array.isArray(data) ? data : Array.isArray(data.favorites) ? data.favorites : [];
+    const hiddenArtistsInput = Array.isArray(data) ? [] : Array.isArray(data.hiddenArtists) ? data.hiddenArtists : [];
+
+    let favAdded = 0;
+    let favSkipped = 0;
+    for (const item of favoritesInput) {
+      if (item && item.Title && item.Artist && item.Language) {
+        const key = `${item.Language}||${item.Artist}||${item.Title}`;
+        if (!validSongKeys.has(key)) {
+          favSkipped++;
+          continue;
+        }
+        if (!state.favorites.has(key)) {
+          state.favorites.add(key);
+          favAdded++;
+        }
+      }
+    }
+
+    let artistsAdded = 0;
+    let artistsSkipped = 0;
+    for (const artist of hiddenArtistsInput) {
+      if (typeof artist !== 'string' || !artist) continue;
+      if (!validArtists.has(artist)) {
+        artistsSkipped++;
+        continue;
+      }
+      if (!state.excludedArtists.has(artist)) {
+        state.excludedArtists.add(artist);
+        artistsAdded++;
+      }
+    }
+
+    saveFavorites();
+    saveHiddenArtists();
+    render();
+
+    return { favAdded, favSkipped, artistsAdded, artistsSkipped };
+  }
+
   function importFavoritesFromFile(file) {
     const reader = new FileReader();
     reader.onload = () => {
       try {
-        const data = JSON.parse(reader.result);
-        // Legacy format: a bare array of songs means favorites-only, no hidden artists.
-        const favoritesInput = Array.isArray(data) ? data : Array.isArray(data.favorites) ? data.favorites : [];
-        const hiddenArtistsInput = Array.isArray(data) ? [] : Array.isArray(data.hiddenArtists) ? data.hiddenArtists : [];
-
-        let favAdded = 0;
-        let favSkipped = 0;
-        for (const item of favoritesInput) {
-          if (item && item.Title && item.Artist && item.Language) {
-            const key = `${item.Language}||${item.Artist}||${item.Title}`;
-            if (!validSongKeys.has(key)) {
-              favSkipped++;
-              continue;
-            }
-            if (!state.favorites.has(key)) {
-              state.favorites.add(key);
-              favAdded++;
-            }
-          }
-        }
-
-        let artistsAdded = 0;
-        let artistsSkipped = 0;
-        for (const artist of hiddenArtistsInput) {
-          if (typeof artist !== 'string' || !artist) continue;
-          if (!validArtists.has(artist)) {
-            artistsSkipped++;
-            continue;
-          }
-          if (!state.excludedArtists.has(artist)) {
-            state.excludedArtists.add(artist);
-            artistsAdded++;
-          }
-        }
-
-        saveFavorites();
-        saveHiddenArtists();
-        render();
-
-        const skippedTotal = favSkipped + artistsSkipped;
+        const result = applyImportedPayload(reader.result);
+        const skippedTotal = result.favSkipped + result.artistsSkipped;
         const message =
-          `Se importaron ${favAdded} favoritos y ${artistsAdded} artistas ocultos nuevos.` +
+          `Se importaron ${result.favAdded} favoritos y ${result.artistsAdded} artistas ocultos nuevos.` +
           (skippedTotal > 0 ? ` ${skippedTotal} entradas no coinciden con el catálogo y se ignoraron.` : '');
         alert(message);
       } catch (e) {
@@ -137,6 +148,26 @@
       }
     };
     reader.readAsText(file);
+  }
+
+  // On load, silently look for an exported favorites file sitting next to index.html
+  // and merge it in automatically. No file present (or blocked by the browser) is a
+  // normal, silent no-op — only surface a banner when something was actually imported.
+  function tryAutoImportFavorites() {
+    fetch(AUTO_IMPORT_FILENAME, { cache: 'no-store' })
+      .then(resp => (resp && resp.ok ? resp.text() : null))
+      .then(text => {
+        if (!text) return;
+        const result = applyImportedPayload(text);
+        if (result.favAdded > 0 || result.artistsAdded > 0) {
+          autoImportText.textContent =
+            `📥 Se importaron ${result.favAdded} favoritos y ${result.artistsAdded} artistas ocultos desde ${AUTO_IMPORT_FILENAME}.`;
+          autoImportBanner.hidden = false;
+        }
+      })
+      .catch(() => {
+        /* no favoritos.json next to index.html, or fetch blocked - ignore silently */
+      });
   }
 
   const searchBox = document.getElementById('searchBox');
@@ -154,6 +185,7 @@
   const headerCells = document.querySelectorAll('#songTable thead th[data-sort]');
   const hiddenArtistsList = document.getElementById('hiddenArtistsList');
   const hiddenCountEl = document.getElementById('hiddenCount');
+  const hiddenArtistsFilterInput = document.getElementById('hiddenArtistsFilter');
   const exportFavoritesBtn = document.getElementById('exportFavoritesBtn');
   const importFavoritesInput = document.getElementById('importFavoritesInput');
   const pageJumpInput = document.getElementById('pageJumpInput');
@@ -163,6 +195,9 @@
   const randomFavoriteText = document.getElementById('randomFavoriteText');
   const randomFavoriteAgainBtn = document.getElementById('randomFavoriteAgainBtn');
   const randomFavoriteCloseBtn = document.getElementById('randomFavoriteCloseBtn');
+  const autoImportBanner = document.getElementById('autoImportBanner');
+  const autoImportText = document.getElementById('autoImportText');
+  const autoImportCloseBtn = document.getElementById('autoImportCloseBtn');
 
   function pickRandomFavorite() {
     const favSongs = allSongs.filter(s => state.favorites.has(songKey(s)));
@@ -234,16 +269,22 @@
     hiddenArtistsList.innerHTML = '';
     if (state.excludedArtists.size === 0) return;
 
-    const artists = Array.from(state.excludedArtists).sort((a, b) =>
+    let artists = Array.from(state.excludedArtists).sort((a, b) =>
       a.localeCompare(b, undefined, { sensitivity: 'base' })
     );
+    if (state.hiddenArtistsFilter) {
+      const q = state.hiddenArtistsFilter;
+      artists = artists.filter(a => a.toLowerCase().includes(q));
+    }
+
     const frag = document.createDocumentFragment();
     for (const artist of artists) {
       const li = document.createElement('li');
       li.className = 'hidden-artist-item';
 
       const label = document.createElement('span');
-      label.textContent = artist;
+      const songCount = artistSongCounts.get(artist) || 0;
+      label.textContent = `${artist} (${songCount})`;
       li.appendChild(label);
 
       const showBtn = document.createElement('button');
@@ -295,29 +336,24 @@
       starTd.appendChild(star);
       tr.appendChild(starTd);
 
-      const titleTd = document.createElement('td');
-      titleTd.textContent = song.Title || '';
-      tr.appendChild(titleTd);
-
-      const artistTd = document.createElement('td');
-      artistTd.className = 'artist-cell';
-      const artistInner = document.createElement('div');
-      artistInner.className = 'artist-inner';
-
-      const artistLabel = document.createElement('span');
-      artistLabel.textContent = song.Artist || '';
-      artistInner.appendChild(artistLabel);
-
+      const hideTd = document.createElement('td');
+      hideTd.className = 'hide-col';
       const hideBtn = document.createElement('button');
       hideBtn.type = 'button';
       hideBtn.className = 'hide-artist-btn';
       hideBtn.textContent = '🚫';
       hideBtn.dataset.artist = song.Artist;
       hideBtn.title = `Ocultar a ${song.Artist}`;
-      artistInner.appendChild(hideBtn);
+      hideTd.appendChild(hideBtn);
+      tr.appendChild(hideTd);
 
-      artistTd.appendChild(artistInner);
+      const artistTd = document.createElement('td');
+      artistTd.textContent = song.Artist || '';
       tr.appendChild(artistTd);
+
+      const titleTd = document.createElement('td');
+      titleTd.textContent = song.Title || '';
+      tr.appendChild(titleTd);
 
       const langTd = document.createElement('td');
       const langBadge = document.createElement('span');
@@ -325,10 +361,6 @@
       langBadge.textContent = song.Language || '';
       langTd.appendChild(langBadge);
       tr.appendChild(langTd);
-
-      const brandTd = document.createElement('td');
-      brandTd.textContent = song.Brand || '';
-      tr.appendChild(brandTd);
 
       frag.appendChild(tr);
     }
@@ -374,6 +406,15 @@
       const btn = e.target.closest('.show-artist-btn');
       if (!btn) return;
       showArtist(btn.dataset.artist);
+    });
+
+    hiddenArtistsFilterInput.addEventListener('input', () => {
+      state.hiddenArtistsFilter = hiddenArtistsFilterInput.value.trim().toLowerCase();
+      renderHiddenArtistsList();
+    });
+
+    autoImportCloseBtn.addEventListener('click', () => {
+      autoImportBanner.hidden = true;
     });
 
     favoritesOnlyBox.addEventListener('change', () => {
@@ -479,4 +520,5 @@
   populateArtistAutocomplete();
   bindEvents();
   render();
+  tryAutoImportFavorites();
 })();

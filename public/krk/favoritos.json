@@ -1,0 +1,540 @@
+{
+  "favorites": [
+    {
+      "Title": "CHIQUITITA (ESPAÑOL)",
+      "Artist": "ABBA",
+      "Language": "Español"
+    },
+    {
+      "Title": "AMIGO FELIX",
+      "Artist": "ENRIQUE & ANA",
+      "Language": "Español"
+    },
+    {
+      "Title": "LA GALLINA CO-CO-UA",
+      "Artist": "ENRIQUE & ANA",
+      "Language": "Español"
+    },
+    {
+      "Title": "SUPER DISCO CHINO",
+      "Artist": "ENRIQUE & ANA",
+      "Language": "Español"
+    },
+    {
+      "Title": "JESUCRISTO GARCIA",
+      "Artist": "EXTREMODURO",
+      "Language": "Español"
+    },
+    {
+      "Title": "LA VEREDA DE LA PUERTA DE ATRAS",
+      "Artist": "EXTREMODURO",
+      "Language": "Español"
+    },
+    {
+      "Title": "SALIR",
+      "Artist": "EXTREMODURO",
+      "Language": "Español"
+    },
+    {
+      "Title": "SO PAYASO",
+      "Artist": "EXTREMODURO",
+      "Language": "Español"
+    },
+    {
+      "Title": "DRAMAS Y COMEDIAS",
+      "Artist": "FANGORIA",
+      "Language": "Español"
+    },
+    {
+      "Title": "NI TU NI NADIE",
+      "Artist": "FANGORIA",
+      "Language": "Español"
+    },
+    {
+      "Title": "RETORCIENDO PALABRAS",
+      "Artist": "FANGORIA",
+      "Language": "Español"
+    },
+    {
+      "Title": "UN HOMBRE DE VERDAD",
+      "Artist": "FANGORIA",
+      "Language": "Español"
+    },
+    {
+      "Title": "ENTRE DOS TIERRAS",
+      "Artist": "HEROES DEL SILENCIO",
+      "Language": "Español"
+    },
+    {
+      "Title": "LA CHISPA ADECUADA",
+      "Artist": "HEROES DEL SILENCIO",
+      "Language": "Español"
+    },
+    {
+      "Title": "MALDITO DUENDE",
+      "Artist": "HEROES DEL SILENCIO",
+      "Language": "Español"
+    },
+    {
+      "Title": "DEVUELVEME A MI CHICA",
+      "Artist": "HOMBRES G",
+      "Language": "Español"
+    },
+    {
+      "Title": "MARTA TIENE UN MARCAPASOS",
+      "Artist": "HOMBRES G",
+      "Language": "Español"
+    },
+    {
+      "Title": "SUELTATE EL PELO",
+      "Artist": "HOMBRES G",
+      "Language": "Español"
+    },
+    {
+      "Title": "VENEZIA",
+      "Artist": "HOMBRES G",
+      "Language": "Español"
+    },
+    {
+      "Title": "VOY A PASARMELO BIEN",
+      "Artist": "HOMBRES G",
+      "Language": "Español"
+    },
+    {
+      "Title": "LUCIFER",
+      "Artist": "OBK",
+      "Language": "Español"
+    },
+    {
+      "Title": "TU SIGUE ASI",
+      "Artist": "OBK",
+      "Language": "Español"
+    },
+    {
+      "Title": "QUIEN ES ESE HOMBRE",
+      "Artist": "PASION DE GAVILANES",
+      "Language": "Español"
+    },
+    {
+      "Title": "ELOISE",
+      "Artist": "TINO CASAL",
+      "Language": "Español"
+    },
+    {
+      "Title": "EMBRUJADA",
+      "Artist": "TINO CASAL",
+      "Language": "Español"
+    },
+    {
+      "Title": "NO LIMIT",
+      "Artist": "2 UNLIMITED",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "KRYPTONITE",
+      "Artist": "3 DOORS DOWN",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "WHAT'S UP",
+      "Artist": "4 NON BLONDES",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "TAKE ON ME",
+      "Artist": "A-HA",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "THE SUN ALWAYS SHINES ON TV",
+      "Artist": "A-HA",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "DANCING QUEEN",
+      "Artist": "ABBA",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "GIMME GIMME GIMME",
+      "Artist": "ABBA",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "MONEY MONEY MONEY",
+      "Artist": "ABBA",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "WATERLOO",
+      "Artist": "ABBA",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "MOVIES",
+      "Artist": "ALIEN ANT FARM",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "SMOOTH CRIMINAL",
+      "Artist": "ALIEN ANT FARM",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "DEVIL CAME TO ME",
+      "Artist": "DOVER",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "A VIEW TO A KILL",
+      "Artist": "DURAN DURAN",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "HUNGRY LIKE THE WOLF",
+      "Artist": "DURAN DURAN",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "NOTORIOUS",
+      "Artist": "DURAN DURAN",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "EPIC",
+      "Artist": "FAITH NO MORE",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "EPIC",
+      "Artist": "FAITH NO MORE",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "ROCK ME AMADEUS",
+      "Artist": "FALCO",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "JUMP AROUND",
+      "Artist": "HOUSE OF PAIN",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "HIP TO BE SQUARE",
+      "Artist": "HUEY LEWIS & THE NEWS",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "I WANT A NEW DRUG",
+      "Artist": "HUEY LEWIS & THE NEWS",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "THE POWER OF LOVE",
+      "Artist": "HUEY LEWIS & THE NEWS",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "THE POWER OF LOVE",
+      "Artist": "HUEY LEWIS & THE NEWS",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "LUST FOR LIFE",
+      "Artist": "IGGY POP",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "REAL WILD CHILD (WILD ONE)",
+      "Artist": "IGGY POP",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "THE PASSENGER",
+      "Artist": "IGGY POP",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "COME AS YOU ARE",
+      "Artist": "NIRVANA",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "HEAT SHAPED BOX",
+      "Artist": "NIRVANA",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "IN BLOOM",
+      "Artist": "NIRVANA",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "LITHIUM",
+      "Artist": "NIRVANA",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "SMELLS LIKE TEEN SPIRIT",
+      "Artist": "NIRVANA",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "ENOLA GAY",
+      "Artist": "OMD",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "HEY YA",
+      "Artist": "OUTKAST",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "MS JACKSON",
+      "Artist": "OUTKAST",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "CRAZY TRAIN",
+      "Artist": "OZZY OSBOURNE",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "HEARTBREAKER",
+      "Artist": "PAT BENATAR",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "LOVE IS A BATTLEFIELD",
+      "Artist": "PAT BENATAR",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "WE BELONG",
+      "Artist": "PAT BENATAR",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "ALIVE",
+      "Artist": "PEARL JAM",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "ANIMAL",
+      "Artist": "PEARL JAM",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "DAUGHTER",
+      "Artist": "PEARL JAM",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "EVEN FLOW",
+      "Artist": "PEARL JAM",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "JEREMY",
+      "Artist": "PEARL JAM",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "SPIN THE BLACK CIRCLE",
+      "Artist": "PEARL JAM",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "GROWING ON ME",
+      "Artist": "THE DARKNESS",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "I BELIEVE IN A THING CALLED LOVE",
+      "Artist": "THE DARKNESS",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "IS IT JUST ME",
+      "Artist": "THE DARKNESS",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "LOVE IS ONLY A FEELING",
+      "Artist": "THE DARKNESS",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "COME OUT & PLAY",
+      "Artist": "THE OFFSPRING",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "SELF ESTEEM",
+      "Artist": "THE OFFSPRING",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "TWO PRINCES",
+      "Artist": "THE SPIN DOCTORS",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "AFTER DARK",
+      "Artist": "TITO & TARANTULA",
+      "Language": "Inglés"
+    },
+    {
+      "Title": "AFTER DARK",
+      "Artist": "TITO & TARANTULA",
+      "Language": "Inglés"
+    }
+  ],
+  "hiddenArtists": [
+    "£1 FISH MAN",
+    "10000 MANIACS",
+    "101 DALMATIONS",
+    "10CC",
+    "1910 FRUITGUM CO",
+    "1927",
+    "1999 MAN UNITED SQUAD",
+    "2 EVISA",
+    "2ND BAPTIST CHURCH (LAUREN JAMES CAMEY)",
+    "2PAC",
+    "2PAC & DR DRE",
+    "2PAC & NOTORIOUS BIG",
+    "21 SAVAGE",
+    "30 SECONDS TO MARS",
+    "21ST CENTURY GIRLS",
+    "24KGOLDN & IANN DIOR",
+    "3T",
+    "3+2",
+    "38 SPECIAL",
+    "3OH!3",
+    "3OH!3 & KATY PERRY",
+    "3OH!3 & KE$HA",
+    "3AM & DANNY OCEAN",
+    "3SL",
+    "411",
+    "42ND STREET",
+    "4 TOWN",
+    "5 SECONDS OF SUMMER",
+    "50 CENT",
+    "50 CENT & EMINEM & ADAM LEVINE",
+    "50 CENT & NATE DOGG",
+    "50 CENT & SNOOP DOGG & YOUNG JEEZY",
+    "5 STAR",
+    "5IVE",
+    "69 BOYZ",
+    "6LACK & J COLE",
+    "702",
+    "911",
+    "A",
+    "A BUG'S LIFE",
+    "A CHORUS LINE",
+    "A TRIBE CALLED QUEST",
+    "A PERFECT CIRCLE",
+    "A TEENS",
+    "A'TEENS",
+    "A$AP FERG",
+    "A$AP ROCKY",
+    "A1",
+    "AALIYAH",
+    "AALIYAH & TIMBALAND",
+    "AARON LEWIS",
+    "AARON LINES",
+    "AARON TIPPIN",
+    "ABC",
+    "ABEL PINTOS",
+    "ABEL PINTOS & MALU",
+    "ABRAHAM MATEO",
+    "ABRAHAM MATEO & ANA MENA",
+    "ABRAHAM MATEO & AUSTIN MAHONE & 50 CENT",
+    "ABRAHAM MATEO & CHANEL",
+    "ABRAHAM MATEO & FARRUKO & CHRISTIAN DANIEL",
+    "ABRAHAM MATEO & JENNIFER LOPEZ",
+    "ABRAHAM MATEO & LUIS FONSI",
+    "ACCEPT",
+    "ADELE",
+    "AIDA CUEVAS",
+    "AKON",
+    "ALACRANES MUSICAL",
+    "ALEJANDRO SANZ",
+    "ALEX UBAGO",
+    "ALICIA VILLARREAL",
+    "ALL SAINTS",
+    "AMARAL",
+    "AMALIA MENDOZA",
+    "ZAYN",
+    "WISIN & YANDEL",
+    "SEBASTIAN YATRA",
+    "MIRANDA LAMBERT",
+    "LA FIRMA",
+    "LA OREJA DE VAN GOGH",
+    "LA SONORA SANTANERA",
+    "THE BEATLES",
+    "THE BEACH BOYS",
+    "THE BLACK EYED PEAS",
+    "THE DOORS",
+    "THE TYETS",
+    "TREY SONGZ",
+    "TRAVIS SCOTT",
+    "U2",
+    "COLDPLAY",
+    "CONJUNTO PRIMAVERA",
+    "CORNELIO REYNA",
+    "CRISTIAN CASTRO",
+    "DIEGO VERDAGUER",
+    "DOJA CAT",
+    "DON OMAR",
+    "DRAGON BALL Z",
+    "DRAKE",
+    "ECOS DEL ROCIO",
+    "ED SHEERAN",
+    "GIRLS ALOUD",
+    "EL COYOTE & SU BANDA TIERRA SANTA",
+    "ELVIS PRESLEY",
+    "EMINEM",
+    "EMINEM & DR DRE & 50 CENT",
+    "EMINEM & ED SHEERAN",
+    "EMINEM & GWEN STEFANI",
+    "EMINEM & LIL' WAYNE",
+    "EMINEM & NATE DOGG",
+    "EMINEM & RIHANNA",
+    "EMINEM & SIA",
+    "EMMANUEL",
+    "EMILIO NAVAIRA",
+    "EN VOGUE",
+    "ENRIQUE GUZMAN",
+    "ENRIQUE BUNBURY",
+    "ENRIQUE BUNBURY & MIREN IZA",
+    "ENYA",
+    "ESPINOZA PAZ",
+    "ERYKAH BADU",
+    "ESTELA NUÑEZ",
+    "FAITH HILL",
+    "FATBOY SLIM",
+    "HIGH SCHOOL MUSICAL (INFANTIL)",
+    "HOOBASTANK",
+    "HOZIER",
+    "IL DIVO",
+    "IGGY POP & KATE PIERSON",
+    "IGGY POP & THE STOOGES",
+    "OASIS",
+    "NSYNC",
+    "OLLY MURS",
+    "OLLY MURS & FLO RIDA",
+    "OLLY MURS & TRAVIE MCCOY",
+    "OLLY MURS & DEMI LOVATO",
+    "OLLY MURS & LOUISA JOHNSON",
+    "OLLY MURS & RIZZLE KICKS",
+    "ONE DIRECTION",
+    "ONEREPUBLIC",
+    "ONE REPUBLIC",
+    "ONEREPUBLIC & JELLY ROLL",
+    "OZUMA",
+    "PABLO ALBORAN",
+    "P DIDDY & CHRISTINA AGUILERA"
+  ]
+}

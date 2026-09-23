@@ -12,6 +12,11 @@
     <div class="stats" id="stats"></div>
   </header>
 
+  <div id="autoImportBanner" class="auto-import-banner" hidden>
+    <span id="autoImportText"></span>
+    <button id="autoImportCloseBtn" type="button">✕</button>
+  </div>
+
   <section class="toolbar">
     <input type="search" id="searchBox" placeholder="Buscar título, artista, idioma o marca..." />
 
@@ -58,10 +63,10 @@
     <thead>
       <tr>
         <th class="star-col"></th>
-        <th data-sort="Title">Título <span class="arrow"></span></th>
+        <th class="hide-col"></th>
         <th data-sort="Artist">Artista <span class="arrow"></span></th>
+        <th data-sort="Title">Título <span class="arrow"></span></th>
         <th data-sort="Language">Idioma <span class="arrow"></span></th>
-        <th data-sort="Brand">Marca <span class="arrow"></span></th>
       </tr>
     </thead>
     <tbody id="songTbody"></tbody>
@@ -79,8 +84,11 @@
   </div>
 
   <section class="hidden-artists">
-    <h2>Artistas ocultos (<span id="hiddenCount">0</span>)</h2>
-    <ul id="hiddenArtistsList" class="hidden-artists-list"></ul>
+    <details id="hiddenArtistsDetails">
+      <summary>Artistas ocultos (<span id="hiddenCount">0</span>)</summary>
+      <input type="search" id="hiddenArtistsFilter" placeholder="Filtrar artistas ocultos..." />
+      <ul id="hiddenArtistsList" class="hidden-artists-list"></ul>
+    </details>
   </section>
 
   <script src="data.js"></script>
