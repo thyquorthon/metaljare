@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>KaraokeMedia · Catálogo de Canciones</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>KaraokeMedia · Catálogo de Canciones</h1>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <section class="toolbar">
+    <input type="search" id="searchBox" placeholder="Buscar título, artista, idioma o marca..." />
+
+    <div class="exclude-artist">
+      <input type="text" id="artistInput" list="artistDatalist" placeholder="Escribe para buscar un artista..." autocomplete="off" />
+      <datalist id="artistDatalist"></datalist>
+      <button id="excludeBtn" type="button">Ocultar artista</button>
+    </div>
+
+    <label class="checkbox">
+      <input type="checkbox" id="favoritesOnly" />
+      Mostrar solo favoritos
+    </label>
+
+    <button id="clearFavoritesBtn" type="button" title="Quita todas las canciones marcadas como favoritas">Vaciar favoritos</button>
+
+    <button id="randomFavoriteBtn" type="button" title="Elige una canción al azar de tus favoritos">🎲 Canción al azar</button>
+
+    <button id="exportFavoritesBtn" type="button" title="Descarga tus favoritos y artistas ocultos como archivo JSON">Exportar favoritos</button>
+
+    <label class="file-btn" title="Carga favoritos y artistas ocultos desde un archivo JSON exportado previamente">
+      Importar favoritos
+      <input type="file" id="importFavoritesInput" accept="application/json,.json" hidden />
+    </label>
+
+    <label class="checkbox">
+      Filas por página
+      <select id="pageSize">
+        <option value="25">25</option>
+        <option value="50" selected>50</option>
+        <option value="100">100</option>
+        <option value="200">200</option>
+      </select>
+    </label>
+  </section>
+
+  <div id="randomFavoriteResult" class="random-favorite-result" hidden>
+    <span id="randomFavoriteText"></span>
+    <button id="randomFavoriteAgainBtn" type="button">🎲 Otra</button>
+    <button id="randomFavoriteCloseBtn" type="button">✕</button>
+  </div>
+
+  <table id="songTable">
+    <thead>
+      <tr>
+        <th class="star-col"></th>
+        <th data-sort="Title">Título <span class="arrow"></span></th>
+        <th data-sort="Artist">Artista <span class="arrow"></span></th>
+        <th data-sort="Language">Idioma <span class="arrow"></span></th>
+        <th data-sort="Brand">Marca <span class="arrow"></span></th>
+      </tr>
+    </thead>
+    <tbody id="songTbody"></tbody>
+  </table>
+
+  <div class="pagination">
+    <button id="prevPage" type="button">« Anterior</button>
+    <span id="pageIndicator"></span>
+    <button id="nextPage" type="button">Siguiente »</button>
+    <label class="page-jump">
+      Ir a página
+      <input type="number" id="pageJumpInput" min="1" step="1" />
+    </label>
+    <button id="pageJumpBtn" type="button">Ir</button>
+  </div>
+
+  <section class="hidden-artists">
+    <h2>Artistas ocultos (<span id="hiddenCount">0</span>)</h2>
+    <ul id="hiddenArtistsList" class="hidden-artists-list"></ul>
+  </section>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

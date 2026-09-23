@@ -1,0 +1,384 @@
+:root {
+  color-scheme: light;
+  --border: #e3d9f7;
+  --primary: #7c3aed;
+  --primary-dark: #5b21b6;
+  --accent: #e11d74;
+  --accent-soft: #ffe1ee;
+  --success: #16a34a;
+  --info: #0891b2;
+  --bg: #f6f3ff;
+  --bg-alt: #efe8fd;
+  --surface: #ffffff;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 1rem 1.5rem 2rem;
+  color: #241b3a;
+  background: var(--bg);
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 1rem 1.25rem;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.35);
+}
+
+h1 {
+  font-size: 1.35rem;
+  margin: 0;
+}
+
+.stats {
+  font-size: 0.85rem;
+  color: #fff;
+  opacity: 0.9;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: 0 1px 4px rgba(124, 58, 237, 0.12);
+}
+
+#searchBox {
+  flex: 1 1 280px;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+#searchBox:focus,
+#artistInput:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
+.exclude-artist {
+  display: flex;
+  gap: 0.4rem;
+}
+
+#artistInput {
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+select {
+  padding: 0.45rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+}
+
+button {
+  padding: 0.5rem 0.85rem;
+  border: none;
+  border-radius: 6px;
+  background: var(--bg-alt);
+  color: var(--primary-dark);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: transform 0.05s ease, filter 0.15s ease;
+}
+
+button:hover:not(:disabled) {
+  filter: brightness(0.95);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+#excludeBtn {
+  background: var(--primary);
+  color: #fff;
+}
+
+#clearFavoritesBtn {
+  background: var(--accent);
+  color: #fff;
+}
+
+#randomFavoriteBtn {
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  color: #fff;
+}
+
+#exportFavoritesBtn {
+  background: var(--success);
+  color: #fff;
+}
+
+.file-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.85rem;
+  border-radius: 6px;
+  background: var(--info);
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+
+.random-favorite-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  padding: 0.7rem 1rem;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #fde68a, #fca5a5);
+  color: #4a1d0f;
+  font-weight: 700;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Our own display:flex above outranks the UA [hidden] rule, so restore it explicitly. */
+.random-favorite-result[hidden] {
+  display: none;
+}
+
+.random-favorite-result span {
+  flex: 1 1 auto;
+}
+
+.random-favorite-result button {
+  background: #fff;
+  color: #4a1d0f;
+  flex: 0 0 auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.9rem;
+  background: var(--surface);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(124, 58, 237, 0.12);
+}
+
+thead th {
+  text-align: left;
+  padding: 0.6rem 0.6rem;
+  border-bottom: 2px solid var(--border);
+  background: var(--primary-dark);
+  color: #fff;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.star-col {
+  width: 2rem;
+  cursor: default !important;
+}
+
+.arrow {
+  font-size: 0.7rem;
+  color: #ffe27a;
+}
+
+tbody td {
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+  height: 2.4rem;
+}
+
+tbody tr:nth-child(even) {
+  background: var(--bg);
+}
+
+tbody tr:hover {
+  background: var(--accent-soft);
+}
+
+.star {
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: #c9ccd3;
+}
+
+.star.active {
+  color: #f2a900;
+}
+
+.artist-cell {
+  vertical-align: middle;
+}
+
+.artist-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+}
+
+.hide-artist-btn {
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-size: 0.85rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.35;
+  flex: 0 0 auto;
+}
+
+tbody tr:hover .hide-artist-btn {
+  opacity: 1;
+}
+
+.fav-row td {
+  font-weight: 700;
+}
+
+.fav-row:nth-child(even) {
+  background: #fdf3ff;
+}
+
+.lang-badge {
+  display: inline-block;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.lang-badge.lang-espanol {
+  background: #f97316;
+}
+
+.lang-badge.lang-ingles {
+  background: #2563eb;
+}
+
+.lang-badge.lang-catalan {
+  background: #16a34a;
+}
+
+.lang-badge.lang-other {
+  background: #64748b;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.pagination button {
+  background: var(--primary);
+  color: #fff;
+}
+
+.page-jump {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+
+#pageJumpInput {
+  width: 4.5rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+#pageJumpBtn {
+  background: var(--info);
+  color: #fff;
+}
+
+.hidden-artists {
+  margin-top: 2rem;
+  padding: 1rem 1.25rem;
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: 0 1px 4px rgba(124, 58, 237, 0.12);
+}
+
+.hidden-artists h2 {
+  font-size: 1rem;
+  margin: 0 0 0.5rem;
+  color: var(--primary-dark);
+}
+
+.hidden-artists-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.hidden-artist-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.25rem 0.4rem 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  color: var(--primary-dark);
+}
+
+.show-artist-btn {
+  border: none;
+  background: var(--success);
+  color: #fff;
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
