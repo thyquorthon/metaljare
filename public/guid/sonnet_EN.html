@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>Off The Radar – Series Proposal & Production Guide</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=Courier+Prime:wght@400;700&display=swap');
+:root{--void:#0A0A0F;--graphite:#16161F;--graphite2:#1f1f2b;--lime:#B8FF3C;--mag:#FF3D8B;--bone:#F2EDE3;--gray:#8A8A99;--cyan:#3DE0FF;--amber:#FFB23D;--red:#FF4A3D;--violet:#A07BFF;--line:#2a2a38}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--void);color:var(--bone);font-family:'Barlow','Segoe UI',Arial,sans-serif;font-size:17px;line-height:1.6;background-image:radial-gradient(circle at 80% -10%,rgba(184,255,60,.07),transparent 40%),radial-gradient(circle at 0% 30%,rgba(255,61,139,.06),transparent 35%)}
+a{color:var(--lime)}
+.d,h1,h2,h3{font-family:'Barlow Condensed','Oswald','Agency FB','Impact',sans-serif;text-transform:uppercase;line-height:1;font-weight:700;letter-spacing:.01em}
+.m,.mono{font-family:'Courier Prime','Courier New',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+nav{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;gap:4px;padding:10px 24px;overflow-x:auto;align-items:center}
+nav .brand{font-family:'Barlow Condensed',Impact,sans-serif;font-weight:700;text-transform:uppercase;font-size:22px;color:var(--void);background:var(--lime);padding:2px 12px;margin-right:12px;white-space:nowrap}
+nav a{font-family:'Courier Prime','Courier New',monospace;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--bone);text-decoration:none;padding:6px 10px;white-space:nowrap;border:1px solid transparent}
+nav a:hover{border-color:var(--lime);color:var(--lime)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.hero{padding:90px 0 60px;position:relative;overflow:hidden}
+.hero .tag{display:inline-block;background:var(--lime);color:var(--void);padding:4px 14px;font-size:15px}
+.hero h1{font-size:clamp(54px,9vw,120px);margin:22px 0 12px}
+.hero h1 span{color:var(--lime)}
+.hero p.lead{font-size:21px;max-width:720px;color:#d9d4c9}
+.hero .meta{margin-top:26px;display:flex;gap:10px;flex-wrap:wrap}
+.chip{border:1px solid var(--lime);color:var(--lime);padding:4px 12px;font-size:13px}
+.chip.mag{border-color:var(--mag);color:var(--mag)}
+.hero-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:center}
+.hero-img{display:flex;gap:14px;justify-content:center}
+.hero-img img{width:31%;min-width:120px;border:2px solid var(--line);border-radius:14px}
+.hero-img img:nth-child(2){transform:translateY(24px)}
+section{padding:64px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:26px}
+.sec-head .n{font-family:'Courier Prime','Courier New',monospace;font-weight:700;color:var(--void);background:var(--mag);padding:2px 10px;font-size:15px}
+h2{font-size:clamp(38px,5vw,64px)}
+h3{font-size:30px;margin:34px 0 12px;color:var(--lime)}
+h4{font-family:'Courier Prime','Courier New',monospace;text-transform:uppercase;font-size:14px;letter-spacing:.08em;color:var(--mag);margin:20px 0 8px}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 16px 22px}
+li{margin-bottom:6px}
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.card{background:var(--graphite);border:1px solid var(--line);border-left:5px solid var(--lime);padding:20px 22px}
+.card.mag{border-left-color:var(--mag)}
+.card.cyan{border-left-color:var(--cyan)}
+.card h4{margin-top:0}
+.card .big{font-family:'Barlow Condensed',Impact,sans-serif;font-size:44px;font-weight:700;line-height:1;color:var(--lime)}
+.callout{padding:18px 22px;margin:22px 0;border:2px solid var(--lime);background:rgba(184,255,60,.07)}
+.callout.warn{border-color:var(--mag);background:rgba(255,61,139,.09)}
+.callout.info{border-color:var(--cyan);background:rgba(61,224,255,.07)}
+.callout strong.t{display:block;font-family:'Courier Prime','Courier New',monospace;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.callout.warn strong.t{color:var(--mag)}.callout:not(.warn):not(.info) strong.t{color:var(--lime)}.callout.info strong.t{color:var(--cyan)}
+table{width:100%;border-collapse:collapse;margin:14px 0 24px;font-size:15.5px}
+th{font-family:'Courier Prime','Courier New',monospace;text-transform:uppercase;font-size:12.5px;letter-spacing:.06em;text-align:left;background:var(--lime);color:var(--void);padding:9px 12px}
+td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:rgba(255,255,255,.025)}
+td.k{font-family:'Courier Prime','Courier New',monospace;font-weight:700;color:var(--lime);white-space:nowrap}
+.tbl-wrap{overflow-x:auto}
+.pill{display:inline-block;font-family:'Courier Prime','Courier New',monospace;font-weight:700;font-size:12px;text-transform:uppercase;padding:2px 8px;margin:0 4px 4px 0}
+.pill.ok{background:var(--lime);color:var(--void)}.pill.no{background:var(--mag);color:var(--void)}.pill.mid{background:var(--amber);color:var(--void)}
+.swatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.sw{border:1px solid var(--line);background:var(--graphite)}
+.sw .c{height:110px;display:flex;align-items:flex-end;padding:8px 10px;font-family:'Courier Prime','Courier New',monospace;font-weight:700;font-size:13px}
+.sw .i{padding:10px 12px;font-size:14px}
+.sw .i b{font-family:'Barlow Condensed',Impact,sans-serif;font-size:22px;text-transform:uppercase;display:block}
+.ratio{display:flex;height:34px;margin:10px 0 4px}
+.ratio div{display:flex;align-items:center;padding-left:8px;font-family:'Courier Prime','Courier New',monospace;font-weight:700;font-size:12px;color:var(--void)}
+.spec{background:var(--graphite);border:1px solid var(--line);padding:22px;margin:12px 0}
+.spec .row{display:flex;align-items:baseline;gap:20px;border-bottom:1px dashed var(--line);padding:10px 0;flex-wrap:wrap}
+.spec .row:last-child{border:0}
+.spec .row .lbl{width:210px;font-family:'Courier Prime','Courier New',monospace;font-weight:700;color:var(--lime);text-transform:uppercase;font-size:13px;letter-spacing:.05em}
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin:18px 0;align-items:start}
+.shot{text-align:center}
+.shot img{width:100%;border-radius:14px;border:2px solid var(--line);display:block}
+.shot figcaption{font-family:'Courier Prime','Courier New',monospace;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--gray);margin-top:8px;font-weight:700}
+.shot figcaption b{color:var(--lime)}
+.checker{background-color:#2a2a38;background-image:linear-gradient(45deg,#3a3a4a 25%,transparent 25%),linear-gradient(-45deg,#3a3a4a 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#3a3a4a 75%),linear-gradient(-45deg,transparent 75%,#3a3a4a 75%);background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0}
+.shot.layer img{border-radius:6px}
+.type-spec{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.type-spec .t{background:var(--graphite);border:1px solid var(--line);padding:22px}
+.specimen{font-family:'Barlow Condensed','Impact',sans-serif;font-weight:700;text-transform:uppercase;font-size:76px;line-height:.9;color:var(--bone)}
+.specimen-m{font-family:'Courier Prime','Courier New',monospace;font-weight:700;text-transform:uppercase;font-size:28px;letter-spacing:.06em;color:var(--lime)}
+.tree{font-family:'Courier Prime','Courier New',monospace;background:#000;border:1px solid var(--line);padding:18px 22px;overflow-x:auto;font-size:14px;line-height:1.55;white-space:pre;color:#cfe;}
+.tree b{color:var(--lime)}
+.check li{list-style:none;position:relative;padding-left:32px}
+.check li:before{content:'';position:absolute;left:0;top:6px;width:18px;height:18px;border:2px solid var(--lime)}
+.cols2{columns:2;column-gap:36px}
+.cols2 li{break-inside:avoid}
+.hooks li strong{color:var(--lime)}
+.timeline{display:flex;height:64px;margin:16px 0 8px;border:1px solid var(--line)}
+.timeline div{display:flex;align-items:center;justify-content:center;font-family:'Courier Prime','Courier New',monospace;font-weight:700;font-size:12px;text-transform:uppercase;color:var(--void);border-right:2px solid var(--void);text-align:center;padding:0 4px}
+.tl-scale{display:flex;justify-content:space-between;font-family:'Courier Prime','Courier New',monospace;font-size:12px;color:var(--gray)}
+footer{border-top:1px solid var(--line);padding:40px 0 70px;color:var(--gray);font-size:14px}
+.sources a{display:block}
+@media(max-width:820px){.hero-grid{grid-template-columns:1fr}.cols2{columns:1}.spec .row .lbl{width:100%}}
+@media print{nav{display:none}body{background:#fff;color:#000}}
+
+</style>
+</head>
+<body>
+<nav>
+<span class="brand">Off The Radar</span>
+<a href="#approach">01 Approach</a><a href="#names">02 Names</a><a href="#script">03 Script</a><a href="#style">04 Visual style</a><a href="#specs">05 Tech specs</a><a href="#template">06 CapCut template</a><a href="#thumbs">07 Thumbnails</a><a href="#rights">08 Copyright &amp; Content ID</a><a href="#pitfalls">09 Pitfalls</a>
+</nav>
+
+<header class="hero"><div class="wrap hero-grid">
+<div>
+<span class="tag m">Series proposal · v1.0 · 2026-10-16</span>
+<h1 class="d">Bands you <span>don't know</span><br>yet.</h1>
+<p class="lead">A complete plan for a weekly vertical-video series that introduces lesser-known bands on YouTube Shorts and Instagram Reels: one video, two platforms, music and text only, built to stay consistent and to stay clear of copyright strikes.</p>
+<div class="meta"><span class="chip m">9:16 · 1080×1920</span><span class="chip m">35–45 s</span><span class="chip m">Music + text, no voice-over</span><span class="chip mag m">Rights-first</span></div>
+</div>
+<div class="hero-img"><img src="images/frame_hook_en.png" alt="Hook frame"><img src="images/frame_title_en.png" alt="Title frame"><img src="images/frame_fact_en.png" alt="Sounds-like frame"></div>
+</div></header>
+
+<main class="wrap">
+
+<!-- ============ 01 APPROACH ============ -->
+<section id="approach">
+<div class="sec-head"><span class="n">01</span><h2>The approach</h2></div>
+<p><strong>Concept in one line:</strong> every week, a 40-second "radar ping": one band the viewer has never heard of, one reason to press play, and a clear way to listen to more.</p>
+
+<div class="grid g3">
+<div class="card"><h4>Audience promise</h4><p>"In 40 seconds you'll know whether this band is for you, and you'll have heard their best moment."</p></div>
+<div class="card mag"><h4>Why it can work</h4><p>Music discovery is a daily habit, "if you like X" is already how people search, and text-only videos are cheap, quick and sound-first.</p></div>
+<div class="card cyan"><h4>Why it's hard</h4><p>Unknown bands have no search demand, so the hook, the comparison to a known band and the recurring format must do the work. Music rights are the main risk (section 08).</p></div>
+</div>
+
+<h3>Series formats (same template, different shape)</h3>
+<div class="tbl-wrap"><table>
+<tr><th>Format</th><th>Length</th><th>Cadence</th><th>What it is</th></tr>
+<tr><td class="k">Radar Pick</td><td>38–45 s</td><td>Weekly (flagship)</td><td>One band, the standard script of section 03.</td></tr>
+<tr><td class="k">Double Blip</td><td>30–35 s</td><td>Optional 2nd weekly slot</td><td>Two similar bands side by side ("If you like A, try B or C").</td></tr>
+<tr><td class="k">Genre Sweep</td><td>50–60 s</td><td>Every 2–3 weeks</td><td>Three bands from one genre or country, 15 s each.</td></tr>
+<tr><td class="k">Rewind</td><td>55–60 s</td><td>Monthly</td><td>Recap of the month's best bands. Only reuse material that is already cleared.</td></tr>
+</table></div>
+
+<h3>Production workflow (one master video, two platforms)</h3>
+<ol>
+<li><strong>Select and research</strong> (20 min): pick the band, verify every fact you will put on screen, fill in <span class="mono">Video_Template/Episode_Sheet.csv</span>.</li>
+<li><strong>Clear the rights first</strong> (async): send the permission email (<span class="mono">Permission_Request_EN.txt</span>) to the band or label. Do not edit until you have a written yes.</li>
+<li><strong>Assemble from the CapCut template</strong> (45–60 min): swap text, photo and audio; pick the accent colour for the genre.</li>
+<li><strong>Export once</strong> (clean 1080×1920 MP4, no CapCut outro, no watermark).</li>
+<li><strong>Upload natively to both platforms</strong> from the same file, with a different caption and hashtags for each. Never re-upload a video downloaded from the other platform (watermarks hurt reach).</li>
+<li><strong>Pin a comment</strong> with links to the band (Bandcamp / Spotify / official site) and credit the photo and music.</li>
+<li><strong>Review after 48 h</strong>: retention, swipe-away rate, shares, saves, follows.</li>
+</ol>
+
+<h3>Cadence and when to scale up</h3>
+<p>Start with <strong>2 videos per week for 4 weeks</strong> to learn what works, then settle on a sustainable rhythm. Scale only if the numbers justify it. These are working heuristics, not platform rules:</p>
+<div class="grid g4">
+<div class="card"><h4>Stayed to watch</h4><div class="big">≥ 65–70%</div><p>in YouTube Analytics ("viewed vs swiped away")</p></div>
+<div class="card"><h4>Avg. view duration</h4><div class="big">≥ 80%</div><p>of video length (looping helps)</p></div>
+<div class="card mag"><h4>Shares + saves</h4><div class="big">≥ 3%</div><p>of views. Discovery content lives on shares.</p></div>
+<div class="card mag"><h4>Follows</h4><div class="big">≥ 1–2 / 1k</div><p>per 1,000 views, trending up</p></div>
+</div>
+<p>If three consecutive videos beat these, move to 3 per week. If you are below them after 8 videos, change the <em>hook</em> and the <em>first 2 seconds</em> before changing anything else.</p>
+
+<h3>Captions and discovery (text is not baked into the video)</h3>
+<div class="grid g2">
+<div class="card"><h4>YouTube Shorts</h4><ul><li><strong>Title</strong> (≤ 60 chars): "[BAND]: if you like [A]". Keywords first.</li><li><strong>Description</strong>: 2 lines on the band, links, photo and music credits, then 3 hashtags.</li><li>Link the band in the pinned comment.</li><li>Add the Shorts to a playlist "Off The Radar" for binge-watching.</li></ul></div>
+<div class="card"><h4>Instagram Reels</h4><ul><li><strong>First line</strong> of the caption works as the hook: "If you like [A], you need [BAND]".</li><li><strong>Invite the band as collaborator</strong> (Collab post) so the video also appears to their audience.</li><li>3–5 relevant hashtags (genre, "newmusic", series tag).</li><li>Add alt text and a cover that survives the 3:4 grid crop (section 07).</li></ul></div>
+</div>
+
+<h3>30-day launch plan</h3>
+<div class="tbl-wrap"><table>
+<tr><th>Week</th><th>Goal</th><th>Actions</th></tr>
+<tr><td class="k">0</td><td>Set-up</td><td>Choose name and check handles, build the CapCut master from the template, write 8 permission emails, create Episode Sheet.</td></tr>
+<tr><td class="k">1</td><td>Batch</td><td>Produce 4 episodes in one sitting from bands that said yes. Keep a buffer of two.</td></tr>
+<tr><td class="k">2–3</td><td>Publish &amp; test</td><td>2 per week. Test two hook styles (section 03) and two thumbnails (section 07).</td></tr>
+<tr><td class="k">4</td><td>Decide</td><td>Keep the best hook and format, set the cadence, tell the bands you featured, ask them to share.</td></tr>
+</table></div>
+</section>
+
+<!-- ============ 02 NAMES ============ -->
+<section id="names">
+<div class="sec-head"><span class="n">02</span><h2>Series name proposals</h2></div>
+<p>Criteria: short enough for a handle, says "discovery" at a glance, works spoken and written, and fits the radar/zine visual identity. <strong>Before choosing:</strong> search the name on YouTube, Instagram, TikTok and a domain registrar, and run a trademark search in your country. Most of these are likely used somewhere, so check the exact handle and the music-niche conflicts.</p>
+<div class="tbl-wrap"><table>
+<tr><th>#</th><th>Name</th><th>Tagline</th><th>Why it works</th><th>Watch out</th></tr>
+<tr><td class="k">1 ★</td><td><strong>Off The Radar</strong></td><td>One band you've never heard.</td><td>Says discovery instantly; the radar visual language comes free. Works as a recurring "ping".</td><td>Common phrase: expect crowded search, use a distinctive handle (e.g. @offtheradar.bands).</td></tr>
+<tr><td class="k">2</td><td><strong>Unsung</strong></td><td>Bands worth your next listen.</td><td>Short, elegant, evergreen.</td><td>Generic; many existing uses.</td></tr>
+<tr><td class="k">3</td><td><strong>B-Side Club</strong></td><td>The bands behind the hits.</td><td>Nostalgic, community feel, good for merch later.</td><td>"B-side" suggests older records; set expectations about new bands.</td></tr>
+<tr><td class="k">4</td><td><strong>The Underplayed</strong></td><td>Too good to be this quiet.</td><td>Clear promise; "underplayed" is distinctive.</td><td>Longer handle.</td></tr>
+<tr><td class="k">5</td><td><strong>Blip</strong></td><td>A new signal every week.</td><td>Ultra-short, ownable, matches the logo mark.</td><td>Hard to search; needs a strong tagline in the bio.</td></tr>
+<tr><td class="k">6</td><td><strong>Haystack</strong></td><td>We found the needle.</td><td>Strong metaphor for curation.</td><td>Unrelated to music out of context; add "bands" to handle.</td></tr>
+<tr><td class="k">7</td><td><strong>Low Orbit</strong></td><td>Just below your radar.</td><td>Distinctive and memorable, space/radar tone.</td><td>Not obviously music.</td></tr>
+<tr><td class="k">8</td><td><strong>Hidden Track</strong></td><td>Press play on what you missed.</td><td>Music-native phrase, a little "secret" feeling.</td><td>Also means a specific thing on albums.</td></tr>
+<tr><td class="k">9</td><td><strong>Never Heard Of 'Em</strong></td><td>Yet.</td><td>Conversational, matches the hook line "you've never heard of them".</td><td>Long; fine as a title, harder as a handle.</td></tr>
+<tr><td class="k">10</td><td><strong>Signal / Noise</strong></td><td>Cut through the playlist noise.</td><td>Editorial, curator voice.</td><td>Many existing uses, including tech content.</td></tr>
+</table></div>
+<div class="callout"><strong class="t">Recommendation</strong>Go with <strong>Off The Radar</strong> (clearest promise and best visual fit). Keep <strong>Blip</strong> as the name of the mascot/logo mark and <strong>Low Orbit</strong> as an alternative if the handle is taken. All visuals in this guide use "Off The Radar" as the example; the template layers contain no brand text, so renaming costs nothing.</div>
+</section>
+
+<!-- ============ 03 SCRIPT ============ -->
+<section id="script">
+<div class="sec-head"><span class="n">03</span><h2>Standard series script</h2></div>
+<p>Because there is no voice-over, the script is a <strong>beat sheet of on-screen text synchronised with the music</strong>. The structure never changes (so viewers recognise the series); the wording, order of some beats, accent colour and treatment change (so videos don't look like clones).</p>
+
+<h3>The 40-second master structure</h3>
+<div class="timeline">
+<div style="width:6.25%;background:var(--mag)">Hook</div><div style="width:8.75%;background:var(--lime)">ID</div><div style="width:17.5%;background:var(--cyan)">Sounds like</div><div style="width:20%;background:var(--amber)">Why</div><div style="width:25%;background:var(--lime)">Start with</div><div style="width:12.5%;background:var(--violet)">Score</div><div style="width:10%;background:var(--mag)">CTA</div>
+</div>
+<div class="tl-scale"><span>0 s</span><span>2.5</span><span>6</span><span>13</span><span>21</span><span>31</span><span>36</span><span>40 s</span></div>
+
+<div class="tbl-wrap"><table>
+<tr><th>Beat</th><th>Time</th><th>Goal</th><th>On-screen text pattern</th><th>Visual</th></tr>
+<tr><td class="k">0 · Hook</td><td>0.0–2.5</td><td>Stop the scroll, create curiosity.</td><td>1 statement, max 7 words, 3 short lines, big (150–176 px). One word in lime.</td><td>Band photo/footage under accent tint, brackets + header appear. Start music on an energetic bar, not the intro.</td></tr>
+<tr><td class="k">1 · ID</td><td>2.5–6.0</td><td>Who is it.</td><td>[BAND NAME] (150 px) + mono line: city, country · genre · year.</td><td>Photo on top, band-name plate, tape label if useful.</td></tr>
+<tr><td class="k">2 · Sounds like</td><td>6.0–13.0</td><td>Place them in the viewer's mental map.</td><td>"Sounds like" + [BAND A] + [BAND B] and one sharp line about the sound.</td><td>Fact card plate; cut on the beat between the two names.</td></tr>
+<tr><td class="k">3 · Why they matter</td><td>13.0–21.0</td><td>Two verifiable facts: milestone, scene, instrument, story.</td><td>2 cards × 4 s, ≤ 7 words each. Never lyrics.</td><td>Card layout with a different photo/texture for each.</td></tr>
+<tr><td class="k">4 · Start with</td><td>21.0–31.0</td><td>The payoff: let the music breathe.</td><td>"Start with →" + [TRACK TITLE]. Almost no other text.</td><td>Music peak (chorus/drop). EQ bars, slow zoom on photo, grid background.</td></tr>
+<tr><td class="k">5 · Radar score</td><td>31.0–36.0</td><td>Verdict that invites debate.</td><td>"Radar score 4/5 blips" + 1-line verdict.</td><td>Radar icon, 4 filled blips. Optional: tiny "disagree? tell me" prompt.</td></tr>
+<tr><td class="k">6 · CTA</td><td>36.0–40.0</td><td>Follow + where to listen + loop.</td><td>"Next week: another band you don't know" · "Follow" · "Full tracks: Bandcamp / Spotify".</td><td>End card plate. Final 0.3 s cuts back to hook frame to encourage loop.</td></tr>
+</table></div>
+
+<h3>Storyboard (using the template layers)</h3>
+<div class="shots">
+<figure class="shot"><img src="images/frame_hook_en.png" alt=""><figcaption><b>0</b> Hook</figcaption></figure>
+<figure class="shot"><img src="images/frame_title_en.png" alt=""><figcaption><b>1</b> ID</figcaption></figure>
+<figure class="shot"><img src="images/frame_fact_en.png" alt=""><figcaption><b>2</b> Sounds like</figcaption></figure>
+<figure class="shot"><img src="images/frame_track_en.png" alt=""><figcaption><b>4</b> Start with</figcaption></figure>
+<figure class="shot"><img src="images/frame_rating_en.png" alt=""><figcaption><b>5</b> Radar score</figcaption></figure>
+<figure class="shot"><img src="images/frame_end_en.png" alt=""><figcaption><b>6</b> CTA</figcaption></figure>
+</div>
+
+<h3>Writing rules for on-screen text</h3>
+<ul class="cols2">
+<li>Maximum <strong>7 words</strong> per screen, 3 lines.</li>
+<li>Reading speed: about <strong>3 words per second</strong>; no text under 1.2 s.</li>
+<li>Change something on screen every <strong>1.5–3 s</strong> (text, crop, zoom, plate).</li>
+<li>Cut on the beat: at 120 BPM a bar is 2 s, a beat 0.5 s.</li>
+<li>Only <strong>verifiable facts</strong>; keep sources in the Episode Sheet.</li>
+<li><strong>Never put song lyrics</strong> on screen (separate copyright).</li>
+<li>Describe sound with "sounds like", not "copy of".</li>
+<li>Same words in lime for the key idea, magenta only for asides.</li>
+<li>Don't over-promise ("best band ever"). Opinion goes in the Radar score.</li>
+<li>Keep everything inside the safe zone (section 04).</li>
+</ul>
+
+<h3>Variation bank</h3>
+<p>Rule: <strong>change at least 3 of these 5 dimensions between consecutive videos</strong>: (1) hook style, (2) structural variant, (3) accent colour/genre, (4) background and photo treatment, (5) transition set and CTA line.</p>
+
+<h4>1 · Hook styles (beat 0)</h4>
+<ol class="hooks">
+<li><strong>Classic:</strong> "You've probably never heard of [BAND]. Let's fix that."</li>
+<li><strong>Playlist:</strong> "Your playlist is missing [BAND]."</li>
+<li><strong>Comparison:</strong> "If you like [A], you need [BAND]."</li>
+<li><strong>Genre-country:</strong> "[GENRE] from [COUNTRY]. You're welcome."</li>
+<li><strong>Cross:</strong> "[A] fell in love with [B]. This is the result."</li>
+<li><strong>Stat (verify!):</strong> "[N] monthly listeners. They deserve [N×10]."</li>
+<li><strong>Story:</strong> "[YEAR]: one EP. Nobody noticed. Until now."</li>
+<li><strong>Challenge:</strong> "Press play. Try not to replay it."</li>
+<li><strong>Direct:</strong> "Meet your next obsession."</li>
+<li><strong>Insider:</strong> "Nobody told you about [BAND]. So we will."</li>
+</ol>
+
+<h4>2 · Structural variants (same visual system)</h4>
+<div class="tbl-wrap"><table>
+<tr><th>Variant</th><th>Length</th><th>Changes vs. master</th></tr>
+<tr><td class="k">A · Classic Radar Pick</td><td>40 s</td><td>The master structure.</td></tr>
+<tr><td class="k">B · If you like</td><td>35 s</td><td>Hook is the comparison; beat 2 shortened; the track gets 14 s.</td></tr>
+<tr><td class="k">C · Three reasons</td><td>45 s</td><td>Beat 3 becomes three numbered cards (1, 2, 3) of 4 s each.</td></tr>
+<tr><td class="k">D · Timeline</td><td>45 s</td><td>Beat 3 becomes a horizontal timeline: formed → first release → now.</td></tr>
+<tr><td class="k">E · Double Blip</td><td>35 s</td><td>Split screen band A vs. B, "Which one first?" prompt. Needs clearance for both.</td></tr>
+<tr><td class="k">F · Guess the genre</td><td>35 s</td><td>Hook is a question; genre is revealed at beat 2. Boosts comments.</td></tr>
+</table></div>
+
+<h4>3 · Sound descriptions (beat 2 one-liners)</h4>
+<ul class="cols2"><li>"Fast, melodic and a bit sad."</li><li>"Warm guitars, cold synths."</li><li>"Folk that grew teeth."</li><li>"Punk with a pop conscience."</li><li>"Slow-burn, then a wall of sound."</li><li>"Heavy riffs, tender choruses."</li><li>"Dance floor at 3 a.m."</li><li>"Road-trip music for rainy days."</li></ul>
+
+<h4>4 · Verdict lines (beat 5)</h4>
+<ul class="cols2"><li>"Play it twice."</li><li>"Fans of [A], you're welcome."</li><li>"Underrated isn't the word."</li><li>"Save for later. Trust me."</li><li>"Debut? Hard to believe."</li><li>"Not for everyone. Maybe for you."</li></ul>
+
+<h4>5 · CTA lines (beat 6)</h4>
+<ul class="cols2"><li>"New band every [DAY]. Follow."</li><li>"Save this for your next playlist."</li><li>"Send it to the friend with the best taste."</li><li>"Which band should I feature next? Comment."</li><li>"Support them: link in comments."</li><li>"Next week: [GENRE] from [COUNTRY]."</li></ul>
+
+<h4>6 · Visual variations</h4>
+<ul>
+<li><strong>Accent by genre:</strong> lime (default / rock-indie), magenta (punk/pop), cyan (electronic), amber (folk/acoustic), red (metal/hardcore), violet (jazz/soul/hip-hop). Always keep lime brackets and header.</li>
+<li><strong>Background:</strong> Void Rings (default), Void Grid (technical, track beat), Bone Paper (light "zine" variant for acoustic/folk).</li>
+<li><strong>Photo treatment:</strong> duotone tint · halftone cut-out with tape · full-bleed with dark gradient · stills with slow Ken Burns.</li>
+<li><strong>Transitions pack:</strong> (a) radar sweep wipe, (b) 3-frame glitch slice, (c) zoom punch 108 %, (d) flash cut on the beat. Use one pair per video.</li>
+</ul>
+
+<div class="callout info"><strong class="t">Avoid the "mass-produced" flag</strong>YouTube monetisation rules target repetitive, near-identical or mass-produced content. A template is fine; what must differ every time is the original curation: your research, your comparisons, your wording and the footage you are cleared to use. Keep the original commentary (the "Why they matter" and verdict beats) genuinely yours.</div>
+</section>
+
+<!-- ============ 04 STYLE ============ -->
+<section id="style">
+<div class="sec-head"><span class="n">04</span><h2>Visual style guide</h2></div>
+<p><strong>Concept: "Radar × Zine".</strong> A surveillance-interface (brackets, rings, blips, mono labels) crossed with a photocopied fanzine (tape, halftone, grain, torn paper). It reads as "we detect what the algorithm misses" and it is cheap to produce because most elements are flat shapes.</p>
+<div class="shots" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+<figure class="shot"><img src="images/BG_Void_Rings.png" alt=""><figcaption><b>BG</b> Void Rings</figcaption></figure>
+<figure class="shot"><img src="images/BG_Void_Grid.png" alt=""><figcaption><b>BG</b> Void Grid</figcaption></figure>
+<figure class="shot"><img src="images/BG_Bone_Paper.png" alt=""><figcaption><b>BG</b> Bone Paper</figcaption></figure>
+<figure class="shot layer checker" style="padding:18px;border-radius:14px"><img src="images/logo_mark.png" alt="" style="border:0"><figcaption><b>Logo mark</b> "Blip"</figcaption></figure>
+</div>
+
+<h3>Colour palette</h3>
+<div class="swatches">
+<div class="sw"><div class="c" style="background:#0A0A0F;color:#F2EDE3">#0A0A0F</div><div class="i"><b>Void</b>Background, 60 %.</div></div>
+<div class="sw"><div class="c" style="background:#16161F;color:#F2EDE3">#16161F</div><div class="i"><b>Graphite</b>Cards, plates.</div></div>
+<div class="sw"><div class="c" style="background:#B8FF3C;color:#0A0A0F">#B8FF3C</div><div class="i"><b>Radar Lime</b>Primary accent, 20 %. Contrast on Void ≈ 16:1.</div></div>
+<div class="sw"><div class="c" style="background:#FF3D8B;color:#0A0A0F">#FF3D8B</div><div class="i"><b>Signal Magenta</b>Secondary, blips, 8 %. ≈ 6:1.</div></div>
+<div class="sw"><div class="c" style="background:#F2EDE3;color:#0A0A0F">#F2EDE3</div><div class="i"><b>Bone</b>Main text. ≈ 17:1.</div></div>
+<div class="sw"><div class="c" style="background:#8A8A99;color:#0A0A0F">#8A8A99</div><div class="i"><b>Static Gray</b>Small labels. ≈ 6:1.</div></div>
+</div>
+<div class="ratio"><div style="width:60%;background:#16161F;color:#F2EDE3;border:1px solid var(--line)">60 % Void / Graphite</div><div style="width:20%;background:#B8FF3C">20 % Lime</div><div style="width:12%;background:#F2EDE3">12 % Bone</div><div style="width:8%;background:#FF3D8B">8 %</div></div>
+<h4>Genre accents (swap in place of magenta/lime on photo tints and highlights)</h4>
+<div class="swatches">
+<div class="sw"><div class="c" style="background:#FF3D8B;color:#0A0A0F">#FF3D8B</div><div class="i"><b>Punk · Pop</b></div></div>
+<div class="sw"><div class="c" style="background:#3DE0FF;color:#0A0A0F">#3DE0FF</div><div class="i"><b>Electronic</b></div></div>
+<div class="sw"><div class="c" style="background:#FFB23D;color:#0A0A0F">#FFB23D</div><div class="i"><b>Folk · Acoustic</b></div></div>
+<div class="sw"><div class="c" style="background:#FF4A3D;color:#0A0A0F">#FF4A3D</div><div class="i"><b>Metal · Hardcore</b></div></div>
+<div class="sw"><div class="c" style="background:#A07BFF;color:#0A0A0F">#A07BFF</div><div class="i"><b>Jazz · Soul · Hip-hop</b></div></div>
+</div>
+
+<h3>Typography</h3>
+<div class="type-spec">
+<div class="t"><h4>Display · Barlow Condensed Bold</h4><div class="specimen">Off the radar 4/5</div><p style="margin-top:12px">All-caps, tight leading (0.88). Titles, hooks, band names. Free, SIL Open Font License (Google Fonts), commercial use allowed. If you can't install it, CapCut alternatives: Bebas Neue, Oswald or Anton (check the licence of any font you use).</p></div>
+<div class="t"><h4>Labels · Courier Prime Bold</h4><div class="specimen-m">[City] · Genre · 2019</div><p style="margin-top:12px">All-caps, tracking +6 %. Metadata, labels, episode counter, "start with". Typewriter feel = zine. Free (OFL). Fallback: Courier New Bold.</p></div>
+</div>
+<div class="tbl-wrap"><table>
+<tr><th>Use</th><th>Font</th><th>Size (1080×1920 px)</th><th>Colour</th></tr>
+<tr><td class="k">Hook</td><td>Barlow Condensed Bold</td><td>150–176</td><td>Bone, key word Lime</td></tr>
+<tr><td class="k">Band name</td><td>Barlow Condensed Bold</td><td>150–220 (shrink for long names, max 2 lines)</td><td>Bone</td></tr>
+<tr><td class="k">Fact / track title</td><td>Barlow Condensed Bold</td><td>100–190</td><td>Bone / Lime</td></tr>
+<tr><td class="k">Verdict, CTA</td><td>Barlow Condensed Bold</td><td>56–100</td><td>Bone / Magenta</td></tr>
+<tr><td class="k">Labels / metadata</td><td>Courier Prime Bold</td><td>30–44 (never below 30)</td><td>Lime / Gray / Magenta</td></tr>
+</table></div>
+<p>CapCut's size slider does not map 1:1 to pixels; compare with <span class="mono">Template_Preview.png</span> and match the look.</p>
+
+<h3>Safe zones</h3>
+<div class="grid g2" style="align-items:center">
+<figure class="shot" style="max-width:300px"><img src="images/safe_zones_en.png" alt="Safe zones"></figure>
+<div>
+<p>Both platforms cover the edges with interface. Keep every important element inside <strong>x 72–936, y 250–1440</strong> (the lime brackets in the template mark exactly this area).</p>
+<ul>
+<li><span class="pill no">Top 250 px</span> profile, search, camera and title bars.</li>
+<li><span class="pill no">Bottom 480 px</span> caption, music, account, progress bar.</li>
+<li><span class="pill no">Right 144 px</span> like / comment / share / remix buttons.</li>
+<li><span class="pill mid">Instagram grid</span> shows the centre 3:4 crop (1080×1440, dashed line) of the cover. Key cover elements go inside it.</li>
+</ul>
+<p>UI layouts change; test with a private upload on both apps once per quarter.</p>
+</div>
+</div>
+
+<h3>Video elements library</h3>
+<div class="shots" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr))">
+<figure class="shot layer"><div class="checker" style="border-radius:6px"><img src="images/layer_L01_Frame_Brackets.png" alt=""></div><figcaption><b>L01</b> Brackets</figcaption></figure>
+<figure class="shot layer"><div class="checker" style="border-radius:6px"><img src="images/layer_L02_Header_Plates.png" alt=""></div><figcaption><b>L02</b> Header</figcaption></figure>
+<figure class="shot layer"><div class="checker" style="border-radius:6px"><img src="images/layer_L03_BandName_Plate.png" alt=""></div><figcaption><b>L03</b> Band plate</figcaption></figure>
+<figure class="shot layer"><div class="checker" style="border-radius:6px"><img src="images/layer_L04_FactCard_Plate.png" alt=""></div><figcaption><b>L04</b> Fact card</figcaption></figure>
+<figure class="shot layer"><div class="checker" style="border-radius:6px"><img src="images/layer_L05_Rating_Plate.png" alt=""></div><figcaption><b>L05</b> Score plate</figcaption></figure>
+<figure class="shot layer"><div class="checker" style="border-radius:6px"><img src="images/layer_L12_EndCard_Plate.png" alt=""></div><figcaption><b>L12</b> End card</figcaption></figure>
+<figure class="shot layer"><div class="checker" style="border-radius:6px;padding:10px"><img src="images/layer_L09_Radar_Sweep_Square.png" alt=""></div><figcaption><b>L09</b> Radar sweep</figcaption></figure>
+<figure class="shot layer"><div class="checker" style="border-radius:6px;padding:10px"><img src="images/layer_L13_Tape_Label.png" alt=""></div><figcaption><b>L13</b> Tape label</figcaption></figure>
+</div>
+
+<h3>Motion &amp; editing language</h3>
+<div class="grid g2">
+<div class="card"><h4>Do</h4><ul>
+<li>Hard cuts on the beat; text pops in 0.2–0.3 s (pop / slide-up), no slow fades.</li>
+<li>Slow push-in on photos: 100 % → 108 % over the shot.</li>
+<li>Radar sweep wipe between major beats (max 2 per video).</li>
+<li>Keep scanlines (30 %), grain (40–50 %) and vignette (50–60 %) on the whole video: it is the "glue" of the series.</li>
+<li>Duotone photos: black &amp; white + Solid tint (Multiply / Overlay, 60–80 %).</li>
+<li>A blip (magenta dot) appears in each video, always in a different place: a recognisable easter egg.</li>
+</ul></div>
+<div class="card mag"><h4>Don't</h4><ul>
+<li>More than 2 fonts, or more than 2 accent colours in one scene.</li>
+<li>Text over busy areas without a plate or gradient.</li>
+<li>Stock "viral" effects, emoji stickers or trend filters: they date the series.</li>
+<li>Flashing effects faster than 3 per second (photosensitivity).</li>
+<li>Lyrics, logos of streaming platforms or other creators' watermarks in the frame.</li>
+<li>Screenshots of Spotify/Bandcamp pages or album covers without permission.</li>
+</ul></div>
+</div>
+</section>
+
+<!-- ============ 05 SPECS ============ -->
+<section id="specs">
+<div class="sec-head"><span class="n">05</span><h2>Video technical specifications</h2></div>
+<div class="spec">
+<div class="row"><span class="lbl">Aspect / resolution</span><span>9:16 vertical · <strong>1080 × 1920 px</strong></span></div>
+<div class="row"><span class="lbl">Frame rate</span><span><strong>30 fps</strong> constant (24/25 also fine; avoid variable frame rate)</span></div>
+<div class="row"><span class="lbl">Container / codec</span><span><strong>MP4 · H.264</strong> (High profile), 4:2:0, progressive</span></div>
+<div class="row"><span class="lbl">Video bitrate</span><span><strong>10–16 Mbps</strong> (CapCut: bitrate "Recommended" or "Higher"). Grain makes compression hard; don't go below 8 Mbps.</span></div>
+<div class="row"><span class="lbl">Audio</span><span><strong>AAC-LC · 48 kHz · stereo · 192–320 kbps</strong></span></div>
+<div class="row"><span class="lbl">Loudness</span><span>≈ <strong>−14 LUFS</strong> integrated, true peak ≤ −1 dBTP. Don't clip; the platforms normalise anyway.</span></div>
+<div class="row"><span class="lbl">Colour</span><span>SDR Rec.709. Don't export HDR (looks washed out on some phones).</span></div>
+<div class="row"><span class="lbl">Duration</span><span><strong>35–45 s</strong> target. Shorts allows up to 3 min and Reels up to 3 min (Instagram may allow more on some accounts). Keep ≤ 90 s if you may want to boost/promote on Instagram. Check the current limits before launch.</span></div>
+<div class="row"><span class="lbl">Safe area</span><span>x 72–936 · y 250–1440 (section 04)</span></div>
+<div class="row"><span class="lbl">Text</span><span>Burned-in only. Min. 30 px label, 56 px+ for key text, contrast ≥ 4.5:1</span></div>
+<div class="row"><span class="lbl">Watermark / outro</span><span><strong>None.</strong> Turn off CapCut's end-tag/outro in export settings. Never upload files carrying another app's watermark.</span></div>
+<div class="row"><span class="lbl">File name</span><span><span class="mono">OTR_E012_BandName_v1_1080x1920.mp4</span> (series_episode_band_version)</span></div>
+<div class="row"><span class="lbl">Cover</span><span>1080×1920 PNG/JPG, key content inside the centre 1080×1440 (section 07)</span></div>
+<div class="row"><span class="lbl">Accessibility</span><span>Add alt text on Instagram; credit the band in captions. No flashing, no strobing.</span></div>
+</div>
+<h4>Export checklist</h4>
+<ul class="check cols2"><li>Resolution 1080p, 30 fps, MP4 / H.264</li><li>Bitrate Recommended or Higher</li><li>Audio export on, AAC</li><li>No CapCut outro or watermark</li><li>Peaks under −1 dB, no clipping</li><li>Watched on phone at full-screen with the platform UI simulated</li><li>First frame doubles as cover</li><li>Rights logged in the Episode Sheet</li></ul>
+<h4>Upload notes</h4>
+<ul>
+<li><strong>YouTube:</strong> a vertical video up to the current Shorts length limit is treated as a Short. Upload from the Studio app or desktop; set title, description, audience ("not made for kids") and playlist. Custom Short thumbnails may be limited to the mobile app: verify in your account.</li>
+<li><strong>Instagram:</strong> upload natively as a Reel from the app or Meta Business Suite. A <em>Business</em> account has a restricted commercial music library; for your own cleared audio this does not matter, but trending in-app audio is not available on files uploaded with your own music track baked in.</li>
+<li>Don't upload the same file twice on the same platform. Do vary the title/caption per platform.</li>
+</ul>
+</section>
+
+<!-- ============ 06 TEMPLATE ============ -->
+<section id="template">
+<div class="sec-head"><span class="n">06</span><h2>CapCut template</h2></div>
+<div class="callout warn"><strong class="t">Read this first: what the template is, and isn't</strong>CapCut's project files (<span class="mono">draft_content.json</span>) are a proprietary format that changes between versions and, in recent versions, is encrypted. A hand-generated project file would be unreliable and I can't validate it without your CapCut build. So the template is delivered as a <strong>ready-to-assemble kit</strong>: every graphic is a layer already sized and positioned for 1080×1920, a timeline blueprint tells you exactly where each one goes, and you build the master project once (about 15 minutes) and then duplicate it for every episode.</div>
+
+<h3>Folder contents</h3>
+<div class="tree"><b>Video_Template\</b>
+ ├─ README_EN.md  /  README_ES.md        step-by-step build guide
+ ├─ Template_Preview.png                  what the finished master looks like
+ ├─ <b>Layers\</b>                              transparent PNGs, 1080×1920 (L01–L08, L12) + small elements
+ ├─ <b>Backgrounds\</b>                         BG_Void_Rings · BG_Void_Grid · BG_Bone_Paper
+ ├─ <b>Solid_Tints\</b>                         6 flat colours for duotone tints (blend modes)
+ ├─ Timeline_Blueprint_EN.csv / _ES.csv   every layer, track, time and animation
+ ├─ Text_Presets_EN.csv / _ES.csv         font, size, colour, position and wording for each text
+ ├─ Episode_Sheet.csv                     per-episode research and rights log
+ └─ Permission_Request_EN.txt / _ES.txt   email template to ask bands for permission</div>
+
+<h3>Track stack (bottom → top)</h3>
+<div class="tbl-wrap"><table>
+<tr><th>Track</th><th>Content</th><th>Notes</th></tr>
+<tr><td class="k">V1</td><td>Background (BG_*) or band footage/photo</td><td>Photos: slow zoom 100→108 %.</td></tr>
+<tr><td class="k">V2</td><td>Solid tint (Solid_*)</td><td>Blend Multiply/Overlay, opacity 60–80 %, only over photos.</td></tr>
+<tr><td class="k">V3</td><td>Plates L03 / L04 / L05 / L12</td><td>One per beat, aligned automatically (full-frame layers).</td></tr>
+<tr><td class="k">V4</td><td>L01 Brackets + L02 Header (whole video)</td><td>Never moves; this is the series signature.</td></tr>
+<tr><td class="k">V5</td><td>L06 Scanlines (30 %), L07 Grain (45 %), L08 Vignette (55 %)</td><td>Whole video, above everything except text.</td></tr>
+<tr><td class="k">T1–T4</td><td>Text per Text_Presets</td><td>Header text, main text, labels, details.</td></tr>
+<tr><td class="k">A1</td><td>Music (cleared)</td><td>−14 LUFS target. Fade out last 0.5 s.</td></tr>
+<tr><td class="k">A2</td><td>SFX (optional)</td><td>Only royalty-free / licensed SFX.</td></tr>
+</table></div>
+
+<h3>Build the master in 10 steps</h3>
+<ol>
+<li>New project → ratio <strong>9:16</strong>, 1080p, 30 fps. Import the whole <span class="mono">Video_Template</span> folder.</li>
+<li>Drop <strong>BG_Void_Rings</strong> on V1 for 40 s.</li>
+<li>Drop L01 + L02 on V4 for 40 s. Drop L06/L07/L08 on V5 for 40 s with the opacities above. They are full-frame, so no positioning is needed.</li>
+<li>Add plates on V3 following the blueprint (L03 at 2.5–6 s, L04 at 6–21 s, L05 at 31–36 s, L12 at 36–40 s).</li>
+<li>Create the text clips from <span class="mono">Text_Presets_EN.csv</span> (font, size, colour, wording). Match positions against <span class="mono">Template_Preview.png</span>.</li>
+<li>Add a pop-in (0.25 s) to each text and a quick radar-sweep wipe (or L09 rotated with keyframes) at 13 s and 31 s.</li>
+<li>Optional top progress bar: L10 Track under the header, L10 Fill with keyframes scale-X 0 → 100 % over 40 s.</li>
+<li>Add the placeholder photo on V1/V2 for beats 0–1, with tint.</li>
+<li>Add a placeholder music clip and align the cuts to its beat markers.</li>
+<li>Rename the project <strong>OTR_MASTER</strong>. For each episode, <em>duplicate</em> the draft, rename (OTR_E012…), replace text/photo/music, export.</li>
+</ol>
+<p>If your CapCut version offers "Export as template" / "Create template", use it on OTR_MASTER (availability depends on version and region). Otherwise, the duplicated master is your template.</p>
+<div class="shots" style="max-width:520px"><figure class="shot"><img src="images/frame_title_en.png" alt=""><figcaption><b>Template_Preview.png</b> target look</figcaption></figure></div>
+</section>
+
+<!-- ============ 07 THUMBS ============ -->
+<section id="thumbs">
+<div class="sec-head"><span class="n">07</span><h2>Thumbnail style</h2></div>
+<p>In vertical feeds the "thumbnail" appears in three places: the YouTube Shorts shelf/channel page, the Instagram profile grid and the cover when someone shares a link. Design every cover as a poster that works at 1/10 size, and make the <strong>first frame of the video = the cover</strong> (so you don't depend on custom-upload availability).</p>
+<div class="shots" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+<figure class="shot"><img src="images/thumb_A_en.png" alt=""><figcaption><b>A · Poster</b> default</figcaption></figure>
+<figure class="shot"><img src="images/thumb_B_en.png" alt=""><figcaption><b>B · Radar scan</b> curiosity</figcaption></figure>
+<figure class="shot"><img src="images/thumb_C_en.png" alt=""><figcaption><b>C · If you like</b> comparison</figcaption></figure>
+</div>
+<div class="tbl-wrap"><table>
+<tr><th>Template</th><th>Use when</th><th>Elements</th></tr>
+<tr><td class="k">A · Poster</td><td>You have a good, cleared band photo.</td><td>Duotone photo + band name (≈ 230 px) + magenta tag "you don't know them yet" + header bar.</td></tr>
+<tr><td class="k">B · Radar scan</td><td>No photo, or hook is a question.</td><td>Radar sweep + 2-line question + blip. Fully typographic and photo-free: zero image-rights risk.</td></tr>
+<tr><td class="k">C · If you like</td><td>The comparison is the selling point.</td><td>Split light/dark: "If you like [A]" over "Listen to [B]". Bone Paper top.</td></tr>
+</table></div>
+<h4>Rules</h4>
+<ul class="cols2">
+<li>Max <strong>4 words</strong> of large text, 6 total.</li>
+<li>Keep key content inside the <strong>centre 1080×1440</strong> (Instagram 3:4 grid crop) and the safe area.</li>
+<li>Same header bar and brackets in every cover: consistency in the grid.</li>
+<li>Alternate A/B/C across the grid so it doesn't look repetitive; test A vs. B for 2 weeks.</li>
+<li>Text contrast ≥ 4.5:1; bone or lime on dark only.</li>
+<li>Only photos you are cleared to use. Otherwise template B.</li>
+<li>Honest covers: no fake claims or misleading imagery (YouTube's misleading-metadata policy).</li>
+<li>Export PNG, 1080×1920, under 2 MB.</li>
+</ul>
+</section>
+
+<!-- ============ 08 RIGHTS ============ -->
+<section id="rights">
+<div class="sec-head"><span class="n">08</span><h2>Avoiding strikes, Content ID and other filters</h2></div>
+<div class="callout warn"><strong class="t">The honest truth</strong>There is <strong>no editing trick</strong> that makes someone else's recording "safe". Speeding up, pitch-shifting, EQ, mirroring or adding noise are unreliable (the systems are designed to survive them), can be treated as circumvention, do nothing against a manual takedown, and damage the music you're trying to showcase. The only reliable way to avoid problems is to <strong>have the right to use the music</strong>. Fortunately, promoting bands is the best possible case for getting permission. This section is general information, not legal advice; policies change, so check the platforms' current rules.</div>
+
+<h3>Claim vs. strike vs. takedown</h3>
+<div class="tbl-wrap"><table>
+<tr><th>What</th><th>Who triggers it</th><th>Consequence</th><th>Severity</th></tr>
+<tr><td class="k">Content ID claim (YouTube)</td><td>Automatic match against rights-holder reference files</td><td>No strike. Revenue goes to the claimant, the audio may be muted or the video blocked in some countries. On Shorts the claim usually results in the music being tracked/monetised by the owner, or blocked if the owner doesn't allow it.</td><td><span class="pill mid">Medium</span></td></tr>
+<tr><td class="k">Copyright takedown / strike</td><td>A person or label files a legal takedown request (DMCA or local equivalent)</td><td>Video removed + <strong>copyright strike</strong>. 3 active strikes → channel termination.</td><td><span class="pill no">High</span></td></tr>
+<tr><td class="k">Meta Rights Manager (Instagram/Facebook)</td><td>Automatic match or manual report</td><td>Audio muted, video removed or blocked, reach limited; repeat infringers risk restrictions or account disablement.</td><td><span class="pill no">High</span></td></tr>
+<tr><td class="k">Community / policy strike</td><td>Platform review</td><td>Reused/inauthentic content, spam, misleading metadata, etc.: demonetisation, limited reach, strikes.</td><td><span class="pill mid">Medium</span></td></tr>
+</table></div>
+
+<h3>Music sourcing ladder (from safest)</h3>
+<div class="tbl-wrap"><table>
+<tr><th>#</th><th>Source</th><th>Safety</th><th>How to do it right</th></tr>
+<tr><td class="k">1</td><td><strong>Written permission from the rights holders</strong> (band + label/distributor/publisher if they exist)</td><td><span class="pill ok">Best</span></td><td>Use <span class="mono">Permission_Request_EN.txt</span>. Ask explicitly for YouTube <em>and</em> Instagram, 30–45 s of the track, with credit. <strong>Ask them to allow-list your channel/account</strong> with their distributor (YouTube Content ID) and Meta Rights Manager so no automatic claim fires. Save the email. They gain free promotion, so many bands say yes.</td></tr>
+<tr><td class="k">2</td><td><strong>Creative Commons music</strong> from bands who chose it (e.g. CC BY, CC BY-SA)</td><td><span class="pill ok">Good</span></td><td>Avoid NC (non-commercial) and ND (no derivatives; adding music to video counts as a derivative). Give the credit the licence requires. Keep a screenshot of the licence page: CC tracks are sometimes registered in Content ID by mistake and you'll need proof.</td></tr>
+<tr><td class="k">3</td><td><strong>Licensed library / subscription</strong></td><td><span class="pill ok">Good</span></td><td>Perfect for stingers, intro/outro and the Rewind format. It can't be the featured band, so it doesn't replace #1. Check that the licence covers YouTube and Instagram, and that channel whitelisting is included.</td></tr>
+<tr><td class="k">4</td><td><strong>In-app music libraries</strong> (YouTube Shorts sounds, Instagram audio)</td><td><span class="pill mid">Platform-only</span></td><td>Licensed for use inside that app only, can't be exported, so it breaks the "same file on both" rule: you'd export the video silent and add audio in each app. Most unknown bands won't be in the catalogue. Business Instagram accounts have a narrower library.</td></tr>
+<tr><td class="k">5</td><td>Ripping from Spotify/YouTube/Bandcamp without permission, "no copyright intended" notes, "fair use" bets, covers/re-recordings, lyrics</td><td><span class="pill no">Avoid</span></td><td>Disclaimers have no legal effect; 30–40 s of a recording used as the main attraction isn't a safe fair-use bet; covers need composition licences. Don't.</td></tr>
+</table></div>
+
+<h3>Images, fonts and other assets</h3>
+<ul>
+<li><strong>Band photos, logos and artwork:</strong> use official press-kit images and ask for permission in the same email. Credit the photographer if the band asks.</li>
+<li><strong>Concert footage:</strong> usually belongs to the filmer <em>and</em> contains the music. Use only the band's own footage or your own.</li>
+<li><strong>Screenshots of Spotify/Bandcamp/Instagram pages or album covers:</strong> avoid. Use plain text "Bandcamp / Spotify" instead of logos.</li>
+<li><strong>Stock footage, SFX, fonts, CapCut library effects/music:</strong> check the commercial-use licence of each; CapCut marks some items as commercial-use friendly, others not.</li>
+<li><strong>AI-generated visuals:</strong> don't create realistic fake band members or performances. If you use realistic synthetic content, follow the platforms' disclosure/labelling rules.</li>
+<li><strong>Facts:</strong> misinformation or defamatory claims about real people cause reports. Source every fact.</li>
+</ul>
+
+<h3>Other filters that can hurt the series</h3>
+<ul>
+<li><strong>YouTube "inauthentic / mass-produced content":</strong> repetitive, templated videos without original value may lose monetisation eligibility. Keep real curation and commentary in every episode.</li>
+<li><strong>Instagram originality:</strong> reposted content and visible third-party watermarks get less distribution. Export clean files.</li>
+<li><strong>Spam &amp; metadata:</strong> don't stuff hashtags (3–5), don't use misleading titles or covers, don't mass-tag accounts.</li>
+<li><strong>Duplicate uploads:</strong> posting the same file on both platforms is fine; posting it repeatedly on one is not.</li>
+</ul>
+
+<h3>Pre-publish compliance checklist</h3>
+<ul class="check">
+<li>Written permission from the band/label for audio <em>and</em> images, for YouTube <em>and</em> Instagram (saved in the Episode Sheet).</li>
+<li>Channel/account allow-listed with the distributor, or permission states they won't claim.</li>
+<li>Only the part of the track agreed is used (≤ 45 s). Credit in caption/description.</li>
+<li>No lyrics, no streaming logos, no screenshots, no third-party footage.</li>
+<li>Every on-screen fact verified, source stored.</li>
+<li>First export reviewed on a phone with no watermark or CapCut outro.</li>
+<li>Posted as <em>Private/Unlisted</em> first: check that no Content ID claim appears in YouTube Studio's Content tab before publishing publicly. Meta shows rights issues in Rights Manager or the Reel's status.</li>
+</ul>
+
+<h3>If a claim or strike arrives anyway</h3>
+<ol>
+<li>Read the exact type (Content ID claim vs. takedown). Don't panic-delete: deleting a video <strong>does not</strong> remove a strike.</li>
+<li>If you have permission, send the evidence to the claimant. Only dispute when you are right: false disputes can escalate into takedown requests and strikes.</li>
+<li>If you don't have rights, remove or replace the audio, or delete the video (before a strike where possible).</li>
+<li>Strike: take the copyright school, don't repost the content; a claimant can retract the takedown, which removes the strike.</li>
+<li>Log what happened and fix the process that allowed it.</li>
+</ol>
+
+<div class="callout info"><strong class="t">Rights log (Episode_Sheet.csv)</strong>For every episode keep: band, contact, date of permission, scope (platforms, duration, territory), source of photos, licence links, and the allow-list confirmation. It's what you'll need in a dispute.</div>
+</section>
+
+<!-- ============ 09 PITFALLS ============ -->
+<section id="pitfalls">
+<div class="sec-head"><span class="n">09</span><h2>Pitfalls &amp; mitigation</h2></div>
+<div class="tbl-wrap"><table>
+<tr><th>Pitfall</th><th>Why it happens</th><th>Mitigation</th></tr>
+<tr><td class="k">Music claims or strikes</td><td>Using commercial or unlicensed tracks, even for 15 s.</td><td>Permission-first workflow, allow-listing, rights log, unlisted pre-check (section 08).</td></tr>
+<tr><td class="k">"Same video" ≠ same audio</td><td>In-app music can't be exported; trending audio only works in-app.</td><td>Accept the trade-off: cleared music baked in the file, no trending sounds. Optionally publish a 2nd, in-app version for trend ride-alongs.</td></tr>
+<tr><td class="k">Text hidden by UI</td><td>Different overlays on YouTube and Instagram.</td><td>Template brackets = safe area. Test a private upload on both apps.</td></tr>
+<tr><td class="k">Unknown bands have no search demand</td><td>Nobody searches for a name they don't know.</td><td>Use "If you like [A]" in titles/captions, genre + country keywords, collab posts with the band.</td></tr>
+<tr><td class="k">Weak first 2 seconds</td><td>Text-only: the hook must be visual and typographic.</td><td>Hook bank, A/B test two hook styles, start music on an energetic bar.</td></tr>
+<tr><td class="k">Looks like a clone factory</td><td>Same template every time + automation.</td><td>3-of-5 variation rule, genuine commentary, vary accent/background/structure.</td></tr>
+<tr><td class="k">Text too fast / too small</td><td>No voice to carry information.</td><td>7 words max, 3 words/s, 30 px+ labels, test with sound off.</td></tr>
+<tr><td class="k">Name or handle conflict</td><td>Generic names already used.</td><td>Check handles/trademark before branding; secure the same handle on all platforms.</td></tr>
+<tr><td class="k">Burn-out / cadence</td><td>Weekly is hard for solo creators.</td><td>Batch 4 episodes; keep a 2-episode buffer; scale only with data.</td></tr>
+<tr><td class="k">Band backlash</td><td>Wrong facts or unapproved use of material.</td><td>Ask for approval of the final cut; tag and credit the band.</td></tr>
+<tr><td class="k">Wrong platform assumptions</td><td>Limits and features change often.</td><td>Re-check lengths, library access and policies each quarter.</td></tr>
+</table></div>
+
+<h3>Source pages to re-check (official)</h3>
+<div class="sources">
+<a href="https://www.youtube.com/howyoutubeworks/policies/copyright/" target="_blank" rel="noopener">YouTube – How copyright works (Content ID, claims, strikes)</a>
+<a href="https://support.google.com/youtube" target="_blank" rel="noopener">YouTube Help – Shorts, monetisation and channel policies</a>
+<a href="https://help.instagram.com" target="_blank" rel="noopener">Instagram Help Center – Reels, music and copyright</a>
+<a href="https://creativecommons.org/share-your-work/cclicenses/" target="_blank" rel="noopener">Creative Commons – licence types</a>
+</div>
+</section>
+</main>
+<footer><div class="wrap"><span class="m" style="color:var(--lime)">Off The Radar</span> · Series proposal v1.0 · Platform limits and policies as understood in October 2026; verify before launch. Not legal advice.</div></footer>
+
+</body>
+</html>

@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang='es'>
+<head>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>Fuera de Radar – Propuesta de Serie y Guía de Producción</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=Courier+Prime:wght@400;700&display=swap');
+:root{--void:#0A0A0F;--graphite:#16161F;--graphite2:#1f1f2b;--lime:#B8FF3C;--mag:#FF3D8B;--bone:#F2EDE3;--gray:#8A8A99;--cyan:#3DE0FF;--amber:#FFB23D;--red:#FF4A3D;--violet:#A07BFF;--line:#2a2a38}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--void);color:var(--bone);font-family:'Barlow','Segoe UI',Arial,sans-serif;font-size:17px;line-height:1.6;background-image:radial-gradient(circle at 80% -10%,rgba(184,255,60,.07),transparent 40%),radial-gradient(circle at 0% 30%,rgba(255,61,139,.06),transparent 35%)}
+a{color:var(--lime)}
+.d,h1,h2,h3{font-family:'Barlow Condensed','Oswald','Agency FB','Impact',sans-serif;text-transform:uppercase;line-height:1;font-weight:700;letter-spacing:.01em}
+.m,.mono{font-family:'Courier Prime','Courier New',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+nav{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;gap:4px;padding:10px 24px;overflow-x:auto;align-items:center}
+nav .brand{font-family:'Barlow Condensed',Impact,sans-serif;font-weight:700;text-transform:uppercase;font-size:22px;color:var(--void);background:var(--lime);padding:2px 12px;margin-right:12px;white-space:nowrap}
+nav a{font-family:'Courier Prime','Courier New',monospace;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--bone);text-decoration:none;padding:6px 10px;white-space:nowrap;border:1px solid transparent}
+nav a:hover{border-color:var(--lime);color:var(--lime)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.hero{padding:90px 0 60px;position:relative;overflow:hidden}
+.hero .tag{display:inline-block;background:var(--lime);color:var(--void);padding:4px 14px;font-size:15px}
+.hero h1{font-size:clamp(54px,9vw,120px);margin:22px 0 12px}
+.hero h1 span{color:var(--lime)}
+.hero p.lead{font-size:21px;max-width:720px;color:#d9d4c9}
+.hero .meta{margin-top:26px;display:flex;gap:10px;flex-wrap:wrap}
+.chip{border:1px solid var(--lime);color:var(--lime);padding:4px 12px;font-size:13px}
+.chip.mag{border-color:var(--mag);color:var(--mag)}
+.hero-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:center}
+.hero-img{display:flex;gap:14px;justify-content:center}
+.hero-img img{width:31%;min-width:120px;border:2px solid var(--line);border-radius:14px}
+.hero-img img:nth-child(2){transform:translateY(24px)}
+section{padding:64px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:26px}
+.sec-head .n{font-family:'Courier Prime','Courier New',monospace;font-weight:700;color:var(--void);background:var(--mag);padding:2px 10px;font-size:15px}
+h2{font-size:clamp(38px,5vw,64px)}
+h3{font-size:30px;margin:34px 0 12px;color:var(--lime)}
+h4{font-family:'Courier Prime','Courier New',monospace;text-transform:uppercase;font-size:14px;letter-spacing:.08em;color:var(--mag);margin:20px 0 8px}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 16px 22px}
+li{margin-bottom:6px}
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.card{background:var(--graphite);border:1px solid var(--line);border-left:5px solid var(--lime);padding:20px 22px}
+.card.mag{border-left-color:var(--mag)}
+.card.cyan{border-left-color:var(--cyan)}
+.card h4{margin-top:0}
+.card .big{font-family:'Barlow Condensed',Impact,sans-serif;font-size:44px;font-weight:700;line-height:1;color:var(--lime)}
+.callout{padding:18px 22px;margin:22px 0;border:2px solid var(--lime);background:rgba(184,255,60,.07)}
+.callout.warn{border-color:var(--mag);background:rgba(255,61,139,.09)}
+.callout.info{border-color:var(--cyan);background:rgba(61,224,255,.07)}
+.callout strong.t{display:block;font-family:'Courier Prime','Courier New',monospace;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.callout.warn strong.t{color:var(--mag)}.callout:not(.warn):not(.info) strong.t{color:var(--lime)}.callout.info strong.t{color:var(--cyan)}
+table{width:100%;border-collapse:collapse;margin:14px 0 24px;font-size:15.5px}
+th{font-family:'Courier Prime','Courier New',monospace;text-transform:uppercase;font-size:12.5px;letter-spacing:.06em;text-align:left;background:var(--lime);color:var(--void);padding:9px 12px}
+td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:rgba(255,255,255,.025)}
+td.k{font-family:'Courier Prime','Courier New',monospace;font-weight:700;color:var(--lime);white-space:nowrap}
+.tbl-wrap{overflow-x:auto}
+.pill{display:inline-block;font-family:'Courier Prime','Courier New',monospace;font-weight:700;font-size:12px;text-transform:uppercase;padding:2px 8px;margin:0 4px 4px 0}
+.pill.ok{background:var(--lime);color:var(--void)}.pill.no{background:var(--mag);color:var(--void)}.pill.mid{background:var(--amber);color:var(--void)}
+.swatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.sw{border:1px solid var(--line);background:var(--graphite)}
+.sw .c{height:110px;display:flex;align-items:flex-end;padding:8px 10px;font-family:'Courier Prime','Courier New',monospace;font-weight:700;font-size:13px}
+.sw .i{padding:10px 12px;font-size:14px}
+.sw .i b{font-family:'Barlow Condensed',Impact,sans-serif;font-size:22px;text-transform:uppercase;display:block}
+.ratio{display:flex;height:34px;margin:10px 0 4px}
+.ratio div{display:flex;align-items:center;padding-left:8px;font-family:'Courier Prime','Courier New',monospace;font-weight:700;font-size:12px;color:var(--void)}
+.spec{background:var(--graphite);border:1px solid var(--line);padding:22px;margin:12px 0}
+.spec .row{display:flex;align-items:baseline;gap:20px;border-bottom:1px dashed var(--line);padding:10px 0;flex-wrap:wrap}
+.spec .row:last-child{border:0}
+.spec .row .lbl{width:210px;font-family:'Courier Prime','Courier New',monospace;font-weight:700;color:var(--lime);text-transform:uppercase;font-size:13px;letter-spacing:.05em}
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin:18px 0;align-items:start}
+.shot{text-align:center}
+.shot img{width:100%;border-radius:14px;border:2px solid var(--line);display:block}
+.shot figcaption{font-family:'Courier Prime','Courier New',monospace;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--gray);margin-top:8px;font-weight:700}
+.shot figcaption b{color:var(--lime)}
+.checker{background-color:#2a2a38;background-image:linear-gradient(45deg,#3a3a4a 25%,transparent 25%),linear-gradient(-45deg,#3a3a4a 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#3a3a4a 75%),linear-gradient(-45deg,transparent 75%,#3a3a4a 75%);background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0}
+.shot.layer img{border-radius:6px}
+.type-spec{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.type-spec .t{background:var(--graphite);border:1px solid var(--line);padding:22px}
+.specimen{font-family:'Barlow Condensed','Impact',sans-serif;font-weight:700;text-transform:uppercase;font-size:76px;line-height:.9;color:var(--bone)}
+.specimen-m{font-family:'Courier Prime','Courier New',monospace;font-weight:700;text-transform:uppercase;font-size:28px;letter-spacing:.06em;color:var(--lime)}
+.tree{font-family:'Courier Prime','Courier New',monospace;background:#000;border:1px solid var(--line);padding:18px 22px;overflow-x:auto;font-size:14px;line-height:1.55;white-space:pre;color:#cfe;}
+.tree b{color:var(--lime)}
+.check li{list-style:none;position:relative;padding-left:32px}
+.check li:before{content:'';position:absolute;left:0;top:6px;width:18px;height:18px;border:2px solid var(--lime)}
+.cols2{columns:2;column-gap:36px}
+.cols2 li{break-inside:avoid}
+.hooks li strong{color:var(--lime)}
+.timeline{display:flex;height:64px;margin:16px 0 8px;border:1px solid var(--line)}
+.timeline div{display:flex;align-items:center;justify-content:center;font-family:'Courier Prime','Courier New',monospace;font-weight:700;font-size:12px;text-transform:uppercase;color:var(--void);border-right:2px solid var(--void);text-align:center;padding:0 4px}
+.tl-scale{display:flex;justify-content:space-between;font-family:'Courier Prime','Courier New',monospace;font-size:12px;color:var(--gray)}
+footer{border-top:1px solid var(--line);padding:40px 0 70px;color:var(--gray);font-size:14px}
+.sources a{display:block}
+@media(max-width:820px){.hero-grid{grid-template-columns:1fr}.cols2{columns:1}.spec .row .lbl{width:100%}}
+@media print{nav{display:none}body{background:#fff;color:#000}}
+
+</style>
+</head>
+<body>
+<nav>
+<span class="brand">Fuera de Radar</span>
+<a href="#approach">01 Enfoque</a><a href="#names">02 Nombres</a><a href="#script">03 Guion</a><a href="#style">04 Estilo visual</a><a href="#specs">05 Especificaciones</a><a href="#template">06 Plantilla CapCut</a><a href="#thumbs">07 Miniaturas</a><a href="#rights">08 Copyright y Content ID</a><a href="#pitfalls">09 Riesgos</a>
+</nav>
+
+<header class="hero"><div class="wrap hero-grid">
+<div>
+<span class="tag m">Propuesta de serie · v1.0 · 2026-10-16</span>
+<h1 class="d">Bandas que <span>aún no conoces</span>.</h1>
+<p class="lead">Un plan completo para una serie semanal de vídeos verticales que presenta bandas poco conocidas en YouTube Shorts e Instagram Reels: un solo vídeo para dos plataformas, solo música y texto, pensada para ser consistente y para evitar strikes por copyright.</p>
+<div class="meta"><span class="chip m">9:16 · 1080×1920</span><span class="chip m">35–45 s</span><span class="chip m">Música + texto, sin voz en off</span><span class="chip mag m">Derechos primero</span></div>
+</div>
+<div class="hero-img"><img src="images/frame_hook_es.png" alt="Fotograma de gancho"><img src="images/frame_title_es.png" alt="Fotograma de título"><img src="images/frame_fact_es.png" alt="Fotograma suena a"></div>
+</div></header>
+
+<main class="wrap">
+
+<!-- ============ 01 ENFOQUE ============ -->
+<section id="approach">
+<div class="sec-head"><span class="n">01</span><h2>El enfoque</h2></div>
+<p><strong>El concepto en una línea:</strong> cada semana, un "ping de radar" de 40 segundos: una banda que el espectador no conoce, una razón para darle al play y una forma clara de seguir escuchando.</p>
+
+<div class="grid g3">
+<div class="card"><h4>Promesa a la audiencia</h4><p>"En 40 segundos sabrás si esta banda es para ti y habrás escuchado su mejor momento."</p></div>
+<div class="card mag"><h4>Por qué puede funcionar</h4><p>Descubrir música es un hábito diario, el "si te gusta X" ya es como la gente busca, y los vídeos solo de texto son baratos, rápidos y centrados en el sonido.</p></div>
+<div class="card cyan"><h4>Por qué es difícil</h4><p>Las bandas desconocidas no tienen búsquedas, así que el gancho, la comparación con una banda conocida y el formato recurrente hacen el trabajo. Los derechos musicales son el principal riesgo (sección 08).</p></div>
+</div>
+
+<h3>Formatos de la serie (misma plantilla, distinta forma)</h3>
+<div class="tbl-wrap"><table>
+<tr><th>Formato</th><th>Duración</th><th>Frecuencia</th><th>Qué es</th></tr>
+<tr><td class="k">Radar Pick</td><td>38–45 s</td><td>Semanal (principal)</td><td>Una banda, con el guion estándar de la sección 03.</td></tr>
+<tr><td class="k">Doble Blip</td><td>30–35 s</td><td>2.º hueco semanal opcional</td><td>Dos bandas parecidas ("Si te gusta A, prueba B o C").</td></tr>
+<tr><td class="k">Barrido de género</td><td>50–60 s</td><td>Cada 2–3 semanas</td><td>Tres bandas de un género o país, 15 s cada una.</td></tr>
+<tr><td class="k">Rewind</td><td>55–60 s</td><td>Mensual</td><td>Resumen de las mejores bandas del mes. Reutiliza solo material ya autorizado.</td></tr>
+</table></div>
+
+<h3>Flujo de producción (un vídeo maestro, dos plataformas)</h3>
+<ol>
+<li><strong>Elegir e investigar</strong> (20 min): escoge la banda, verifica cada dato que saldrá en pantalla y rellena <span class="mono">Video_Template/Episode_Sheet.csv</span>.</li>
+<li><strong>Resolver derechos primero</strong> (en paralelo): envía el correo de permiso (<span class="mono">Permission_Request_ES.txt</span>) a la banda o sello. No edites hasta tener un sí por escrito.</li>
+<li><strong>Montar desde la plantilla de CapCut</strong> (45–60 min): cambia texto, foto y audio; elige el color de acento del género.</li>
+<li><strong>Exportar una sola vez</strong> (MP4 1080×1920 limpio, sin cierre de CapCut ni marca de agua).</li>
+<li><strong>Subir de forma nativa a ambas plataformas</strong> desde el mismo archivo, con descripción y hashtags distintos en cada una. Nunca resubas un vídeo descargado de la otra plataforma (las marcas de agua penalizan el alcance).</li>
+<li><strong>Fijar un comentario</strong> con enlaces a la banda (Bandcamp / Spotify / web oficial) y créditos de foto y música.</li>
+<li><strong>Revisar a las 48 h</strong>: retención, deslizamiento, compartidos, guardados, seguidores.</li>
+</ol>
+
+<h3>Frecuencia y cuándo escalar</h3>
+<p>Empieza con <strong>2 vídeos por semana durante 4 semanas</strong> para aprender qué funciona y después fija un ritmo sostenible. Escala solo si los números lo justifican. Son heurísticas de trabajo, no reglas de las plataformas:</p>
+<div class="grid g4">
+<div class="card"><h4>Se quedaron a verlo</h4><div class="big">≥ 65–70%</div><p>en YouTube Analytics ("visto vs. deslizado")</p></div>
+<div class="card"><h4>Duración media vista</h4><div class="big">≥ 80%</div><p>de la duración (el bucle ayuda)</p></div>
+<div class="card mag"><h4>Compartidos + guardados</h4><div class="big">≥ 3%</div><p>de las visualizaciones. El descubrimiento vive de compartir.</p></div>
+<div class="card mag"><h4>Seguidores</h4><div class="big">≥ 1–2 / 1k</div><p>por cada 1.000 visualizaciones, al alza</p></div>
+</div>
+<p>Si tres vídeos seguidos superan estas cifras, pasa a 3 por semana. Si tras 8 vídeos estás por debajo, cambia el <em>gancho</em> y los <em>primeros 2 segundos</em> antes de tocar nada más.</p>
+
+<h3>Descripciones y descubrimiento (el texto no va dentro del vídeo)</h3>
+<div class="grid g2">
+<div class="card"><h4>YouTube Shorts</h4><ul><li><strong>Título</strong> (≤ 60 caracteres): "[BANDA]: si te gusta [A]". Palabras clave primero.</li><li><strong>Descripción</strong>: 2 líneas sobre la banda, enlaces, créditos de foto y música y 3 hashtags.</li><li>Enlace a la banda en el comentario fijado.</li><li>Añade los Shorts a una lista "Fuera de Radar" para maratones.</li></ul></div>
+<div class="card"><h4>Instagram Reels</h4><ul><li>La <strong>primera línea</strong> de la descripción funciona como gancho: "Si te gusta [A], necesitas a [BANDA]".</li><li><strong>Invita a la banda como colaboradora</strong> (publicación Collab) para que el vídeo llegue también a su audiencia.</li><li>3–5 hashtags relevantes (género, "musicanueva", etiqueta de la serie).</li><li>Añade texto alternativo y una portada que sobreviva al recorte 3:4 de la cuadrícula (sección 07).</li></ul></div>
+</div>
+
+<h3>Plan de lanzamiento a 30 días</h3>
+<div class="tbl-wrap"><table>
+<tr><th>Semana</th><th>Objetivo</th><th>Acciones</th></tr>
+<tr><td class="k">0</td><td>Preparación</td><td>Elegir nombre y comprobar handles, montar el maestro de CapCut desde la plantilla, escribir 8 correos de permiso, crear la Episode Sheet.</td></tr>
+<tr><td class="k">1</td><td>Producción en lote</td><td>Producir 4 episodios de una tacada con bandas que dijeron sí. Mantener un colchón de dos.</td></tr>
+<tr><td class="k">2–3</td><td>Publicar y probar</td><td>2 por semana. Probar dos estilos de gancho (sección 03) y dos miniaturas (sección 07).</td></tr>
+<tr><td class="k">4</td><td>Decidir</td><td>Quedarse con el mejor gancho y formato, fijar la frecuencia, avisar a las bandas y pedirles que compartan.</td></tr>
+</table></div>
+</section>
+
+<!-- ============ 02 NOMBRES ============ -->
+<section id="names">
+<div class="sec-head"><span class="n">02</span><h2>Propuestas de nombre</h2></div>
+<p>Criterios: corto para un handle, que diga "descubrimiento" de un vistazo, que funcione hablado y escrito y que encaje con la identidad visual radar/fanzine. <strong>Antes de elegir:</strong> busca el nombre en YouTube, Instagram, TikTok y un registrador de dominios, y haz una búsqueda de marca en tu país. Es probable que casi todos estén usados en algún sitio, así que comprueba el handle exacto y los conflictos en el nicho musical.</p>
+<div class="tbl-wrap"><table>
+<tr><th>#</th><th>Nombre</th><th>Eslogan</th><th>Por qué funciona</th><th>Ojo con</th></tr>
+<tr><td class="k">1 ★</td><td><strong>Fuera de Radar</strong></td><td>Una banda que no conoces.</td><td>Comunica descubrimiento al instante; el lenguaje visual del radar sale solo. Funciona como un "ping" recurrente.</td><td>Expresión común: búsqueda saturada. Usa un handle distintivo (p. ej. @fueraderadar.bandas).</td></tr>
+<tr><td class="k">2</td><td><strong>Bajo el Radar</strong></td><td>Música que se te escapó.</td><td>Muy natural en español y cercano al nombre 1.</td><td>Muy usado como expresión general.</td></tr>
+<tr><td class="k">3</td><td><strong>Cara B</strong></td><td>Las bandas detrás de los éxitos.</td><td>Nostálgico, comunitario, bueno para merchandising.</td><td>Evoca discos antiguos; aclara que son bandas actuales.</td></tr>
+<tr><td class="k">4</td><td><strong>Lo Que No Suena</strong></td><td>Y debería.</td><td>Promesa clara y un punto de provocación.</td><td>Más largo como handle.</td></tr>
+<tr><td class="k">5</td><td><strong>Blip</strong></td><td>Una señal nueva cada semana.</td><td>Cortísimo, propio, encaja con la marca-logo.</td><td>Difícil de buscar; necesita un eslogan fuerte en la bio.</td></tr>
+<tr><td class="k">6</td><td><strong>Aguja en el Pajar</strong></td><td>Encontramos la aguja.</td><td>Metáfora potente de curaduría.</td><td>Fuera de contexto no suena a música; añade "bandas" al handle.</td></tr>
+<tr><td class="k">7</td><td><strong>Órbita Baja</strong></td><td>Justo por debajo de tu radar.</td><td>Distintivo y memorable, tono espacial/radar.</td><td>No es obviamente música.</td></tr>
+<tr><td class="k">8</td><td><strong>Pista Oculta</strong></td><td>Dale al play a lo que te perdiste.</td><td>Término musical, con aire de secreto.</td><td>También designa algo concreto en los discos.</td></tr>
+<tr><td class="k">9</td><td><strong>¿Quiénes Son?</strong></td><td>Todavía.</td><td>Conversacional, conecta con el gancho "seguro que no los conoces".</td><td>Dificulta el SEO; mejor como título de episodio.</td></tr>
+<tr><td class="k">10</td><td><strong>Señal / Ruido</strong></td><td>Atraviesa el ruido de las playlists.</td><td>Tono editorial de curador.</td><td>Muy usado, incluido contenido tecnológico.</td></tr>
+</table></div>
+<div class="callout"><strong class="t">Recomendación</strong>Quédate con <strong>Fuera de Radar</strong> (promesa más clara y mejor encaje visual). Usa <strong>Blip</strong> como nombre de la mascota/marca-logo y <strong>Órbita Baja</strong> como alternativa si el handle está ocupado. Todos los elementos visuales de esta guía usan "Fuera de Radar" como ejemplo; las capas de la plantilla no contienen texto de marca, así que cambiarlo no cuesta nada.</div>
+</section>
+
+<!-- ============ 03 GUION ============ -->
+<section id="script">
+<div class="sec-head"><span class="n">03</span><h2>Guion estándar de la serie</h2></div>
+<p>Como no hay voz en off, el guion es una <strong>hoja de ritmo de texto en pantalla sincronizado con la música</strong>. La estructura nunca cambia (para que el público reconozca la serie); cambian el texto, el orden de algunos bloques, el color de acento y el tratamiento (para que los vídeos no parezcan clones).</p>
+
+<h3>La estructura maestra de 40 segundos</h3>
+<div class="timeline">
+<div style="width:6.25%;background:var(--mag)">Gancho</div><div style="width:8.75%;background:var(--lime)">ID</div><div style="width:17.5%;background:var(--cyan)">Suena a</div><div style="width:20%;background:var(--amber)">Por qué</div><div style="width:25%;background:var(--lime)">Empieza por</div><div style="width:12.5%;background:var(--violet)">Nota</div><div style="width:10%;background:var(--mag)">CTA</div>
+</div>
+<div class="tl-scale"><span>0 s</span><span>2,5</span><span>6</span><span>13</span><span>21</span><span>31</span><span>36</span><span>40 s</span></div>
+
+<div class="tbl-wrap"><table>
+<tr><th>Bloque</th><th>Tiempo</th><th>Objetivo</th><th>Patrón de texto en pantalla</th><th>Visual</th></tr>
+<tr><td class="k">0 · Gancho</td><td>0,0–2,5</td><td>Frenar el scroll y crear curiosidad.</td><td>1 frase, máx. 7 palabras, 3 líneas cortas, grande (150–176 px). Una palabra en lima.</td><td>Foto/vídeo de la banda con tinte de acento; aparecen esquinas + cabecera. La música arranca en un compás enérgico, no en la intro.</td></tr>
+<tr><td class="k">1 · ID</td><td>2,5–6,0</td><td>Quién es.</td><td>[NOMBRE BANDA] (150 px) + línea mono: ciudad, país · género · año.</td><td>Foto arriba, placa del nombre, etiqueta de cinta opcional.</td></tr>
+<tr><td class="k">2 · Suena a</td><td>6,0–13,0</td><td>Situarlos en el mapa mental del espectador.</td><td>"Suena a" + [BANDA A] + [BANDA B] y una frase certera sobre el sonido.</td><td>Placa de dato; corte al ritmo entre los dos nombres.</td></tr>
+<tr><td class="k">3 · Por qué importan</td><td>13,0–21,0</td><td>Dos datos verificables: hito, escena, instrumento, historia.</td><td>2 tarjetas × 4 s, ≤ 7 palabras cada una. Nunca letras de canciones.</td><td>Tarjetas con foto/textura distinta en cada una.</td></tr>
+<tr><td class="k">4 · Empieza por</td><td>21,0–31,0</td><td>La recompensa: deja respirar la música.</td><td>"Empieza por →" + [TÍTULO CANCIÓN]. Casi ningún otro texto.</td><td>Momento álgido (estribillo/drop). Barras EQ, zoom lento sobre la foto, fondo de rejilla.</td></tr>
+<tr><td class="k">5 · Nivel de radar</td><td>31,0–36,0</td><td>Un veredicto que invite al debate.</td><td>"Nivel de radar 4/5" + veredicto en una línea.</td><td>Icono de radar, 4 puntos rellenos. Opcional: mini invitación "¿no estás de acuerdo? cuéntame".</td></tr>
+<tr><td class="k">6 · CTA</td><td>36,0–40,0</td><td>Seguir + dónde escuchar + bucle.</td><td>"La semana que viene: otra banda que no conoces" · "Sígueme" · "Escúchalos: Bandcamp / Spotify".</td><td>Placa de cierre. Los últimos 0,3 s vuelven al fotograma del gancho para fomentar el bucle.</td></tr>
+</table></div>
+
+<h3>Storyboard (con las capas de la plantilla)</h3>
+<div class="shots">
+<figure class="shot"><img src="images/frame_hook_es.png" alt=""><figcaption><b>0</b> Gancho</figcaption></figure>
+<figure class="shot"><img src="images/frame_title_es.png" alt=""><figcaption><b>1</b> ID</figcaption></figure>
+<figure class="shot"><img src="images/frame_fact_es.png" alt=""><figcaption><b>2</b> Suena a</figcaption></figure>
+<figure class="shot"><img src="images/frame_track_es.png" alt=""><figcaption><b>4</b> Empieza por</figcaption></figure>
+<figure class="shot"><img src="images/frame_rating_es.png" alt=""><figcaption><b>5</b> Nivel de radar</figcaption></figure>
+<figure class="shot"><img src="images/frame_end_es.png" alt=""><figcaption><b>6</b> CTA</figcaption></figure>
+</div>
+
+<h3>Reglas de redacción del texto en pantalla</h3>
+<ul class="cols2">
+<li>Máximo <strong>7 palabras</strong> por pantalla, 3 líneas.</li>
+<li>Velocidad de lectura: unas <strong>3 palabras por segundo</strong>; ningún texto menos de 1,2 s.</li>
+<li>Cambia algo en pantalla cada <strong>1,5–3 s</strong> (texto, encuadre, zoom, placa).</li>
+<li>Corta al ritmo: a 120 BPM un compás son 2 s y un tiempo 0,5 s.</li>
+<li>Solo <strong>datos verificables</strong>; guarda las fuentes en la Episode Sheet.</li>
+<li><strong>Nunca pongas letras de canciones</strong> en pantalla (otro copyright distinto).</li>
+<li>Describe el sonido con "suena a", no con "copia de".</li>
+<li>Lima para la idea clave; magenta solo para apartes.</li>
+<li>No exageres ("la mejor banda de la historia"). La opinión va en el Nivel de radar.</li>
+<li>Todo dentro de la zona segura (sección 04).</li>
+</ul>
+
+<h3>Banco de variaciones</h3>
+<p>Regla: <strong>cambia al menos 3 de estas 5 dimensiones entre vídeos consecutivos</strong>: (1) estilo de gancho, (2) variante estructural, (3) color de acento/género, (4) fondo y tratamiento de foto, (5) set de transiciones y frase de CTA.</p>
+
+<h4>1 · Estilos de gancho (bloque 0)</h4>
+<ol class="hooks">
+<li><strong>Clásico:</strong> "Seguro que nunca has oído hablar de [BANDA]. Vamos a arreglarlo."</li>
+<li><strong>Playlist:</strong> "A tu playlist le falta [BANDA]."</li>
+<li><strong>Comparación:</strong> "Si te gusta [A], necesitas a [BANDA]."</li>
+<li><strong>Género y país:</strong> "[GÉNERO] de [PAÍS]. De nada."</li>
+<li><strong>Cruce:</strong> "[A] se enamoró de [B]. Este es el resultado."</li>
+<li><strong>Dato (¡verifícalo!):</strong> "[N] oyentes mensuales. Merecen [N×10]."</li>
+<li><strong>Historia:</strong> "[AÑO]: un EP. Nadie se enteró. Hasta ahora."</li>
+<li><strong>Reto:</strong> "Dale al play. Intenta no repetirla."</li>
+<li><strong>Directo:</strong> "Conoce tu próxima obsesión."</li>
+<li><strong>Confidencial:</strong> "Nadie te habló de [BANDA]. Te lo contamos nosotros."</li>
+</ol>
+
+<h4>2 · Variantes estructurales (mismo sistema visual)</h4>
+<div class="tbl-wrap"><table>
+<tr><th>Variante</th><th>Duración</th><th>Cambios respecto al maestro</th></tr>
+<tr><td class="k">A · Radar Pick clásico</td><td>40 s</td><td>La estructura maestra.</td></tr>
+<tr><td class="k">B · Si te gusta</td><td>35 s</td><td>El gancho es la comparación; bloque 2 más corto; la canción gana hasta 14 s.</td></tr>
+<tr><td class="k">C · Tres razones</td><td>45 s</td><td>El bloque 3 pasa a ser tres tarjetas numeradas (1, 2, 3) de 4 s.</td></tr>
+<tr><td class="k">D · Línea de tiempo</td><td>45 s</td><td>El bloque 3 es una línea de tiempo horizontal: formación → primer disco → hoy.</td></tr>
+<tr><td class="k">E · Doble Blip</td><td>35 s</td><td>Pantalla dividida banda A vs. B, "¿Cuál primero?". Requiere permiso de ambas.</td></tr>
+<tr><td class="k">F · Adivina el género</td><td>35 s</td><td>El gancho es una pregunta; el género se revela en el bloque 2. Impulsa comentarios.</td></tr>
+</table></div>
+
+<h4>3 · Descripciones del sonido (frases del bloque 2)</h4>
+<ul class="cols2"><li>"Rápido, melódico y un poco triste."</li><li>"Guitarras cálidas, sintetizadores fríos."</li><li>"Folk con dientes."</li><li>"Punk con conciencia pop."</li><li>"Fuego lento y luego un muro de sonido."</li><li>"Riffs pesados, estribillos tiernos."</li><li>"Pista de baile a las 3 de la mañana."</li><li>"Música de carretera para días de lluvia."</li></ul>
+
+<h4>4 · Frases de veredicto (bloque 5)</h4>
+<ul class="cols2"><li>"Escúchala dos veces."</li><li>"Fans de [A], de nada."</li><li>"Infravalorados se queda corto."</li><li>"Guárdala para luego. Confía."</li><li>"¿Debut? Cuesta creerlo."</li><li>"No es para todos. Quizá sí para ti."</li></ul>
+
+<h4>5 · Frases de CTA (bloque 6)</h4>
+<ul class="cols2"><li>"Banda nueva cada [DÍA]. Sígueme."</li><li>"Guárdalo para tu próxima playlist."</li><li>"Envíaselo a tu amigo con mejor gusto."</li><li>"¿Qué banda quieres ver? Comenta."</li><li>"Apóyalos: enlace en comentarios."</li><li>"La semana que viene: [GÉNERO] de [PAÍS]."</li></ul>
+
+<h4>6 · Variaciones visuales</h4>
+<ul>
+<li><strong>Acento por género:</strong> lima (por defecto / rock-indie), magenta (punk/pop), cian (electrónica), ámbar (folk/acústico), rojo (metal/hardcore), violeta (jazz/soul/hip-hop). Mantén siempre las esquinas y la cabecera en lima.</li>
+<li><strong>Fondo:</strong> Void Rings (por defecto), Void Grid (técnico, bloque de la canción), Bone Paper (variante clara "fanzine" para acústico/folk).</li>
+<li><strong>Tratamiento de foto:</strong> duotono · recorte con medios tonos y cinta · pantalla completa con degradado oscuro · imágenes fijas con Ken Burns lento.</li>
+<li><strong>Pack de transiciones:</strong> (a) barrido de radar, (b) corte glitch de 3 fotogramas, (c) zoom de golpe 108 %, (d) corte flash al ritmo. Usa una pareja por vídeo.</li>
+</ul>
+
+<div class="callout info"><strong class="t">Evita la etiqueta de "contenido producido en masa"</strong>Las normas de monetización de YouTube apuntan a contenido repetitivo, casi idéntico o producido en masa. Una plantilla está bien; lo que debe cambiar siempre es la curaduría original: tu investigación, tus comparaciones, tu redacción y el material que tengas autorizado. Mantén el comentario original (los bloques "Por qué importan" y el veredicto) genuinamente tuyo.</div>
+</section>
+
+<!-- ============ 04 ESTILO ============ -->
+<section id="style">
+<div class="sec-head"><span class="n">04</span><h2>Guía de estilo visual</h2></div>
+<p><strong>Concepto: "Radar × Fanzine".</strong> Una interfaz de vigilancia (esquinas, anillos, blips, etiquetas mono) cruzada con un fanzine fotocopiado (cinta, medios tonos, grano, papel rasgado). Se lee como "detectamos lo que el algoritmo se pierde" y es barata de producir porque casi todos los elementos son formas planas.</p>
+<div class="shots" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+<figure class="shot"><img src="images/BG_Void_Rings.png" alt=""><figcaption><b>Fondo</b> Void Rings</figcaption></figure>
+<figure class="shot"><img src="images/BG_Void_Grid.png" alt=""><figcaption><b>Fondo</b> Void Grid</figcaption></figure>
+<figure class="shot"><img src="images/BG_Bone_Paper.png" alt=""><figcaption><b>Fondo</b> Bone Paper</figcaption></figure>
+<figure class="shot layer checker" style="padding:18px;border-radius:14px"><img src="images/logo_mark.png" alt="" style="border:0"><figcaption><b>Marca-logo</b> "Blip"</figcaption></figure>
+</div>
+
+<h3>Paleta de color</h3>
+<div class="swatches">
+<div class="sw"><div class="c" style="background:#0A0A0F;color:#F2EDE3">#0A0A0F</div><div class="i"><b>Void</b>Fondo, 60 %.</div></div>
+<div class="sw"><div class="c" style="background:#16161F;color:#F2EDE3">#16161F</div><div class="i"><b>Graphite</b>Tarjetas, placas.</div></div>
+<div class="sw"><div class="c" style="background:#B8FF3C;color:#0A0A0F">#B8FF3C</div><div class="i"><b>Radar Lime</b>Acento principal, 20 %. Contraste sobre Void ≈ 16:1.</div></div>
+<div class="sw"><div class="c" style="background:#FF3D8B;color:#0A0A0F">#FF3D8B</div><div class="i"><b>Signal Magenta</b>Secundario, blips, 8 %. ≈ 6:1.</div></div>
+<div class="sw"><div class="c" style="background:#F2EDE3;color:#0A0A0F">#F2EDE3</div><div class="i"><b>Bone</b>Texto principal. ≈ 17:1.</div></div>
+<div class="sw"><div class="c" style="background:#8A8A99;color:#0A0A0F">#8A8A99</div><div class="i"><b>Static Gray</b>Etiquetas pequeñas. ≈ 6:1.</div></div>
+</div>
+<div class="ratio"><div style="width:60%;background:#16161F;color:#F2EDE3;border:1px solid var(--line)">60 % Void / Graphite</div><div style="width:20%;background:#B8FF3C">20 % Lima</div><div style="width:12%;background:#F2EDE3">12 % Bone</div><div style="width:8%;background:#FF3D8B">8 %</div></div>
+<h4>Acentos por género (sustituyen al magenta/lima en tintes de foto y resaltes)</h4>
+<div class="swatches">
+<div class="sw"><div class="c" style="background:#FF3D8B;color:#0A0A0F">#FF3D8B</div><div class="i"><b>Punk · Pop</b></div></div>
+<div class="sw"><div class="c" style="background:#3DE0FF;color:#0A0A0F">#3DE0FF</div><div class="i"><b>Electrónica</b></div></div>
+<div class="sw"><div class="c" style="background:#FFB23D;color:#0A0A0F">#FFB23D</div><div class="i"><b>Folk · Acústico</b></div></div>
+<div class="sw"><div class="c" style="background:#FF4A3D;color:#0A0A0F">#FF4A3D</div><div class="i"><b>Metal · Hardcore</b></div></div>
+<div class="sw"><div class="c" style="background:#A07BFF;color:#0A0A0F">#A07BFF</div><div class="i"><b>Jazz · Soul · Hip-hop</b></div></div>
+</div>
+
+<h3>Tipografía</h3>
+<div class="type-spec">
+<div class="t"><h4>Titulares · Barlow Condensed Bold</h4><div class="specimen">Fuera de radar 4/5</div><p style="margin-top:12px">Todo en mayúsculas, interlineado ajustado (0,88). Títulos, ganchos, nombres de banda. Gratuita, licencia SIL Open Font (Google Fonts), uso comercial permitido. Si no puedes instalarla, alternativas en CapCut: Bebas Neue, Oswald o Anton (revisa la licencia de cualquier fuente que uses).</p></div>
+<div class="t"><h4>Etiquetas · Courier Prime Bold</h4><div class="specimen-m">[Ciudad] · Género · 2019</div><p style="margin-top:12px">Todo en mayúsculas, espaciado +6 %. Metadatos, etiquetas, contador de episodio, "empieza por". Sensación de máquina de escribir = fanzine. Gratuita (OFL). Alternativa: Courier New Bold.</p></div>
+</div>
+<div class="tbl-wrap"><table>
+<tr><th>Uso</th><th>Fuente</th><th>Tamaño (1080×1920 px)</th><th>Color</th></tr>
+<tr><td class="k">Gancho</td><td>Barlow Condensed Bold</td><td>150–176</td><td>Bone, palabra clave en Lima</td></tr>
+<tr><td class="k">Nombre de la banda</td><td>Barlow Condensed Bold</td><td>150–220 (reduce en nombres largos, máx. 2 líneas)</td><td>Bone</td></tr>
+<tr><td class="k">Dato / título de canción</td><td>Barlow Condensed Bold</td><td>100–190</td><td>Bone / Lima</td></tr>
+<tr><td class="k">Veredicto, CTA</td><td>Barlow Condensed Bold</td><td>56–100</td><td>Bone / Magenta</td></tr>
+<tr><td class="k">Etiquetas / metadatos</td><td>Courier Prime Bold</td><td>30–44 (nunca menos de 30)</td><td>Lima / Gray / Magenta</td></tr>
+</table></div>
+<p>El control de tamaño de CapCut no equivale 1:1 a píxeles; compara con <span class="mono">Template_Preview.png</span> y ajusta hasta que se vea igual.</p>
+
+<h3>Zonas seguras</h3>
+<div class="grid g2" style="align-items:center">
+<figure class="shot" style="max-width:300px"><img src="images/safe_zones_es.png" alt="Zonas seguras"></figure>
+<div>
+<p>Ambas plataformas tapan los bordes con su interfaz. Mantén todo lo importante dentro de <strong>x 72–936, y 250–1440</strong> (las esquinas lima de la plantilla marcan exactamente esa área).</p>
+<ul>
+<li><span class="pill no">Arriba 250 px</span> perfil, búsqueda, cámara y barras de título.</li>
+<li><span class="pill no">Abajo 480 px</span> descripción, música, cuenta, barra de progreso.</li>
+<li><span class="pill no">Derecha 144 px</span> botones de me gusta / comentar / compartir / remix.</li>
+<li><span class="pill mid">Cuadrícula de Instagram</span> muestra el recorte central 3:4 (1080×1440, línea discontinua) de la portada. Los elementos clave de la portada van dentro.</li>
+</ul>
+<p>Las interfaces cambian; haz una subida privada de prueba en ambas apps una vez por trimestre.</p>
+</div>
+</div>
+
+<h3>Biblioteca de elementos de vídeo</h3>
+<div class="shots" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr))">
+<figure class="shot layer"><div class="checker" style="border-radius:6px"><img src="images/layer_L01_Frame_Brackets.png" alt=""></div><figcaption><b>L01</b> Esquinas</figcaption></figure>
+<figure class="shot layer"><div class="checker" style="border-radius:6px"><img src="images/layer_L02_Header_Plates.png" alt=""></div><figcaption><b>L02</b> Cabecera</figcaption></figure>
+<figure class="shot layer"><div class="checker" style="border-radius:6px"><img src="images/layer_L03_BandName_Plate.png" alt=""></div><figcaption><b>L03</b> Placa banda</figcaption></figure>
+<figure class="shot layer"><div class="checker" style="border-radius:6px"><img src="images/layer_L04_FactCard_Plate.png" alt=""></div><figcaption><b>L04</b> Tarjeta dato</figcaption></figure>
+<figure class="shot layer"><div class="checker" style="border-radius:6px"><img src="images/layer_L05_Rating_Plate.png" alt=""></div><figcaption><b>L05</b> Placa nota</figcaption></figure>
+<figure class="shot layer"><div class="checker" style="border-radius:6px"><img src="images/layer_L12_EndCard_Plate.png" alt=""></div><figcaption><b>L12</b> Cierre</figcaption></figure>
+<figure class="shot layer"><div class="checker" style="border-radius:6px;padding:10px"><img src="images/layer_L09_Radar_Sweep_Square.png" alt=""></div><figcaption><b>L09</b> Barrido radar</figcaption></figure>
+<figure class="shot layer"><div class="checker" style="border-radius:6px;padding:10px"><img src="images/layer_L13_Tape_Label.png" alt=""></div><figcaption><b>L13</b> Etiqueta cinta</figcaption></figure>
+</div>
+
+<h3>Lenguaje de movimiento y edición</h3>
+<div class="grid g2">
+<div class="card"><h4>Hacer</h4><ul>
+<li>Cortes secos al ritmo; el texto entra en 0,2–0,3 s (pop / deslizar arriba), sin fundidos lentos.</li>
+<li>Empuje lento sobre las fotos: 100 % → 108 % durante el plano.</li>
+<li>Barrido de radar entre bloques importantes (máx. 2 por vídeo).</li>
+<li>Mantén líneas de escaneo (30 %), grano (40–50 %) y viñeta (50–60 %) en todo el vídeo: es el "pegamento" de la serie.</li>
+<li>Fotos en duotono: blanco y negro + tinte Solid (Multiplicar / Superponer, 60–80 %).</li>
+<li>En cada vídeo aparece un blip (punto magenta), siempre en un sitio distinto: un huevo de pascua reconocible.</li>
+</ul></div>
+<div class="card mag"><h4>No hacer</h4><ul>
+<li>Más de 2 fuentes, o más de 2 colores de acento en una escena.</li>
+<li>Texto sobre zonas recargadas sin placa ni degradado.</li>
+<li>Efectos "virales", pegatinas emoji o filtros de moda: envejecen la serie.</li>
+<li>Efectos con destellos de más de 3 por segundo (fotosensibilidad).</li>
+<li>Letras, logos de plataformas de streaming o marcas de agua de otros creadores en el encuadre.</li>
+<li>Capturas de Spotify/Bandcamp o portadas de discos sin permiso.</li>
+</ul></div>
+</div>
+</section>
+
+<!-- ============ 05 ESPECIFICACIONES ============ -->
+<section id="specs">
+<div class="sec-head"><span class="n">05</span><h2>Especificaciones técnicas del vídeo</h2></div>
+<div class="spec">
+<div class="row"><span class="lbl">Relación / resolución</span><span>9:16 vertical · <strong>1080 × 1920 px</strong></span></div>
+<div class="row"><span class="lbl">Fotogramas por segundo</span><span><strong>30 fps</strong> constantes (24/25 también valen; evita fps variables)</span></div>
+<div class="row"><span class="lbl">Contenedor / códec</span><span><strong>MP4 · H.264</strong> (perfil High), 4:2:0, progresivo</span></div>
+<div class="row"><span class="lbl">Bitrate de vídeo</span><span><strong>10–16 Mbps</strong> (CapCut: bitrate "Recomendado" o "Más alto"). El grano dificulta la compresión; no bajes de 8 Mbps.</span></div>
+<div class="row"><span class="lbl">Audio</span><span><strong>AAC-LC · 48 kHz · estéreo · 192–320 kbps</strong></span></div>
+<div class="row"><span class="lbl">Sonoridad</span><span>≈ <strong>−14 LUFS</strong> integrados, pico real ≤ −1 dBTP. No saturar; las plataformas normalizan de todos modos.</span></div>
+<div class="row"><span class="lbl">Color</span><span>SDR Rec.709. No exportes en HDR (se ve apagado en algunos móviles).</span></div>
+<div class="row"><span class="lbl">Duración</span><span>Objetivo <strong>35–45 s</strong>. Shorts admite hasta 3 min y Reels hasta 3 min (Instagram puede permitir más en algunas cuentas). Mantén ≤ 90 s si quieres poder promocionar en Instagram. Comprueba los límites vigentes antes del lanzamiento.</span></div>
+<div class="row"><span class="lbl">Área segura</span><span>x 72–936 · y 250–1440 (sección 04)</span></div>
+<div class="row"><span class="lbl">Texto</span><span>Solo incrustado. Etiqueta mín. 30 px, texto clave 56 px+, contraste ≥ 4,5:1</span></div>
+<div class="row"><span class="lbl">Marca de agua / cierre</span><span><strong>Ninguno.</strong> Desactiva el cierre/etiqueta final de CapCut en los ajustes de exportación. No subas archivos con marca de agua de otra app.</span></div>
+<div class="row"><span class="lbl">Nombre de archivo</span><span><span class="mono">OTR_E012_NombreBanda_v1_1080x1920.mp4</span> (serie_episodio_banda_versión)</span></div>
+<div class="row"><span class="lbl">Portada</span><span>PNG/JPG 1080×1920, contenido clave dentro del centro 1080×1440 (sección 07)</span></div>
+<div class="row"><span class="lbl">Accesibilidad</span><span>Añade texto alternativo en Instagram; acredita a la banda en las descripciones. Sin destellos ni estroboscopios.</span></div>
+</div>
+<h4>Lista de comprobación de exportación</h4>
+<ul class="check cols2"><li>Resolución 1080p, 30 fps, MP4 / H.264</li><li>Bitrate Recomendado o Más alto</li><li>Exportar audio activado, AAC</li><li>Sin cierre ni marca de agua de CapCut</li><li>Picos por debajo de −1 dB, sin saturación</li><li>Visto en el móvil a pantalla completa simulando la interfaz</li><li>El primer fotograma sirve de portada</li><li>Derechos anotados en la Episode Sheet</li></ul>
+<h4>Notas de subida</h4>
+<ul>
+<li><strong>YouTube:</strong> un vídeo vertical dentro del límite actual de Shorts se trata como Short. Sube desde la app de Studio o el escritorio; define título, descripción, audiencia ("no es contenido para niños") y lista. Las miniaturas personalizadas de Shorts pueden estar limitadas a la app móvil: compruébalo en tu cuenta.</li>
+<li><strong>Instagram:</strong> sube de forma nativa como Reel desde la app o Meta Business Suite. Una cuenta de <em>empresa</em> tiene una biblioteca de música comercial restringida; para tu audio autorizado da igual, pero el audio en tendencia de la app no está disponible en archivos con tu pista ya incrustada.</li>
+<li>No subas el mismo archivo dos veces en la misma plataforma. Sí varía el título/descripción por plataforma.</li>
+</ul>
+</section>
+
+<!-- ============ 06 PLANTILLA ============ -->
+<section id="template">
+<div class="sec-head"><span class="n">06</span><h2>Plantilla de CapCut</h2></div>
+<div class="callout warn"><strong class="t">Lee esto primero: qué es y qué no es la plantilla</strong>Los archivos de proyecto de CapCut (<span class="mono">draft_content.json</span>) son un formato propietario que cambia entre versiones y, en las versiones recientes, va cifrado. Un archivo de proyecto generado a mano sería poco fiable y no puedo validarlo sin tu versión de CapCut. Por eso la plantilla se entrega como un <strong>kit listo para montar</strong>: cada gráfico es una capa ya dimensionada y posicionada para 1080×1920, un plano de línea de tiempo indica dónde va cada una, y construyes el proyecto maestro una vez (unos 15 minutos) y luego lo duplicas en cada episodio.</div>
+
+<h3>Contenido de la carpeta</h3>
+<div class="tree"><b>Video_Template\</b>
+ ├─ README_EN.md  /  README_ES.md        guía paso a paso
+ ├─ Template_Preview.png                  aspecto del maestro terminado
+ ├─ <b>Layers\</b>                              PNG transparentes 1080×1920 (L01–L08, L12) + elementos pequeños
+ ├─ <b>Backgrounds\</b>                         BG_Void_Rings · BG_Void_Grid · BG_Bone_Paper
+ ├─ <b>Solid_Tints\</b>                         6 colores planos para tintes duotono (modos de fusión)
+ ├─ Timeline_Blueprint_EN.csv / _ES.csv   cada capa, pista, tiempo y animación
+ ├─ Text_Presets_EN.csv / _ES.csv         fuente, tamaño, color, posición y texto de cada rótulo
+ ├─ Episode_Sheet.csv                     investigación y registro de derechos por episodio
+ └─ Permission_Request_EN.txt / _ES.txt   correo modelo para pedir permiso a las bandas</div>
+
+<h3>Pila de pistas (de abajo arriba)</h3>
+<div class="tbl-wrap"><table>
+<tr><th>Pista</th><th>Contenido</th><th>Notas</th></tr>
+<tr><td class="k">V1</td><td>Fondo (BG_*) o vídeo/foto de la banda</td><td>Fotos: zoom lento 100→108 %.</td></tr>
+<tr><td class="k">V2</td><td>Tinte sólido (Solid_*)</td><td>Fusión Multiplicar/Superponer, opacidad 60–80 %, solo sobre fotos.</td></tr>
+<tr><td class="k">V3</td><td>Placas L03 / L04 / L05 / L12</td><td>Una por bloque, alineadas automáticamente (capas a pantalla completa).</td></tr>
+<tr><td class="k">V4</td><td>L01 Esquinas + L02 Cabecera (todo el vídeo)</td><td>Nunca se mueven: es la firma de la serie.</td></tr>
+<tr><td class="k">V5</td><td>L06 Líneas de escaneo (30 %), L07 Grano (45 %), L08 Viñeta (55 %)</td><td>Todo el vídeo, por encima de todo salvo el texto.</td></tr>
+<tr><td class="k">T1–T4</td><td>Texto según Text_Presets</td><td>Texto de cabecera, principal, etiquetas, detalles.</td></tr>
+<tr><td class="k">A1</td><td>Música (autorizada)</td><td>Objetivo −14 LUFS. Fundido de salida en los últimos 0,5 s.</td></tr>
+<tr><td class="k">A2</td><td>SFX (opcional)</td><td>Solo efectos libres de derechos / con licencia.</td></tr>
+</table></div>
+
+<h3>Construye el maestro en 10 pasos</h3>
+<ol>
+<li>Proyecto nuevo → relación <strong>9:16</strong>, 1080p, 30 fps. Importa toda la carpeta <span class="mono">Video_Template</span>.</li>
+<li>Arrastra <strong>BG_Void_Rings</strong> a V1 durante 40 s.</li>
+<li>Arrastra L01 + L02 a V4 durante 40 s. Arrastra L06/L07/L08 a V5 durante 40 s con las opacidades indicadas. Son capas a pantalla completa, no hace falta posicionarlas.</li>
+<li>Añade las placas en V3 según el plano (L03 de 2,5 a 6 s, L04 de 6 a 21 s, L05 de 31 a 36 s, L12 de 36 a 40 s).</li>
+<li>Crea los textos desde <span class="mono">Text_Presets_ES.csv</span> (fuente, tamaño, color, texto). Compara las posiciones con <span class="mono">Template_Preview.png</span>.</li>
+<li>Añade una animación de entrada pop (0,25 s) a cada texto y un barrido de radar rápido (o L09 girando con fotogramas clave) a los 13 s y 31 s.</li>
+<li>Barra de progreso superior opcional: L10 Track bajo la cabecera, L10 Fill con fotogramas clave de escala X 0 → 100 % durante 40 s.</li>
+<li>Añade la foto de ejemplo en V1/V2 para los bloques 0–1, con tinte.</li>
+<li>Añade un clip de música de ejemplo y alinea los cortes con sus marcadores de ritmo.</li>
+<li>Renombra el proyecto <strong>OTR_MASTER</strong>. Para cada episodio, <em>duplica</em> el borrador, renómbralo (OTR_E012…), sustituye texto/foto/música y exporta.</li>
+</ol>
+<p>Si tu versión de CapCut ofrece "Exportar como plantilla" / "Crear plantilla", úsalo con OTR_MASTER (depende de la versión y la región). Si no, tu maestro duplicado es la plantilla.</p>
+<div class="shots" style="max-width:520px"><figure class="shot"><img src="images/frame_title_es.png" alt=""><figcaption><b>Template_Preview.png</b> aspecto objetivo</figcaption></figure></div>
+</section>
+
+<!-- ============ 07 MINIATURAS ============ -->
+<section id="thumbs">
+<div class="sec-head"><span class="n">07</span><h2>Estilo de miniaturas</h2></div>
+<p>En los feeds verticales la "miniatura" aparece en tres sitios: la estantería de Shorts y la página del canal de YouTube, la cuadrícula del perfil de Instagram y la portada al compartir un enlace. Diseña cada portada como un cartel que funcione a 1/10 de tamaño y haz que el <strong>primer fotograma del vídeo = la portada</strong> (así no dependes de poder subir una portada personalizada).</p>
+<div class="shots" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+<figure class="shot"><img src="images/thumb_A_es.png" alt=""><figcaption><b>A · Cartel</b> por defecto</figcaption></figure>
+<figure class="shot"><img src="images/thumb_B_es.png" alt=""><figcaption><b>B · Barrido radar</b> curiosidad</figcaption></figure>
+<figure class="shot"><img src="images/thumb_C_es.png" alt=""><figcaption><b>C · Si te gusta</b> comparación</figcaption></figure>
+</div>
+<div class="tbl-wrap"><table>
+<tr><th>Plantilla</th><th>Cuándo usarla</th><th>Elementos</th></tr>
+<tr><td class="k">A · Cartel</td><td>Tienes una buena foto de la banda con permiso.</td><td>Foto duotono + nombre de la banda (≈ 230 px) + etiqueta magenta "aún no los conoces" + barra de cabecera.</td></tr>
+<tr><td class="k">B · Barrido radar</td><td>No hay foto, o el gancho es una pregunta.</td><td>Barrido de radar + pregunta en 2 líneas + blip. Totalmente tipográfica y sin fotos: riesgo cero de derechos de imagen.</td></tr>
+<tr><td class="k">C · Si te gusta</td><td>La comparación es el principal atractivo.</td><td>Mitad clara/oscura: "Si te gusta [A]" sobre "Escucha a [B]". Bone Paper arriba.</td></tr>
+</table></div>
+<h4>Reglas</h4>
+<ul class="cols2">
+<li>Máx. <strong>4 palabras</strong> de texto grande, 6 en total.</li>
+<li>Contenido clave dentro del <strong>centro 1080×1440</strong> (recorte 3:4 de Instagram) y del área segura.</li>
+<li>Misma barra de cabecera y esquinas en todas las portadas: coherencia en la cuadrícula.</li>
+<li>Alterna A/B/C en la cuadrícula para que no resulte repetitiva; prueba A vs. B durante 2 semanas.</li>
+<li>Contraste del texto ≥ 4,5:1; solo bone o lima sobre oscuro.</li>
+<li>Solo fotos que tengas autorizadas. Si no, plantilla B.</li>
+<li>Portadas honestas: sin afirmaciones falsas ni imágenes engañosas (política de metadatos engañosos de YouTube).</li>
+<li>Exporta PNG, 1080×1920, menos de 2 MB.</li>
+</ul>
+</section>
+
+<!-- ============ 08 DERECHOS ============ -->
+<section id="rights">
+<div class="sec-head"><span class="n">08</span><h2>Cómo evitar strikes, Content ID y otros filtros</h2></div>
+<div class="callout warn"><strong class="t">La verdad sin adornos</strong>No existe <strong>ningún truco de edición</strong> que haga "segura" la grabación de otra persona. Acelerar, cambiar el tono, ecualizar, espejar o añadir ruido no es fiable (los sistemas están diseñados para resistirlo), puede considerarse elusión, no sirve de nada contra una retirada manual y estropea la música que quieres mostrar. La única forma fiable de evitar problemas es <strong>tener derecho a usar la música</strong>. Por suerte, promocionar bandas es el mejor caso posible para conseguir permiso. Esta sección es información general, no asesoramiento legal; las políticas cambian, así que consulta las normas vigentes de las plataformas.</div>
+
+<h3>Reclamación vs. strike vs. retirada</h3>
+<div class="tbl-wrap"><table>
+<tr><th>Qué es</th><th>Quién lo activa</th><th>Consecuencia</th><th>Gravedad</th></tr>
+<tr><td class="k">Reclamación de Content ID (YouTube)</td><td>Coincidencia automática con archivos de referencia de los titulares</td><td>Sin strike. Los ingresos van al reclamante, el audio puede silenciarse o el vídeo bloquearse en algunos países. En Shorts suele significar que el titular monetiza/rastrea la música, o que se bloquea si no lo permite.</td><td><span class="pill mid">Media</span></td></tr>
+<tr><td class="k">Retirada por copyright / strike</td><td>Una persona o sello presenta una solicitud legal (DMCA o equivalente local)</td><td>Vídeo eliminado + <strong>strike de copyright</strong>. 3 strikes activos → cierre del canal.</td><td><span class="pill no">Alta</span></td></tr>
+<tr><td class="k">Meta Rights Manager (Instagram/Facebook)</td><td>Coincidencia automática o denuncia manual</td><td>Audio silenciado, vídeo eliminado o bloqueado, alcance limitado; los infractores reincidentes pueden sufrir restricciones o desactivación de la cuenta.</td><td><span class="pill no">Alta</span></td></tr>
+<tr><td class="k">Strike de comunidad / política</td><td>Revisión de la plataforma</td><td>Contenido reutilizado/inauténtico, spam, metadatos engañosos, etc.: desmonetización, alcance limitado, strikes.</td><td><span class="pill mid">Media</span></td></tr>
+</table></div>
+
+<h3>Escalera de fuentes musicales (de más a menos segura)</h3>
+<div class="tbl-wrap"><table>
+<tr><th>#</th><th>Fuente</th><th>Seguridad</th><th>Cómo hacerlo bien</th></tr>
+<tr><td class="k">1</td><td><strong>Permiso por escrito de los titulares</strong> (banda + sello/distribuidora/editorial si los hay)</td><td><span class="pill ok">La mejor</span></td><td>Usa <span class="mono">Permission_Request_ES.txt</span>. Pide expresamente YouTube <em>e</em> Instagram, 30–45 s del tema, con crédito. <strong>Pídeles que incluyan tu canal/cuenta en la lista de permitidos</strong> de su distribuidora (Content ID de YouTube) y de Meta Rights Manager para que no salte ninguna reclamación automática. Guarda el correo. Ganan promoción gratis, así que muchas bandas dicen que sí.</td></tr>
+<tr><td class="k">2</td><td><strong>Música con Creative Commons</strong> de bandas que la eligieron (p. ej. CC BY, CC BY-SA)</td><td><span class="pill ok">Buena</span></td><td>Evita NC (no comercial) y ND (sin derivadas; añadir música a un vídeo cuenta como obra derivada). Da el crédito que exige la licencia. Guarda una captura de la página de licencia: a veces los temas CC se registran por error en Content ID y necesitarás pruebas.</td></tr>
+<tr><td class="k">3</td><td><strong>Biblioteca / suscripción con licencia</strong></td><td><span class="pill ok">Buena</span></td><td>Perfecta para sintonías, intro/cierre y el formato Rewind. No puede ser la banda protagonista, así que no sustituye al n.º 1. Comprueba que la licencia cubre YouTube e Instagram y que incluye la inclusión del canal en la lista de permitidos.</td></tr>
+<tr><td class="k">4</td><td><strong>Bibliotecas musicales dentro de las apps</strong> (sonidos de YouTube Shorts, audio de Instagram)</td><td><span class="pill mid">Solo en la plataforma</span></td><td>Con licencia solo para usar dentro de esa app y no se pueden exportar, así que rompe la regla de "mismo archivo en ambas": exportarías el vídeo en silencio y añadirías el audio en cada app. La mayoría de bandas desconocidas no estarán en el catálogo. Las cuentas de empresa de Instagram tienen una biblioteca más reducida.</td></tr>
+<tr><td class="k">5</td><td>Extraer de Spotify/YouTube/Bandcamp sin permiso, avisos de "no se pretende infringir copyright", apuestas por el "uso legítimo", versiones/regrabaciones, letras</td><td><span class="pill no">Evitar</span></td><td>Los avisos no tienen efecto legal; usar 30–40 s de una grabación como atractivo principal no es una apuesta segura de uso legítimo; las versiones requieren licencia de la composición. No lo hagas.</td></tr>
+</table></div>
+
+<h3>Imágenes, fuentes y otros recursos</h3>
+<ul>
+<li><strong>Fotos, logos y arte de la banda:</strong> usa imágenes oficiales del press kit y pide permiso en el mismo correo. Acredita al fotógrafo si la banda lo pide.</li>
+<li><strong>Grabaciones de conciertos:</strong> suelen pertenecer a quien graba <em>y</em> contienen la música. Usa solo material de la propia banda o tuyo.</li>
+<li><strong>Capturas de Spotify/Bandcamp/Instagram o portadas de discos:</strong> evítalas. Usa texto plano "Bandcamp / Spotify" en lugar de logos.</li>
+<li><strong>Vídeo de stock, SFX, fuentes, efectos/música de la biblioteca de CapCut:</strong> revisa la licencia de uso comercial de cada uno; CapCut marca algunos elementos como aptos para uso comercial y otros no.</li>
+<li><strong>Visuales generados con IA:</strong> no crees miembros de banda ni actuaciones falsas realistas. Si usas contenido sintético realista, sigue las normas de divulgación/etiquetado de las plataformas.</li>
+<li><strong>Datos:</strong> la desinformación o las afirmaciones difamatorias sobre personas reales provocan denuncias. Cita la fuente de cada dato.</li>
+</ul>
+
+<h3>Otros filtros que pueden perjudicar a la serie</h3>
+<ul>
+<li><strong>"Contenido inauténtico / producido en masa" de YouTube:</strong> los vídeos repetitivos y basados en plantilla sin valor original pueden perder la elegibilidad para monetizar. Mantén curaduría y comentario original en cada episodio.</li>
+<li><strong>Originalidad en Instagram:</strong> el contenido reposteado y las marcas de agua de terceros reciben menos distribución. Exporta archivos limpios.</li>
+<li><strong>Spam y metadatos:</strong> no abuses de hashtags (3–5), no uses títulos ni portadas engañosos, no etiquetes cuentas en masa.</li>
+<li><strong>Subidas duplicadas:</strong> publicar el mismo archivo en ambas plataformas está bien; repetirlo varias veces en una sola, no.</li>
+</ul>
+
+<h3>Lista de comprobación de cumplimiento antes de publicar</h3>
+<ul class="check">
+<li>Permiso por escrito de la banda/sello para audio <em>e</em> imágenes, para YouTube <em>e</em> Instagram (guardado en la Episode Sheet).</li>
+<li>Canal/cuenta incluido en la lista de permitidos de la distribuidora, o el permiso indica que no reclamarán.</li>
+<li>Solo se usa la parte acordada del tema (≤ 45 s). Crédito en la descripción.</li>
+<li>Sin letras, sin logos de streaming, sin capturas, sin material de terceros.</li>
+<li>Cada dato en pantalla verificado, fuente guardada.</li>
+<li>Primera exportación revisada en el móvil, sin marca de agua ni cierre de CapCut.</li>
+<li>Publicado primero como <em>Privado/No listado</em>: comprueba que no aparece ninguna reclamación de Content ID en la pestaña Contenido de YouTube Studio antes de hacerlo público. Meta muestra los problemas de derechos en Rights Manager o en el estado del Reel.</li>
+</ul>
+
+<h3>Si llega una reclamación o un strike</h3>
+<ol>
+<li>Lee el tipo exacto (reclamación de Content ID vs. retirada). No borres por pánico: eliminar un vídeo <strong>no</strong> quita el strike.</li>
+<li>Si tienes permiso, envía las pruebas al reclamante. Disputa solo cuando tengas razón: las disputas falsas pueden escalar a solicitudes de retirada y strikes.</li>
+<li>Si no tienes derechos, retira o sustituye el audio, o elimina el vídeo (antes de que haya strike si es posible).</li>
+<li>Strike: haz el curso de copyright, no republiques el contenido; el reclamante puede retirar su solicitud, lo que elimina el strike.</li>
+<li>Anota lo ocurrido y corrige el proceso que lo permitió.</li>
+</ol>
+
+<div class="callout info"><strong class="t">Registro de derechos (Episode_Sheet.csv)</strong>Guarda para cada episodio: banda, contacto, fecha del permiso, alcance (plataformas, duración, territorio), origen de las fotos, enlaces a licencias y confirmación de inclusión en la lista de permitidos. Es lo que necesitarás en una disputa.</div>
+</section>
+
+<!-- ============ 09 RIESGOS ============ -->
+<section id="pitfalls">
+<div class="sec-head"><span class="n">09</span><h2>Riesgos y mitigación</h2></div>
+<div class="tbl-wrap"><table>
+<tr><th>Riesgo</th><th>Por qué ocurre</th><th>Mitigación</th></tr>
+<tr><td class="k">Reclamaciones o strikes de música</td><td>Usar temas comerciales sin licencia, aunque sean 15 s.</td><td>Flujo con permiso primero, lista de permitidos, registro de derechos, comprobación en no listado (sección 08).</td></tr>
+<tr><td class="k">"Mismo vídeo" ≠ mismo audio</td><td>La música de las apps no se exporta; el audio en tendencia solo funciona dentro de ellas.</td><td>Asume el compromiso: música autorizada incrustada en el archivo, sin sonidos en tendencia. Opcionalmente publica una 2.ª versión con audio de la app para aprovechar tendencias.</td></tr>
+<tr><td class="k">Texto tapado por la interfaz</td><td>Cada plataforma superpone elementos distintos.</td><td>Las esquinas de la plantilla = zona segura. Prueba una subida privada en ambas apps.</td></tr>
+<tr><td class="k">Las bandas desconocidas no tienen búsquedas</td><td>Nadie busca un nombre que no conoce.</td><td>Usa "Si te gusta [A]" en títulos/descripciones, palabras clave de género + país y publicaciones colaborativas con la banda.</td></tr>
+<tr><td class="k">Primeros 2 segundos flojos</td><td>Solo texto: el gancho debe ser visual y tipográfico.</td><td>Banco de ganchos, prueba A/B de dos estilos, arrancar la música en un compás enérgico.</td></tr>
+<tr><td class="k">Parece una fábrica de clones</td><td>La misma plantilla siempre + automatización.</td><td>Regla de 3 de 5 variaciones, comentario genuino, variar acento/fondo/estructura.</td></tr>
+<tr><td class="k">Texto demasiado rápido / pequeño</td><td>No hay voz que transmita la información.</td><td>7 palabras máx., 3 palabras/s, etiquetas de 30 px+, probar con el sonido apagado.</td></tr>
+<tr><td class="k">Conflicto de nombre o handle</td><td>Los nombres genéricos ya están usados.</td><td>Comprueba handles/marca antes de definir la imagen; asegura el mismo handle en todas las plataformas.</td></tr>
+<tr><td class="k">Agotamiento / frecuencia</td><td>El ritmo semanal es duro para un creador en solitario.</td><td>Producir 4 episodios en lote; colchón de 2 episodios; escalar solo con datos.</td></tr>
+<tr><td class="k">Rechazo de las bandas</td><td>Datos erróneos o uso de material sin aprobación.</td><td>Pedir aprobación del montaje final; etiquetar y acreditar a la banda.</td></tr>
+<tr><td class="k">Suposiciones erróneas sobre las plataformas</td><td>Los límites y funciones cambian a menudo.</td><td>Revisar duraciones, acceso a bibliotecas y políticas cada trimestre.</td></tr>
+</table></div>
+
+<h3>Páginas oficiales para volver a consultar</h3>
+<div class="sources">
+<a href="https://www.youtube.com/howyoutubeworks/policies/copyright/" target="_blank" rel="noopener">YouTube – Cómo funciona el copyright (Content ID, reclamaciones, strikes)</a>
+<a href="https://support.google.com/youtube" target="_blank" rel="noopener">Ayuda de YouTube – Shorts, monetización y políticas del canal</a>
+<a href="https://help.instagram.com" target="_blank" rel="noopener">Centro de ayuda de Instagram – Reels, música y copyright</a>
+<a href="https://creativecommons.org/share-your-work/cclicenses/" target="_blank" rel="noopener">Creative Commons – tipos de licencia</a>
+</div>
+</section>
+</main>
+<footer><div class="wrap"><span class="m" style="color:var(--lime)">Fuera de Radar</span> · Propuesta de serie v1.0 · Límites y políticas de las plataformas según lo entendido en octubre de 2026; verifica antes del lanzamiento. No es asesoramiento legal.</div></footer>
+
+</body>
+</html>
